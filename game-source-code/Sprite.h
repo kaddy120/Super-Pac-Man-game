@@ -3,6 +3,7 @@
 #define sprite_h
 #include "Vector2.h"
 #include <tuple>
+#include "string"
 
 class Sprite: protected Vector2
 {
@@ -13,7 +14,8 @@ public:
 	std::tuple<float, float> getDimentions() const;
 	void ChangeDimensions(const float& width, const float& height);
 
-private: 
+private:
+	std::string name;
 	float Width;
 	float Height;
 };
