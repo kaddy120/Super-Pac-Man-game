@@ -5,8 +5,10 @@ class Vector2
 {
 public:
     Vector2(): X(0), Y(0) {}
-    Vector2(const float& x, const float& y) : X(x), Y(y)
-    {}
+
+    Vector2(const float& x, const float& y) : X(x), Y(y) {}
+
+    Vector2(const Vector2& other) : X(other.X), Y(other.Y){}
 
     Vector2& add(const Vector2& other) 
     {
