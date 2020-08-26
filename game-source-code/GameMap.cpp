@@ -36,6 +36,7 @@ GameMap::GameMap()
 
 void GameMap::Map()
 {
+
 	Vector2 position(0,0);
 	Vector2 VerticalIncremet(0.f,60.f);
 	Vector2 HorizontalIncrement(60,0);

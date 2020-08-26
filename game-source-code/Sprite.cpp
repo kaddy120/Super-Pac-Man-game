@@ -9,6 +9,7 @@ Sprite::Sprite(const float& width, const float& height, const Vector2& position_
 
 Vector2 Sprite::GetPostion() const
 {
+	
 	return position;
 }
 

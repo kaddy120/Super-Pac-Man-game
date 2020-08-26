@@ -24,7 +24,6 @@ private:
 	//std::shared_ptr<Fruit> Fruite;
 	//std::shared_ptr<Key> Keys;
 	void Map();
-	Vector2 CurrentPostion;
 	std::vector<Sprite> Walls;
 	std::vector<Door> Door;
 	std::vector<Fruit> Fruite;

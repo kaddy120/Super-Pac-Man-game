@@ -10,7 +10,8 @@ int main()
 {
     Window Game_Screan;
     std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();
-
+    window->setVerticalSyncEnabled(true);
+    //window->setFramerateLimit(60);
     // test -----------------------
 
     GameMap testMap;
@@ -26,15 +27,36 @@ int main()
     Sprite Wall_h(width_, height_, position);
     // end ------------------------
 
+    bool Left, Right, Up, Down;
     while (window->isOpen())
     {
         sf::Event event;
-        while (window->pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window->close();
-           
+        switch (event.type) {
+        case sf::Event::KeyPressed:
+            if (event.key.code == sf::Keyboard::Right)
+                Right = true;
+            else if (event.key.code == sf::Keyboard::Left)
+                Left = true;
+            else if (event.key.code == sf::Keyboard::Up)
+                Up = true;
+            else if (event.key.code == sf::Keyboard::Down)
+                Down = true;
+            break;
+        case sf::Event::KeyReleased:
+            if (event.key.code == sf::Keyboard::Right)
+                Right = false;
+            else if (event.key.code == sf::Keyboard::Left)
+                Left = false;
+            else if (event.key.code == sf::Keyboard::Up)
+                Up = false;
+            else if (event.key.code == sf::Keyboard::Down)
+                Down = false;
+            break;
+        case sf::Event::Closed:
+            window->close();
+            break;
+        default:
+            break;
         }
         window->clear(sf::Color::Black);
         //draw here for testing

@@ -4,7 +4,7 @@
 class Collision
 {
 public:
-	bool static CheckCollision(const Sprite& firstSprite, const Sprite& secSprite);
+	static bool CheckCollision(const Sprite& firstSprite, const Sprite& secSprite);
 
 };
 
