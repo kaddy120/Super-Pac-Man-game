@@ -21,8 +21,8 @@ void Sprite::SetPosition(const Vector2& position_)
 {
 	position = position_;
 }
-
+//{width, height}
 std::tuple<float, float> Sprite::getDimentions() const
 {
-	return std::tuple<float, float>{Height, Width};
+	return std::tuple<float, float>{ Width, Height};
 }
