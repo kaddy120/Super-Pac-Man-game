@@ -1,4 +1,5 @@
 #include "Collision.h"
+#include <iostream>
 
 bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 {
@@ -12,7 +13,7 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 			position1.Y < position2.Y + height2 &&
 			position1.Y + height1 > position2.Y)
 		{
-		if(false){
+			std::cout << "collision detected" << std::endl;
 			return true;
 		}
 		else 

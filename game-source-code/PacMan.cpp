@@ -8,6 +8,7 @@ void PacMan::SetSpeed(const float& speed) {Speed = speed; }
 unsigned int PacMan::IncreamentPoints(const unsigned int& points)
 {
 	CollectedPoints += points;
+	return CollectedPoints;
 }
 void PacMan::SetState(const State& state_)
 {

@@ -19,7 +19,7 @@ public:
 	void MoveRight();
 
 private:	
-	float Speed= 1.0f; 
+	float Speed= 3.f; 
 	unsigned int CollectedPoints=0;
 	unsigned int Lifes = 3;
 	State state=State::Alive;
