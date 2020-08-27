@@ -1,6 +1,16 @@
 #include "Collision.h"
 #include <iostream>
 
+bool Collision::CheckCollision(const Sprite& firstSprite, const std::vector<Sprite> secondSprites)
+{
+	for (auto secSprite : secondSprites)
+	{
+		if (CheckCollision(firstSprite, secSprite)) return true;
+	}
+	return false;
+}
+
+
 bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 {
 	auto [width1,height1] = sprite1.getDimentions();
