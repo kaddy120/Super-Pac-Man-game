@@ -11,9 +11,9 @@ GhostAbstract::GhostAbstract(
 	Walls = walls;
 }
 
-void GhostAbstract::SetPackManPosition(const Vector2& packman)
+void GhostAbstract::SetPackManPosition(std::shared_ptr<Vector2>& position)
 {
-	Vector2 PacManPostion=packman;
+    PacManPostion=position;
 }
 
 void GhostAbstract::SetDoorPosition(const Vector2& doorSquar)
@@ -50,6 +50,62 @@ void GhostAbstract::ScaredMovement()
 			CurrentDirection = RandomDirection();
 		}
 }
+
+void GhostAbstract::ChaseTarget()
+{
+	auto TryLeftRight = false;
+	if (abs(GetPostion().Y - Target.Y) > 30)
+	{
+		if (GetPostion().Y < Target.Y && CurrentDirection != Down)//going up
+		{
+			if (isSelectedDirectionMovable(Up))
+			{
+				CurrentDirection = Up;
+				SetPosition(Move(Up));
+			}
+			else
+				TryLeftRight = true;
+		}
+		else if (CurrentDirection != Up)
+		{
+			if (isSelectedDirectionMovable(Up))
+			{
+				CurrentDirection = Down;
+				SetPosition(Move(Down));
+			}
+			else
+				TryLeftRight = true;
+		}
+	}
+	else if (TryLeftRight || abs(GetPostion().Y - Target.Y) < 30)
+	{
+		if (GetPostion().X < Target.X)
+		{
+			if (isSelectedDirectionMovable(Left))
+			{
+				CurrentDirection = Left;
+				SetPosition(Move(Left));
+				TryLeftRight = false;
+
+			}
+		}
+		else
+		{
+			if (isSelectedDirectionMovable(Down))
+			{
+				CurrentDirection = Down;
+				SetPosition(Move(Down));
+				TryLeftRight = false;
+			}
+		}
+	}
+	if (TryLeftRight)
+	{
+		CurrentDirection = RandomDirection();
+		SetPosition(Move(CurrentDirection));
+	}
+}
+
 
 Vector2 GhostAbstract::Move(const Direction& direction)
 {
@@ -101,25 +157,25 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 		auto temp = this->GetPostion();
 		temp.subtract(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
-		if (Collision().CheckCollision(tempSprite, Walls))
+		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	case Down:
 		auto temp = this->GetPostion();
 		temp.add(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
-		if (Collision().CheckCollision(tempSprite, Walls))
+		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	case Right:
 		auto temp = this->GetPostion();
 		temp.add(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
-		if(Collision().CheckCollision(tempSprite, Walls))
+		if(Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	case Left:
 		auto temp = this->GetPostion();
 		temp.subtract(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
-		if (Collision().CheckCollision(tempSprite, Walls))
+		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	}
 	return isMovable;

@@ -7,7 +7,11 @@ RedGhost::RedGhost(
 	const float& height,
 	const Vector2& initPosition) : GhostAbstract(turningTiles,walls,width,height,initPosition) {}
 
-void RedGhost::ChaseMovement()
+void RedGhost::SetPackManPosition(std::shared_ptr<Vector2>& position)
 {
-
+	PacManPostion = position;
+	Target = *position;
 }
+
+
+

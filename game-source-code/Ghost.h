@@ -5,6 +5,7 @@
 #include <vector>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
+#include <memory>
 
 enum class Mode { Chase, Scared, InTheBox, Captured };
 
@@ -22,28 +23,30 @@ public:
 		const Vector2& initPosition = Vector2(300,300));
 
 	void UpdateMode(const Mode& mode);
-	void SetPackManPosition(const Vector2& target);
+	virtual void SetPackManPosition(std::shared_ptr<Vector2>& position);
 	void SetDoorPosition(const Vector2& doorSquar);
 	void SetSpeed(const float& speed);
-	//virtual void ReturnToTheBox();
 
-	Vector2 Move(const Direction& direction);
-	virtual void ScaredMovement();
-	virtual void ChaseMovement() = 0;
+	virtual void Movement() = 0;
 
 protected: 
-
-	std::string Colour;
+	//std::string Colour;
 	float Speed = 3.f;
 	Mode Mode_ = Mode::Chase;
-	Vector2 PacManPostion;
+	std::weak_ptr<const Vector2> PacManPostion;
 	Vector2 DoorPostion; 
 	Vector2 Target;
+
 	std::vector<Sprite> TurningTiles;
 	std::vector<Sprite> Walls;
-	//Direction PreviousDirection;
+
 	Direction CurrentDirection;
+
 	Direction RandomDirection();
+	//virtual void ReturnToTheBox();
+	virtual void ScaredMovement();
+	virtual void ChaseTarget();
+	Vector2 Move(const Direction& direction);
 	bool isSelectedDirectionMovable(const Direction& direction);
 };
 
