@@ -9,6 +9,7 @@ GhostAbstract::GhostAbstract(
 {
 	TurningTiles = turningTiles;
 	Walls = walls;
+	StartTime = std::chrono::steady_clock::now();
 }
 
 void GhostAbstract::SetPackManPosition(std::shared_ptr<Vector2>& position)
@@ -34,6 +35,7 @@ void GhostAbstract::UpdateMode(const Mode& mode)
 	}
 	Mode_ = mode;
 }
+
 void GhostAbstract::SetSpeed(const float& speed) 
 {
 	Speed = speed;
@@ -61,7 +63,6 @@ void GhostAbstract::ChaseTarget()
 			if (isSelectedDirectionMovable(Up))
 			{
 				CurrentDirection = Up;
-				SetPosition(Move(Up));
 			}
 			else
 				TryLeftRight = true;
@@ -71,7 +72,6 @@ void GhostAbstract::ChaseTarget()
 			if (isSelectedDirectionMovable(Up))
 			{
 				CurrentDirection = Down;
-				SetPosition(Move(Down));
 			}
 			else
 				TryLeftRight = true;
@@ -84,7 +84,6 @@ void GhostAbstract::ChaseTarget()
 			if (isSelectedDirectionMovable(Left))
 			{
 				CurrentDirection = Left;
-				SetPosition(Move(Left));
 				TryLeftRight = false;
 
 			}
@@ -94,7 +93,6 @@ void GhostAbstract::ChaseTarget()
 			if (isSelectedDirectionMovable(Down))
 			{
 				CurrentDirection = Down;
-				SetPosition(Move(Down));
 				TryLeftRight = false;
 			}
 		}
@@ -102,7 +100,6 @@ void GhostAbstract::ChaseTarget()
 	if (TryLeftRight)
 	{
 		CurrentDirection = RandomDirection();
-		SetPosition(Move(CurrentDirection));
 	}
 }
 
@@ -180,3 +177,40 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 	}
 	return isMovable;
 }
+
+void GhostAbstract::SetChaseMode()
+{
+	auto Now = std::chrono::steady_clock::now();
+	auto elapsed_seconds = Now - StartTime;
+	unsigned int duration = 0;
+	if (elapsed_seconds.count() < duration+7)
+	{
+		Mode_ = Mode::Frightened;
+	}
+	else if (elapsed_seconds.count() < duration+20)
+	{
+		Mode_ = Mode::Chase;
+	}
+	else if (elapsed_seconds.count() < duration+7)
+	{
+		Mode_ = Mode::Frightened;
+	}
+	else if (elapsed_seconds.count() < duration+20)
+	{
+		Mode_ = Mode::Chase;
+	}
+	else if (elapsed_seconds.count() < duration+5)
+	{
+		Mode_ = Mode::Frightened;
+	}
+	else if (elapsed_seconds.count() < duration+20)
+	{
+		Mode_ = Mode::Chase;
+	}else if (elapsed_seconds.count()< duration+5)
+	{
+		Mode_ = Mode::Frightened;
+	}
+	else
+		Mode_ = Mode::Chase;
+}
+

@@ -6,8 +6,9 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
 #include <memory>
+#include <chrono> 
 
-enum class Mode { Chase, Scared, InTheBox, Captured };
+enum Mode { Chase, Frightened, InTheBox, Captured };
 
 enum Direction { Up, Down, Right, Left };
 
@@ -26,13 +27,14 @@ public:
 	virtual void SetPackManPosition(std::shared_ptr<Vector2>& position);
 	void SetDoorPosition(const Vector2& doorSquar);
 	void SetSpeed(const float& speed);
-
 	virtual void Movement() = 0;
-
+    
 protected: 
 	//std::string Colour;
 	float Speed = 3.f;
-	Mode Mode_ = Mode::Chase;
+	Mode Mode_;
+	std::chrono::steady_clock::time_point StartTime;
+
 	std::weak_ptr<const Vector2> PacManPostion;
 	Vector2 DoorPostion; 
 	Vector2 Target;
@@ -43,6 +45,7 @@ protected:
 	Direction CurrentDirection;
 
 	Direction RandomDirection();
+	void SetChaseMode();
 	//virtual void ReturnToTheBox();
 	virtual void ScaredMovement();
 	virtual void ChaseTarget();
