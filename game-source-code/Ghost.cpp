@@ -24,7 +24,7 @@ void GhostAbstract::SetDoorPosition(const Vector2& doorSquar)
 
 void GhostAbstract::UpdateMode(const Mode& mode)
 {
-	if (mode == Mode::Scared)
+	if (mode == Mode::Frightened)
 	{
 		auto toInt = (int)CurrentDirection;
 		//this is to ensure that a randomly selected direction is not a reverse direction;

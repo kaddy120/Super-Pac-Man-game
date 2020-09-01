@@ -1,7 +1,10 @@
 #include "Collision.h"
 #include <iostream>
+#include <cmath>
 
-bool Collision::CheckCollision(const Sprite& firstSprite, const std::vector<Sprite> secondSprites)
+using std::pow;
+
+bool Collision::CheckCollision(const Sprite& firstSprite, const std::vector<Sprite>& secondSprites)
 {
 	for (auto secSprite : secondSprites)
 	{
@@ -29,3 +32,43 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 		else 
 		return false;
 }
+
+ bool Collision::CheckCollision(const CircleSprite& firstCircle, const CircleSprite& secondCircle)
+ {
+	 auto r1 = firstCircle.GetRadius();
+	 auto r2 = secondCircle.GetRadius();
+	 auto position1 = firstCircle.GetCenter();
+	 auto posititon2 = secondCircle.GetCenter();
+	 if(pow(2,(r1+r2))>(pow(2,(posititon2.X-position1.X))+pow(2,(posititon2.Y-position1.Y))))
+		 return true;
+	 else
+		 return false;
+ }
+ bool Collision::CheckCollision(const CircleSprite& firstCircle, const std::vector<CircleSprite>& circles)
+ {
+	 for (auto circle: circles)
+	 {
+		 CheckCollision(firstCircle, circle);
+	 }
+ }
+
+ bool Collision::CheckCollision(const CircleSprite& circle, const Sprite& rect)
+ {
+		 auto circleDistance_x = abs(circle.GetCenter().X - rect.GetCenter().X);
+		 auto circleDistance_y = abs(circle.GetCenter().Y - rect.GetCenter().Y);
+
+		 auto [width, height] = rect.getDimentions();
+
+		 if (circleDistance_x > (width / 2 + circle.GetRadius())) { return false; }
+		 if (circleDistance_y > (height / 2 + circle.GetRadius())) { return false; }
+
+		 if (circleDistance_x <= (width / 2)) { return true; }
+		 if (circleDistance_y <= (height / 2)) { return true; }
+
+		 auto cornerDistance_sq = pow(2,(circleDistance_x - width/ 2)) +
+			 pow(2,(circleDistance_y - height / 2));
+
+		 return (cornerDistance_sq <= pow(2, circle.GetRadius()));
+ }
+ 
+

@@ -7,23 +7,22 @@ Sprite::Sprite(const float& width, const float& height, const Vector2& position_
 	position = position_;
 }
 
-Vector2 Sprite::GetPostion() const
-{
-	
+Vector2 Sprite::GetPostion() const{
 	return position;
 }
+Vector2 Sprite::GetCenter() const {
+	return Center;
+}
 
-void Sprite::SetDimensions(const float& width, const float& height)
-{
+void Sprite::SetDimensions(const float& width, const float& height){
 	Width = width;
 	Height = height;
 }
-void Sprite::SetPosition(const Vector2& position_)
-{
+
+void Sprite::SetPosition(const Vector2& position_){
 	position = position_;
 }
-//{width, height}
-std::tuple<float, float> Sprite::getDimentions() const
-{
+
+std::tuple<float, float> Sprite::getDimentions() const{
 	return std::tuple<float, float>{ Width, Height};
 }
