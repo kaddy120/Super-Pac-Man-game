@@ -18,12 +18,15 @@ int main()
 
     GameMap testMap;
     auto walls = testMap.GetWalls();
+    auto TurningPoints = testMap.GetTurningPoinints();
     PacMan player1(35, 35, Vector2(300, 300));
     PacMan player2(35, 35, Vector2(500, 500));
 
     sf::RectangleShape rectangle(sf::Vector2f(60.f, 8.f));
     sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
     sf::RectangleShape player2Sprite(sf::Vector2f(35.f, 35.f));
+    sf::CircleShape circle_(10.f);
+    circle_.setFillColor(sf::Color(89, 250, 150));
 
     Vector2 position(0, 0);
     Vector2 VerticalIncremet(80.0f, 0.0f);
@@ -142,6 +145,14 @@ int main()
           rectangle.setSize(sf::Vector2f(width, height));
           rectangle.setPosition(position.X, position.Y);
           window->draw(rectangle);
+        }
+        for (auto TurningPoint : TurningPoints)
+        {
+            auto position = TurningPoint.GetCenter();
+            auto radius = TurningPoint.GetRadius();
+            circle_.setPosition(position.X, position.Y);
+           // circle_.setOrigin(position.X, position.Y);
+            window->draw(circle_);
         }
         player1Sprite.setPosition(player1.GetPostion().X, player1.GetPostion().Y);
         player2Sprite.setPosition(player2.GetPostion().X, player2.GetPostion().Y);

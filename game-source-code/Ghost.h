@@ -27,7 +27,7 @@ public:
 	virtual void SetPackManPosition(std::shared_ptr<Vector2>& position);
 	void SetDoorPosition(const Vector2& doorSquar);
 	void SetSpeed(const float& speed);
-	virtual std::shared_ptr<Vector2> Movement() = 0;
+	//virtual std::shared_ptr<Vector2> Movement() = 0;
     
 protected: 
 	//std::string Colour;

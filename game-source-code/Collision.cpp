@@ -48,8 +48,10 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
  {
 	 for (auto circle: circles)
 	 {
-		 CheckCollision(firstCircle, circle);
+		 if(CheckCollision(firstCircle, circle)) return true;
 	 }
+	 return false;
+
  }
 
  bool Collision::CheckCollision(const CircleSprite& circle, const Sprite& rect)

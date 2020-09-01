@@ -2,7 +2,7 @@
 #include "Ghost.h"
 
 //during chase mode, this ghost target is the exact position of pacman
-class RedGhost: GhostAbstract
+class RedGhost: protected GhostAbstract
 {
 public:
 	RedGhost(
@@ -13,7 +13,10 @@ public:
 		const Vector2& initPosition);
 
 	virtual void SetPackManPosition(std::shared_ptr<Vector2>& position) override;
-	virtual void ChaseMovement() override;
+	/*virtual std::shared_ptr<Vector2> Movement() override
+	{
+
+	};*/
 
 };
 

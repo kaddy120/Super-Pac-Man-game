@@ -148,28 +148,25 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 	Sprite tempSprite(40, 40, Vector2(0,0));
 	auto displace_test = 8.f;
 	auto isMovable = true;
+	auto temp = this->GetPostion();
 	switch (direction)
 	{
 	case Up:
-		auto temp = this->GetPostion();
 		temp.subtract(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
 		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	case Down:
-		auto temp = this->GetPostion();
 		temp.add(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
 		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	case Right:
-		auto temp = this->GetPostion();
 		temp.add(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
 		if(Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
 	case Left:
-		auto temp = this->GetPostion();
 		temp.subtract(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
 		if (Collision::CheckCollision(tempSprite, Walls))
