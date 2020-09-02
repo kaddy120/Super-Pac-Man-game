@@ -4,11 +4,17 @@
 
 Sprite::Sprite(const float& width, const float& height, const Vector2& position_): Width(width), Height(height)
 {
-	position = position_;
+	position = std::make_shared<Vector2>(position_.X, position_.Y);
+	Center = *position;
+	Center.add(Vector2((width / 2), (height / 2)));
 }
 
-Vector2 Sprite::GetPostion() const{
+std::shared_ptr<Vector2> Sprite::GetPosition_ptr() const{
 	return position;
+}
+
+Vector2 Sprite::GetPosition() const {
+	return *position;
 }
 Vector2 Sprite::GetCenter() const {
 	return Center;
@@ -20,7 +26,9 @@ void Sprite::SetDimensions(const float& width, const float& height){
 }
 
 void Sprite::SetPosition(const Vector2& position_){
-	position = position_;
+	position = std::make_shared<Vector2>(position_.X, position_.Y);
+	Center = *position;
+	Center.add(Vector2((Width / 2), (Height / 2)));
 }
 
 std::tuple<float, float> Sprite::getDimentions() const{

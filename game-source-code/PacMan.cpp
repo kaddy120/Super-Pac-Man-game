@@ -18,25 +18,25 @@ unsigned int PacMan::GetLifes() const { return Lifes; }
 
 void PacMan::MoveUp()
 {
-	auto temp = GetPostion();
+	auto temp = GetPosition();
 	temp.subtract(Vector2(0, Speed));
 	SetPosition(temp);
 }
 void PacMan::MoveDown() {
 
-	auto temp = GetPostion();
+	auto temp = GetPosition();
 	temp.add(Vector2(0, Speed));
 	SetPosition(temp);
 }
 void PacMan::MoveLeft()
 {
-	auto temp = GetPostion();
+	auto temp = GetPosition();
 	temp.subtract(Vector2(Speed, 0));
 	SetPosition(temp);
 }
 void PacMan::MoveRight()
 {
-	auto temp = GetPostion();
+	auto temp = GetPosition();
 	temp.add(Vector2(Speed, 0));
 	SetPosition(temp);
 }

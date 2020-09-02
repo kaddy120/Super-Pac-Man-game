@@ -56,9 +56,9 @@ void GhostAbstract::ScaredMovement()
 void GhostAbstract::ChaseTarget()
 {
 	auto TryLeftRight = false;
-	if (abs(GetPostion().Y - Target.Y) > 30)
+	if (abs(GetPosition().Y - Target.Y) > 30)
 	{
-		if (GetPostion().Y < Target.Y && CurrentDirection != Down)//going up
+		if (GetPosition().Y < Target.Y && CurrentDirection != Down)//going up
 		{
 			if (isSelectedDirectionMovable(Up))
 			{
@@ -77,9 +77,9 @@ void GhostAbstract::ChaseTarget()
 				TryLeftRight = true;
 		}
 	}
-	else if (TryLeftRight || abs(GetPostion().Y - Target.Y) < 30)
+	else if (TryLeftRight || abs(GetPosition().Y - Target.Y) < 30)
 	{
-		if (GetPostion().X < Target.X)
+		if (GetPosition().X < Target.X)
 		{
 			if (isSelectedDirectionMovable(Left))
 			{
@@ -110,16 +110,16 @@ Vector2 GhostAbstract::Move(const Direction& direction)
 	switch (direction)
 	{
 	case Up:
-		temp = this->GetPostion();
+		temp = this->GetPosition();
 		temp.subtract(Vector2(0, Speed));	
 	case Down:
-		temp = this->GetPostion();
+		temp = this->GetPosition();
 		temp.add(Vector2(0, Speed));
 	case Right:
-		temp = this->GetPostion();
+		temp = this->GetPosition();
 		temp.add(Vector2(Speed, 0));
 	case Left:
-		temp = this->GetPostion();
+		temp = this->GetPosition();
 		temp.subtract(Vector2(Speed, 0));
 	}
 	return temp;
@@ -148,7 +148,7 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 	Sprite tempSprite(40, 40, Vector2(0,0));
 	auto displace_test = 8.f;
 	auto isMovable = true;
-	auto temp = this->GetPostion();
+	auto temp = this->GetPosition();
 	switch (direction)
 	{
 	case Up:

@@ -1,17 +1,19 @@
 #pragma once
 #include "string"
 #include "Vector2.h"
+#include <memory>
 
 class CircleSprite
 {
 	//Sprite() {}
 public:
 	CircleSprite(const float& radius, const Vector2& postion);
-	Vector2 GetCenter() const;
+	Vector2 GetPosition() const;
+	std::shared_ptr<Vector2> GetPosition_ptr() const;
 	float GetRadius() const;
 
 	void SetRadius(const float& radius);
-	void SetCenter(const Vector2& position);
+	void SetPosition(const Vector2& position);
 
 	const std::string& Name() const { return name; }
 
@@ -20,6 +22,6 @@ public:
 private:
 	std::string name = "";
 	float Radius;
-	Vector2 Center;
+	std::shared_ptr<Vector2> PositionCenter;
 };
 

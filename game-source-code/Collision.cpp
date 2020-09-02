@@ -18,8 +18,8 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 {
 	auto [width1,height1] = sprite1.getDimentions();
 	auto [width2,height2] = sprite2.getDimentions();
-	auto position1 = sprite1.GetPostion();
-	auto position2 = sprite2.GetPostion();
+	auto position1 = sprite1.GetPosition();
+	auto position2 = sprite2.GetPosition();
 	
 		if (position1.X < position2.X + width2 &&
 			position1.X + width1> position2.X &&
@@ -37,8 +37,8 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
  {
 	 auto r1 = firstCircle.GetRadius();
 	 auto r2 = secondCircle.GetRadius();
-	 auto position1 = firstCircle.GetCenter();
-	 auto posititon2 = secondCircle.GetCenter();
+	 auto position1 = firstCircle.GetPosition();
+	 auto posititon2 = secondCircle.GetPosition();
 	 if(pow(2,(r1+r2))>(pow(2,(posititon2.X-position1.X))+pow(2,(posititon2.Y-position1.Y))))
 		 return true;
 	 else
@@ -56,8 +56,8 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 
  bool Collision::CheckCollision(const CircleSprite& circle, const Sprite& rect)
  {
-		 auto circleDistance_x = abs(circle.GetCenter().X - rect.GetCenter().X);
-		 auto circleDistance_y = abs(circle.GetCenter().Y - rect.GetCenter().Y);
+		 auto circleDistance_x = abs(circle.GetPosition().X - rect.GetPosition().X);
+		 auto circleDistance_y = abs(circle.GetPosition().Y - rect.GetPosition().Y);
 
 		 auto [width, height] = rect.getDimentions();
 

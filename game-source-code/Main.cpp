@@ -76,7 +76,7 @@ int main()
         
         if (Up)
         {
-            temp = player1.GetPostion();
+            temp = player1.GetPosition();
             player1.MoveUp();
             auto Unmovable = false;
             for (auto wall : walls)
@@ -92,7 +92,7 @@ int main()
         }
         if (Down)
         {
-            temp = player1.GetPostion();
+            temp = player1.GetPosition();
             player1.MoveDown();
             auto Unmovable = false;
             for (auto wall : walls)
@@ -106,7 +106,7 @@ int main()
         }
         if (Left)
         {
-            temp = player1.GetPostion();
+            temp = player1.GetPosition();
             player1.MoveLeft();
             auto Unmovable = false;
             for (auto wall : walls)
@@ -120,7 +120,7 @@ int main()
         }
         if (Right)
         {
-            temp = player1.GetPostion();
+            temp = player1.GetPosition();
             player1.MoveRight();
             auto Unmovable = false;
             for (auto wall : walls)
@@ -140,7 +140,7 @@ int main()
 
         for (auto wall : walls)
         {
-          auto position = wall.GetPostion();
+          auto position = wall.GetPosition();
           auto [width, height] = wall.getDimentions();
           rectangle.setSize(sf::Vector2f(width, height));
           rectangle.setPosition(position.X, position.Y);
@@ -148,14 +148,14 @@ int main()
         }
         for (auto TurningPoint : TurningPoints)
         {
-            auto position = TurningPoint.GetCenter();
+            auto position = TurningPoint.GetPosition();
             auto radius = TurningPoint.GetRadius();
             circle_.setPosition(position.X, position.Y);
            // circle_.setOrigin(position.X, position.Y);
             window->draw(circle_);
         }
-        player1Sprite.setPosition(player1.GetPostion().X, player1.GetPostion().Y);
-        player2Sprite.setPosition(player2.GetPostion().X, player2.GetPostion().Y);
+        player1Sprite.setPosition(player1.GetPosition().X, player1.GetPosition().Y);
+        player2Sprite.setPosition(player2.GetPosition().X, player2.GetPosition().Y);
         window->draw(player1Sprite);
         window->draw(player2Sprite);
 
