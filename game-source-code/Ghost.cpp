@@ -1,18 +1,18 @@
 #include "Ghost.h"
+#include <iostream>
 
 GhostAbstract::GhostAbstract(
-	std::vector<Sprite> turningTiles,
+	std::vector<CircleSprite> turningTiles,
 	std::vector<Sprite> walls,
-	const float& width, 
-	const float& height,
-	const Vector2& initPosition): Sprite(width, height, initPosition)
+	const float& radius, 
+	const Vector2& initPosition): CircleSprite(radius, initPosition)
 {
 	TurningTiles = turningTiles;
 	Walls = walls;
 	StartTime = std::chrono::steady_clock::now();
 }
 
-void GhostAbstract::SetPackManPosition(std::shared_ptr<Vector2>& position)
+void GhostAbstract::SetPackManPosition(const std::shared_ptr<Vector2>& position)
 {
     PacManPostion=position;
 }
@@ -44,65 +44,30 @@ void GhostAbstract::SetSpeed(const float& speed)
 //in scared move, ghost will take 180 turn and will randomlys just turn way at any given turnable tiles
 void GhostAbstract::ScaredMovement()
 {
-	    this->SetPosition(Move(CurrentDirection));
+	    SetPosition(Move(CurrentDirection));
 
-		auto isInside_turningTile=Collision().CheckCollision(*this, TurningTiles);
+		auto isInside_turningTile = Collision::CheckCollision(*this, TurningTiles);
 		if (isInside_turningTile)
 		{
 			CurrentDirection = RandomDirection();
 		}
 }
 
-void GhostAbstract::ChaseTarget()
+void GhostAbstract::ChaseTargetMovement()
 {
-	auto TryLeftRight = false;
-	if (abs(GetPosition().Y - Target.Y) > 30)
+	/////////////////////////////////////////////
+	//if(isSelectedDirectionMovable(CurrentDirection))
+	SetPosition(Move(CurrentDirection));
+	auto isInside_turningTile = Collision::CheckCollision(*this, TurningTiles);
+	if (isInside_turningTile && count_>=30)
 	{
-		if (GetPosition().Y < Target.Y && CurrentDirection != Down)//going up
-		{
-			if (isSelectedDirectionMovable(Up))
-			{
-				CurrentDirection = Up;
-			}
-			else
-				TryLeftRight = true;
-		}
-		else if (CurrentDirection != Up)
-		{
-			if (isSelectedDirectionMovable(Up))
-			{
-				CurrentDirection = Down;
-			}
-			else
-				TryLeftRight = true;
-		}
+		SetPosition(Move(CurrentDirection));
+		//SetPosition(Move(CurrentDirection));
+		ChaseTarget();
+		count_ = 0;
 	}
-	else if (TryLeftRight || abs(GetPosition().Y - Target.Y) < 30)
-	{
-		if (GetPosition().X < Target.X)
-		{
-			if (isSelectedDirectionMovable(Left))
-			{
-				CurrentDirection = Left;
-				TryLeftRight = false;
-
-			}
-		}
-		else
-		{
-			if (isSelectedDirectionMovable(Down))
-			{
-				CurrentDirection = Down;
-				TryLeftRight = false;
-			}
-		}
-	}
-	if (TryLeftRight)
-	{
-		CurrentDirection = RandomDirection();
-	}
+	count_++;
 }
-
 
 Vector2 GhostAbstract::Move(const Direction& direction)
 {
@@ -112,32 +77,119 @@ Vector2 GhostAbstract::Move(const Direction& direction)
 	case Up:
 		temp = this->GetPosition();
 		temp.subtract(Vector2(0, Speed));	
+		break;
 	case Down:
 		temp = this->GetPosition();
 		temp.add(Vector2(0, Speed));
+		break;
 	case Right:
 		temp = this->GetPosition();
 		temp.add(Vector2(Speed, 0));
+		break;
 	case Left:
 		temp = this->GetPosition();
 		temp.subtract(Vector2(Speed, 0));
+		break;
 	}
 	return temp;
+}
+
+
+void GhostAbstract::ChaseTarget()
+{
+	auto TryLeftRight = false;
+	//auto WrongDirection = false;
+	if (abs(GetPosition().Y - Target.Y) > 30)
+		if ((Target.Y < GetPosition().Y && CurrentDirection == Down) || (Target.Y > GetPosition().Y && CurrentDirection == Up))
+		{
+			if (GetPosition().X < Target.X)
+			{
+				if (isSelectedDirectionMovable(Right))
+				{
+					CurrentDirection = Right;
+					return;
+				}
+				else
+				{
+					CurrentDirection = Left;
+					return;
+				}
+			}
+			else
+			{
+				if (isSelectedDirectionMovable(Left))
+				{
+					CurrentDirection = Left;
+					return;
+				}
+				else
+				{
+					CurrentDirection = Right;
+					return;
+				}
+			}
+		}
+
+	if (abs(GetPosition().Y - Target.Y) > 30)
+	{
+		if (Target.Y < GetPosition().Y && CurrentDirection != Down)//going up
+		{
+			if (isSelectedDirectionMovable(Up))
+			{
+				CurrentDirection = Up;
+			}
+			else
+				TryLeftRight = true;
+		}
+		if (Target.Y > GetPosition().Y && CurrentDirection != Up)
+		{
+			if (isSelectedDirectionMovable(Down))
+			{
+				CurrentDirection = Down;
+			}
+			else
+				TryLeftRight = true;
+		}
+	}
+	if (TryLeftRight || abs(GetPosition().Y - Target.Y) < 30)
+	{
+		if (GetPosition().X < Target.X)
+		{
+			if (isSelectedDirectionMovable(Right))
+			{
+				CurrentDirection = Right;
+				TryLeftRight = false;
+			}
+		}
+		else
+		{
+			if (isSelectedDirectionMovable(Left))
+			{
+				CurrentDirection = Left;
+				TryLeftRight = false;
+
+			}
+		}
+	}
+	if (TryLeftRight)
+	{
+		CurrentDirection = RandomDirection();
+	}
 }
 
 Direction GhostAbstract::RandomDirection()
 {
 	Direction temp;
-	auto toInt = (int)CurrentDirection;
+	auto toInt = static_cast<int>(CurrentDirection);
 	//this is to ensure that a randomly selected direction is not a reverse direction;
 	if (toInt % 2 == 0) toInt -= 1;
 	else
 		toInt += 1;
 	do {
 		do {
-			temp = static_cast<Direction>(rand() % 4);
+			temp = static_cast<Direction>((rand() % 4)+1);
 
-		} while ((int)temp == toInt);
+		} while (static_cast<int>(temp) == toInt);
 	} while (!isSelectedDirectionMovable(temp));
 
 	return temp;
@@ -145,8 +197,8 @@ Direction GhostAbstract::RandomDirection()
 
 bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 {
-	Sprite tempSprite(40, 40, Vector2(0,0));
-	auto displace_test = 8.f;
+	Sprite tempSprite(20, 20, Vector2(0,0));
+	auto displace_test = 35.f;
 	auto isMovable = true;
 	auto temp = this->GetPosition();
 	switch (direction)
@@ -156,21 +208,25 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 		tempSprite.SetPosition(temp);
 		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
+		break;
 	case Down:
 		temp.add(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
 		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
+		break;
 	case Right:
 		temp.add(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
 		if(Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
+		break;
 	case Left:
 		temp.subtract(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
 		if (Collision::CheckCollision(tempSprite, Walls))
 			isMovable = false;
+		break;
 	}
 	return isMovable;
 }
@@ -182,7 +238,7 @@ void GhostAbstract::SetChaseMode()
 	unsigned int duration = 0;
 	if (elapsed_seconds.count() < duration+7)
 	{
-		Mode_ = Mode::Frightened;
+		Mode_ = Mode::Scatter;
 	}
 	else if (elapsed_seconds.count() < duration+20)
 	{
@@ -190,7 +246,7 @@ void GhostAbstract::SetChaseMode()
 	}
 	else if (elapsed_seconds.count() < duration+7)
 	{
-		Mode_ = Mode::Frightened;
+		Mode_ = Mode::Scatter;
 	}
 	else if (elapsed_seconds.count() < duration+20)
 	{
@@ -198,14 +254,14 @@ void GhostAbstract::SetChaseMode()
 	}
 	else if (elapsed_seconds.count() < duration+5)
 	{
-		Mode_ = Mode::Frightened;
+		Mode_ = Mode::Scatter;
 	}
 	else if (elapsed_seconds.count() < duration+20)
 	{
 		Mode_ = Mode::Chase;
 	}else if (elapsed_seconds.count()< duration+5)
 	{
-		Mode_ = Mode::Frightened;
+		Mode_ = Mode::Scatter;
 	}
 	else
 		Mode_ = Mode::Chase;

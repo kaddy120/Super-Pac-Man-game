@@ -39,7 +39,7 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 	 auto r2 = secondCircle.GetRadius();
 	 auto position1 = firstCircle.GetPosition();
 	 auto posititon2 = secondCircle.GetPosition();
-	 if(pow(2,(r1+r2))>(pow(2,(posititon2.X-position1.X))+pow(2,(posititon2.Y-position1.Y))))
+	 if(pow((r1 + r2), 2) > (pow((posititon2.X - position1.X), 2) + pow((posititon2.Y - position1.Y), 2)))
 		 return true;
 	 else
 		 return false;
@@ -67,10 +67,10 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 		 if (circleDistance_x <= (width / 2)) { return true; }
 		 if (circleDistance_y <= (height / 2)) { return true; }
 
-		 auto cornerDistance_sq = pow(2,(circleDistance_x - width/ 2)) +
-			 pow(2,(circleDistance_y - height / 2));
+		 auto cornerDistance_sq = pow((circleDistance_x - width/ 2),2) +
+			 pow((circleDistance_y - height / 2),2);
 
-		 return (cornerDistance_sq <= pow(2, circle.GetRadius()));
+		 return (cornerDistance_sq <= pow( circle.GetRadius(),2));
  }
  
 

@@ -1,17 +1,38 @@
 #include "RedGhost.h"
 
 RedGhost::RedGhost(
-	std::vector<Sprite> turningTiles,
+	std::vector<CircleSprite> turningTiles,
 	std::vector<Sprite> walls,
-	const float& width,
-	const float& height,
-	const Vector2& initPosition) : GhostAbstract(turningTiles,walls,width,height,initPosition) {}
+	const float& radius,
+	const Vector2& initPosition) : GhostAbstract(turningTiles,walls,radius,initPosition) {}
 
-void RedGhost::SetPackManPosition(std::shared_ptr<Vector2>& position)
+void RedGhost::Movement()
 {
-	PacManPostion = position;
-	Target = *position;
+	switch (Mode_)
+	{
+	case Mode::Chase:
+		Target = *PacManPostion;
+		ChaseTargetMovement();
+		break;
+	case Mode::Captured:
+		Target = DoorPostion;
+		ChaseTargetMovement();
+		break;
+	case Mode::Scatter:
+		Target = ScatterPosition;
+		ChaseTargetMovement();
+		break;
+	case Mode::Frightened:
+		ScaredMovement();
+		break;
+	default:
+		break;
+	}
 }
 
+//void RedGhost::SetTarget()
+//{
+//
+//}
 
 

@@ -15,16 +15,16 @@ class GameMap
 {
 public:
 	GameMap();
-	std::vector<Sprite> GetWalls() const;
+	vector<Sprite> GetWalls() const;
 	vector<CircleSprite> GetTurningPoinints() const;
 
 private:
-	std::vector<std::vector<std::string> > Maize;
 	void Map();
-	std::vector<Sprite> Walls;
-	std::vector<Door> Door;
-	std::vector<Fruit> Fruite;
-	std::vector<Key> Keys;
+	vector<std::vector<std::string> > Maize;
+	vector<Sprite> Walls;
+	vector<Door> Door;
+	vector<Fruit> Fruite;
+	vector<Key> Keys;
 	vector<CircleSprite> TurningPoints;
 };
 

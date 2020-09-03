@@ -95,7 +95,7 @@ void GameMap::Map()
 			{
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				TurningPoints.push_back(CircleSprite(20.f, tempPosition));
+				TurningPoints.push_back(CircleSprite(2.f, tempPosition));
 				position.add(HorizontalIncrement);
 
 			}
@@ -103,7 +103,7 @@ void GameMap::Map()
 			{
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				TurningPoints.push_back(CircleSprite(20.f, tempPosition));
+				TurningPoints.push_back(CircleSprite(2.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "d")

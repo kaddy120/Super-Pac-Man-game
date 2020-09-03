@@ -7,6 +7,7 @@
 #include <tuple>
 #include "PacMan.h"
 #include "Collision.h"
+#include "RedGhost.h"
 
 int main()
 {
@@ -21,6 +22,8 @@ int main()
     auto TurningPoints = testMap.GetTurningPoinints();
     PacMan player1(35, 35, Vector2(300, 300));
     PacMan player2(35, 35, Vector2(500, 500));
+    RedGhost redGhost(TurningPoints, walls, 3.f, Vector2(320, 300));
+    redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
     sf::RectangleShape rectangle(sf::Vector2f(60.f, 8.f));
     sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
@@ -74,7 +77,8 @@ int main()
             }
         }
         
-        if (Up)
+        redGhost.Movement();
+      /*  if (Up)
         {
             temp = player1.GetPosition();
             player1.MoveUp();
@@ -131,12 +135,9 @@ int main()
             }
             if (Unmovable)
                 player1.SetPosition(temp);
-        }
+        }*/
         window->clear(sf::Color::Black);
-        //draw here for testing
 
-     
-        // change the size to 100x100
 
         for (auto wall : walls)
         {
@@ -155,7 +156,7 @@ int main()
             window->draw(circle_);
         }
         player1Sprite.setPosition(player1.GetPosition().X, player1.GetPosition().Y);
-        player2Sprite.setPosition(player2.GetPosition().X, player2.GetPosition().Y);
+        player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
         window->draw(player1Sprite);
         window->draw(player2Sprite);
 
