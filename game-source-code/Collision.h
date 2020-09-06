@@ -11,5 +11,6 @@ public:
 	static bool CheckCollision(const CircleSprite& firstCircle, const CircleSprite& secondCircle); //circle to cicle
 	static bool CheckCollision(const CircleSprite& circle, const std::vector<CircleSprite>& circles); //circle to circles
 	static bool CheckCollision(const CircleSprite& circle, const Sprite& rectangle); //circle to rectangle
+	static bool CheckCollision(const Sprite& rectangle, const std::vector<CircleSprite>& circles); //rectange and cicles
 };
 

@@ -11,6 +11,7 @@
 
 int main()
 {
+    srand(time(NULL));
     Window Game_Screan;
     std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();
     window->setVerticalSyncEnabled(true);
@@ -141,6 +142,20 @@ int main()
             if (Unmovable)
                 player1.SetPosition(temp);
         }
+        for (auto it = Keys.begin(); it!=Keys.end(); it++)
+        {
+            if (Collision::CheckCollision(*it, player1))
+            {
+                for (auto Door : Doors)
+                {
+                    if(Door->HasKey() && Door->IsDoorLocked())
+                    Door->Unlock(*it);
+                }
+                Keys.erase(it);
+                break;
+            }
+        }
+
         window->clear(sf::Color::Black);
 
 
@@ -154,11 +169,13 @@ int main()
         }
         for (auto Door : Doors)
         {
+            if (Door->IsDoorLocked()) {
             auto position = Door->GetPosition();
             auto [width, height] = Door->getDimentions();
             door.setSize(sf::Vector2f(width, height));
             door.setPosition(position.X, position.Y);
             window->draw(door);
+            }
         }
         for (auto Key : Keys)
         {

@@ -72,5 +72,12 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 
 		 return (cornerDistance_sq <= pow( circle.GetRadius(),2));
  }
- 
 
+ bool Collision::CheckCollision(const Sprite& rectangle, const std::vector<CircleSprite>& circles)
+ {
+	 for (auto circle : circles)
+	 {
+		 if (CheckCollision(circle, rectangle)) return true;
+	 }
+	 return false;
+ }

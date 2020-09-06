@@ -1,4 +1,5 @@
 #include "Door.h"
+#include <iostream>
 
 Door::Door() {
 }
@@ -16,7 +17,7 @@ bool Door::Unlock(const Key& key_)
 {
 	if (key_ == key)
 	{
-		Unlocked = false;
+		locked = false;
 		return true;
 	}
 	else
@@ -24,7 +25,7 @@ bool Door::Unlock(const Key& key_)
 }
 
 bool Door::IsDoorLocked() const {
-	return Unlocked; 
+	return locked; 
 }
 bool Door::HasKey() const {
 	return hasKey;

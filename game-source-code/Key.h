@@ -13,7 +13,6 @@ public:
 
 	void SetKeyDimensions(const float& radius, const Vector2& postion);
 
-	//i don't really want to copy a key but i want two doors to share a key.
 	//Key(const Key& key);
 	
 	bool operator ==(const Key& other) const;
