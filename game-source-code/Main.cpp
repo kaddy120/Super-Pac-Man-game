@@ -23,6 +23,7 @@ int main()
     auto TurningPoints = testMap.GetTurningPoinints();
     auto Doors = testMap.GetDoors();
     auto Keys = testMap.GetKeys();
+    auto Fruits = testMap.GetFruits();
     PacMan player1(35, 35, Vector2(300, 300));
     PacMan player2(35, 35, Vector2(500, 500));
     RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
@@ -35,7 +36,9 @@ int main()
     sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
     sf::RectangleShape player2Sprite(sf::Vector2f(35.f, 35.f));
     sf::CircleShape circle_(10.f);
+    sf::CircleShape fruit_(10.f);
     circle_.setFillColor(sf::Color(89, 250, 150));
+    fruit_.setFillColor(sf::Color(193, 237, 36));
 
     Vector2 position(0, 0);
     Vector2 VerticalIncremet(80.0f, 0.0f);
@@ -156,6 +159,16 @@ int main()
             }
         }
 
+        for (auto it = Fruits.begin(); it != Fruits.end(); it++)
+        {
+            if (Collision::CheckCollision(*it, player1))
+            {
+                player1.IncreamentPoints(it->FruitPoints());
+                Fruits.erase(it);
+                break;
+            }
+        }
+
         window->clear(sf::Color::Black);
 
 
@@ -182,8 +195,14 @@ int main()
             auto position = Key.GetPosition();
             auto radius = Key.GetRadius();
             circle_.setPosition(position.X, position.Y);
-           // circle_.setOrigin(position.X, position.Y);
             window->draw(circle_);
+        }
+        for (auto Fruit : Fruits)
+        {
+            auto position = Fruit.GetPosition();
+            fruit_.setRadius(Fruit.GetRadius());
+            fruit_.setPosition(position.X, position.Y);
+            window->draw(fruit_);
         }
         player1Sprite.setPosition(player1.GetPosition().X, player1.GetPosition().Y);
         player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);

@@ -1,10 +1,10 @@
 #pragma once
-#include "Sprite.h"
+#include "CircleSprite.h"
 
-class Fruit: public Sprite
+class Fruit: public CircleSprite
 {
 public:
-	Fruit(const float& width, const float& height, const Vector2& postion);
+	Fruit(const float& radius, const Vector2& postion);
 	unsigned int FruitPoints() const;
 	void SetFruitPoints(const unsigned int& points);
 private:

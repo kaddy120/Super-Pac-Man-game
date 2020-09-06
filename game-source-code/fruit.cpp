@@ -1,6 +1,6 @@
 #include "fruit.h"
 
-Fruit::Fruit(const float& width, const float& height, const Vector2& position) : Sprite(width, height, position) {}
+Fruit::Fruit(const float& radius, const Vector2& position) : CircleSprite(radius, position) {}
 
 unsigned int Fruit::FruitPoints() const { return PointsPerFruit; }
 

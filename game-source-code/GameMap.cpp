@@ -101,6 +101,9 @@ void GameMap::Map()
 			}
 			else if(condition =="f")
 			{
+				tempPosition.X = position.X;
+				tempPosition.add(CircleHorizontalIncrement);
+				Fruits.push_back(Fruit(15.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "k")
@@ -146,6 +149,10 @@ vector<std::shared_ptr<Door>> GameMap::GetDoors() const {
 }
 vector<Key> GameMap::GetKeys() const { 
 	return Keys;
+}
+
+vector<Fruit> GameMap::GetFruits() const {
+	return Fruits;
 }
 
 void GameMap::AssignKeyToDoor()
