@@ -17,7 +17,7 @@ public:
 
 private:
 	Key key;
-	bool Unlocked = false;
+	bool Unlocked = true;
 	bool hasKey = false;
 		
 };

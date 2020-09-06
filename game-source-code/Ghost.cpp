@@ -213,25 +213,25 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 	case Up:
 		temp.subtract(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls))
+		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
 			isMovable = false;
 		break;
 	case Down:
 		temp.add(Vector2(0, displace_test));
 		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls))
+		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
 			isMovable = false;
 		break;
 	case Right:
 		temp.add(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
-		if(Collision::CheckCollision(tempSprite, Walls))
+		if(Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
 			isMovable = false;
 		break;
 	case Left:
 		temp.subtract(Vector2(displace_test,0));
 		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls))
+		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
 			isMovable = false;
 		break;
 	}
@@ -276,3 +276,14 @@ void GhostAbstract::SetChaseMode()
 		Mode_ = Mode::Chase;
 }
 
+bool GhostAbstract::CheckCollisionWithaDoor(const Sprite& rectangle) const
+{
+	for (auto Door : Doors)
+	{
+		if (Door->IsDoorLocked())
+		{
+			if (Collision::CheckCollision(rectangle, *Door)) return true;
+		}
+	}
+	return false;
+}

@@ -16,7 +16,7 @@ bool Door::Unlock(const Key& key_)
 {
 	if (key_ == key)
 	{
-		Unlocked = true;
+		Unlocked = false;
 		return true;
 	}
 	else

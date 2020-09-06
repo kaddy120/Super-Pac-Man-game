@@ -54,5 +54,6 @@ private:
 	Direction RandomDirection();
 	bool isSelectedDirectionMovable(const Direction& direction);
 	Vector2 Move(const Direction& direction);
+	bool CheckCollisionWithaDoor(const Sprite& rectangle) const;
 };
 
