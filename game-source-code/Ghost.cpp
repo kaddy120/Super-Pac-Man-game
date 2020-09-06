@@ -1,12 +1,15 @@
 #include "Ghost.h"
 #include <iostream>
+#include "Door.h"
 
 GhostAbstract::GhostAbstract(
-	std::vector<CircleSprite> turningTiles,
-	std::vector<Sprite> walls,
+	const std::vector<CircleSprite>& turningTiles,
+	const std::vector<Sprite>& walls,
+	const std::vector<std::shared_ptr<Door>>& doors,
 	const float& radius, 
 	const Vector2& initPosition): CircleSprite(radius, initPosition)
 {
+	Doors = doors;
 	TurningTiles = turningTiles;
 	Walls = walls;
 	StartTime = std::chrono::steady_clock::now();
@@ -55,14 +58,13 @@ void GhostAbstract::ScaredMovement()
 
 void GhostAbstract::ChaseTargetMovement()
 {
-	/////////////////////////////////////////////
 	//if(isSelectedDirectionMovable(CurrentDirection))
 	SetPosition(Move(CurrentDirection));
 	auto isInside_turningTile = Collision::CheckCollision(*this, TurningTiles);
 	if (isInside_turningTile && count_>=30)
 	{
 		SetPosition(Move(CurrentDirection));
-		//SetPosition(Move(CurrentDirection));
+		SetPosition(Move(CurrentDirection));
 		ChaseTarget();
 		count_ = 0;
 	}
@@ -153,13 +155,16 @@ void GhostAbstract::ChaseTarget()
 	}
 	if (TryLeftRight || abs(GetPosition().Y - Target.Y) < 30)
 	{
+		
 		if (GetPosition().X < Target.X)
 		{
 			if (isSelectedDirectionMovable(Right))
 			{
 				CurrentDirection = Right;
 				TryLeftRight = false;
+				return;
 			}
+			TryLeftRight = true;
 		}
 		else
 		{
@@ -167,8 +172,10 @@ void GhostAbstract::ChaseTarget()
 			{
 				CurrentDirection = Left;
 				TryLeftRight = false;
+				return;
 
 			}
+			TryLeftRight = true;
 		}
 	}
 	if (TryLeftRight)
@@ -197,7 +204,7 @@ Direction GhostAbstract::RandomDirection()
 
 bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 {
-	Sprite tempSprite(20, 20, Vector2(0,0));
+	Sprite tempSprite(30, 30, Vector2(0,0));
 	auto displace_test = 35.f;
 	auto isMovable = true;
 	auto temp = this->GetPosition();
@@ -234,32 +241,34 @@ bool GhostAbstract::isSelectedDirectionMovable(const Direction& direction)
 void GhostAbstract::SetChaseMode()
 {
 	auto Now = std::chrono::steady_clock::now();
-	auto elapsed_seconds = Now - StartTime;
-	unsigned int duration = 0;
-	if (elapsed_seconds.count() < duration+7)
+	std::chrono::duration<float> elapsed_seconds = Now - StartTime;
+	auto duration = 7;
+	auto elapsed_second = elapsed_seconds.count();
+	if (elapsed_second < 7)
 	{
 		Mode_ = Mode::Scatter;
 	}
-	else if (elapsed_seconds.count() < duration+20)
+	else if (elapsed_second < 27)
 	{
 		Mode_ = Mode::Chase;
 	}
-	else if (elapsed_seconds.count() < duration+7)
+	else if (elapsed_second < 34)
 	{
 		Mode_ = Mode::Scatter;
 	}
-	else if (elapsed_seconds.count() < duration+20)
+	else if (elapsed_second < 54)
 	{
 		Mode_ = Mode::Chase;
 	}
-	else if (elapsed_seconds.count() < duration+5)
+	else if (elapsed_second < 59)
 	{
 		Mode_ = Mode::Scatter;
 	}
-	else if (elapsed_seconds.count() < duration+20)
+	else if (elapsed_second < 79)
 	{
 		Mode_ = Mode::Chase;
-	}else if (elapsed_seconds.count()< duration+5)
+
+	}else if (elapsed_second < 84)
 	{
 		Mode_ = Mode::Scatter;
 	}

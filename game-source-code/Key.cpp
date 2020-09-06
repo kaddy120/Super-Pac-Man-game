@@ -4,14 +4,14 @@ Key::Key() {
 	KeyId = GenerateUniqueID();
 }
 
-Key::Key(const float& width, const float& height, const Vector2& postion) : Sprite(width, height, postion) {
+Key::Key(const float& radius, const Vector2& position) : CircleSprite(radius, position) {
 	KeyId = GenerateUniqueID();
 }
 
 //copy constructor
-Key::Key(const Key& key) {
-	KeyId = key.GetKeyId();
-}
+//Key::Key(const Key& key) {
+//	KeyId = key.GetKeyId();
+//}
 
 bool Key::operator ==(const Key& otherkey) const {
 	return KeyId ==otherkey.GetKeyId();
@@ -19,7 +19,7 @@ bool Key::operator ==(const Key& otherkey) const {
 
 std::string Key::GetKeyId() const { return KeyId; }
 
-void Key::SetKeyDimensions(const float& width, const float& height, const Vector2& postion)
+void Key::SetKeyDimensions(const float& radius, const Vector2& postion)
 {
 
 }
@@ -31,7 +31,7 @@ std::string Key::GenerateUniqueID() {
 	std::string KeyId = "";
 	for (int i = 0; i < 10; i++)
 	{
-		auto index = rand() % 43 + 1;
+		auto index = rand() % 43;
 		KeyId += UniqueChar[index];
 	}
 	return KeyId;

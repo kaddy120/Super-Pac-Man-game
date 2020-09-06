@@ -9,16 +9,16 @@ public:
 	Door();
 	Door(const float& width, const float& height, const Vector2& postion);
 
-	Door(const Door& door);
-
 	Key GetKey() const { return key;}
-
-	bool Unlock(const Key& key_);
+	void AssignKey(const Key& key);
+	bool HasKey() const;
+	bool Unlock(const Key& key);
 	bool IsDoorLocked() const;
 
 private:
 	Key key;
 	bool Unlocked = false;
+	bool hasKey = false;
 		
 };
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "Collision.h"
 #include "fruit.h"
 #include "Door.h"
 #include "Sprite.h"
@@ -17,14 +18,18 @@ public:
 	GameMap();
 	vector<Sprite> GetWalls() const;
 	vector<CircleSprite> GetTurningPoinints() const;
+	vector<std::shared_ptr<Door>> GetDoors() const;
+	vector<Key> GetKeys() const;
 
 private:
-	void Map();
 	vector<std::vector<std::string> > Maize;
 	vector<Sprite> Walls;
-	vector<Door> Door;
-	vector<Fruit> Fruite;
+	vector<std::shared_ptr<Door>> Doors;
+	vector<Fruit> Fruites;
 	vector<Key> Keys;
 	vector<CircleSprite> TurningPoints;
+	void Map();
+	void AssignKeyToDoor();
+
 };
 

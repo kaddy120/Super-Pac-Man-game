@@ -3,19 +3,20 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h> 
 #include <string>
+#include "CircleSprite.h"
 
-class Key: public Sprite
+class Key: public CircleSprite
 {
 public:
 	Key();
-	Key(const float& width, const float& height, const Vector2& postion);
+	Key(const float& radius, const Vector2& postion);
 
-	void SetKeyDimensions(const float& width, const float& height, const Vector2& postion);
+	void SetKeyDimensions(const float& radius, const Vector2& postion);
 
 	//i don't really want to copy a key but i want two doors to share a key.
-	Key(const Key& key);
+	//Key(const Key& key);
 	
-	bool operator ==(const Key& ) const;
+	bool operator ==(const Key& other) const;
 	std::string GetKeyId() const;
 
 private:

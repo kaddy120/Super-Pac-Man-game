@@ -5,15 +5,15 @@ GameMap::GameMap()
 	//[25][23]
 	Maize = {
 	{ "o","h","o","h","o","h","o","h","o","h","o","h", "o","h","o","h","o","h","o","h","o","h","o" },
-	{ "v","k","o","t","o","t","o","n","o","n","o","t", "o","n","o","n","o","t","o","t","o","k","v" },
+	{ "v","k","o","t","o","t","o","n","o","n","o","t", "o","n","o","n","o","k","o","t","o","k","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","d", "o","h","o","h","o","n","o","d","o","n","o" },
 	{ "v","n","v","p","v","n","D","f","o","f","o","f", "o","f","o","f","D","n","v","p","v","n","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","h", "o","h","o","h","o","n","o","d","o","n","o" },
-	{ "v","t","o","t","o","t","o","t","o","n","o","t", "o","n","o","t","o","t","o","k","o","t","v" },
+	{ "v","t","o","k","o","t","o","t","o","n","o","t", "o","n","o","t","o","t","o","k","o","t","v" },
 	{ "o","n","o","d","o","h","o","n","o","h","o","d", "o","h","o","n","o","h","o","d","o","n","o" },
-	{ "v","n","v","f","o","f","v","n","v","n","o","n", "o","n","v","n","v","f","o","f","v","n","v" },
+	{ "v","n","v","f","o","f","v","n","v","t","o","n", "o","t","v","n","v","f","o","f","v","n","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","n", "o","n","o","n","o","n","o","d","o","n","o" },
-	{ "v","k","o","t","v","f","v","n","v","n","o","n", "o","n","v","n","v","f","v","t","o","k","v" },
+	{ "v","k","o","t","v","f","v","n","v","t","o","t", "o","t","v","n","v","f","v","t","o","k","v" },
 	{ "o","h","o","n","o","n","o","n","o","h","o","h", "o","h","o","n","o","n","o","n","o","h","o" },
 	{ "D","f","o","t","o","f","D","t","o","n","o","t", "o","n","o","t","D","f","D","t","D","f","D" },
 	{ "o","h","o","n","o","h","o","n","o","h","o","n", "o","h","o","n","o","h","o","n","o","h","o" },
@@ -22,17 +22,24 @@ GameMap::GameMap()
 	{ "o","n","o","d","o","n","o","d","o","h","o","n", "o","h","o","d","o","t","o","d","o","n","o" },
 	{ "v","n","v","f","v","n","v","P","o","f","o","t", "D","f","o","P","v","n","v","f","v","n","v" },
 	{ "o","n","o","n","o","n","o","d","o","h","o","n", "o","h","o","n","o","n","o","n","o","n","o" },
-	{ "v","n","v","f","v","n","v","f","v","n","o","k", "o","t","v","f","v","n","v","f","v","n","v" },
+	{ "v","n","v","f","v","n","v","f","v","t","o","k", "o","t","v","f","v","n","v","f","v","n","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","h", "o","n","o","n","o","n","o","d","o","n","o" },
-	{ "v","t","o","t","o","t","v","f","v","n","v","f", "v","n","v","f","v","t","o","t","o","t","v" },
-	{ "o","n","o","d","o","n","o","n","o","n","o","d", "o","n","o","d","o","n","o","d","o","n","o" },
+	{ "v","t","o","t","o","t","v","f","v","n","v","n", "v","n","v","f","v","t","o","t","o","t","v" },
+	{ "o","n","o","d","o","n","o","n","o","n","o","h", "o","n","o","d","o","n","o","d","o","n","o" },
 	{ "v","n","v","p","v","k","o","t","o","t","o","t", "o","t","o","t","o","k","v","p","v","n","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","d", "o","h","o","h","o","n","o","d","o","n","o" },
-	{ "v","k","o","n","o","t","D","f","o","f","o","f", "o","f","o","f","D","t","o","t","o","k","v" },
+	{ "v","k","o","t","o","t","D","f","o","f","o","f", "o","f","o","f","D","t","o","t","o","k","v" },
 	{ "o","h","o","h","o","h","o","h","o","h","o","h", "o","h","o","h","o","h","o","h","o","h","o" }
 	};
 
 	Map();
+	AssignKeyToDoor();
+	//////
+	//for (auto door : Doors)
+	//{
+	//	std::cout << door.HasKey() << std::endl;
+	//}
+	////
 }
 
 void GameMap::Map()
@@ -81,7 +88,12 @@ void GameMap::Map()
 			}
 			else if (condition == "D")
 			{
-				Walls.push_back(Sprite(width, height, position));
+				Doors.push_back(std::make_shared<Door>(width, height, position));
+			}
+			else if (condition == "d")
+			{
+				Doors.push_back(std::make_shared<Door>(width_, height_, position));
+				position.add(HorizontalIncrement);
 			}
 			else if (condition == "n")
 			{
@@ -96,22 +108,23 @@ void GameMap::Map()
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
 				TurningPoints.push_back(CircleSprite(2.f, tempPosition));
+				Keys.push_back(Key(4.f, tempPosition));
 				position.add(HorizontalIncrement);
 
 			}
 			else if (condition == "t")
 			{
+				//i can refactor most of this code into  a private functions
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				TurningPoints.push_back(CircleSprite(2.f, tempPosition));
-				position.add(HorizontalIncrement);
-			}
-			else if (condition == "d")
-			{
+				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "P")
 			{
+				tempPosition.X = position.X;
+				tempPosition.add(CircleHorizontalIncrement);
+				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "p")
@@ -122,7 +135,42 @@ void GameMap::Map()
 	}
 }
 
-std::vector<Sprite> GameMap::GetWalls() const { return Walls; }
-vector<CircleSprite> GameMap::GetTurningPoinints() const { return TurningPoints; }
+std::vector<Sprite> GameMap::GetWalls() const { 
+	return Walls; 
+}
+vector<CircleSprite> GameMap::GetTurningPoinints() const { 
+	return TurningPoints; 
+}
+vector<std::shared_ptr<Door>> GameMap::GetDoors() const {
+	return Doors; 
+}
+vector<Key> GameMap::GetKeys() const { 
+	return Keys;
+}
+
+void GameMap::AssignKeyToDoor()
+{
+	for (auto key: Keys)
+	{
+		auto count = 0;
+		for (auto i =0 ; i< Doors.size(); i++)
+		{
+			if (count >= 3)
+				break;
+			CircleSprite RangeCircle(120, key.GetPosition());
+			if (Collision::CheckCollision(RangeCircle, *Doors[i]))
+			{
+				if (!Doors[i]->HasKey())
+				{
+					Doors[i]->AssignKey(key);
+					count++;
+				}
+			}
+		}
+	}
+}
+
+
+
 
 

@@ -26,7 +26,8 @@ void Sprite::SetDimensions(const float& width, const float& height){
 }
 
 void Sprite::SetPosition(const Vector2& position_){
-	position = std::make_shared<Vector2>(position_.X, position_.Y);
+	position->X = position_.X;
+	position->Y = position_.Y;
 	Center = *position;
 	Center.add(Vector2((Width / 2), (Height / 2)));
 }

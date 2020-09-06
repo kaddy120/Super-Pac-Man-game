@@ -7,6 +7,7 @@ class CircleSprite
 {
 	//Sprite() {}
 public:
+	CircleSprite();
 	CircleSprite(const float& radius, const Vector2& postion);
 	Vector2 GetPosition() const;
 	std::shared_ptr<Vector2> GetPosition_ptr() const;

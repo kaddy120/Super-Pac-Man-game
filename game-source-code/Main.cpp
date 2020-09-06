@@ -20,12 +20,17 @@ int main()
     GameMap testMap;
     auto walls = testMap.GetWalls();
     auto TurningPoints = testMap.GetTurningPoinints();
+    auto Doors = testMap.GetDoors();
+    auto Keys = testMap.GetKeys();
     PacMan player1(35, 35, Vector2(300, 300));
     PacMan player2(35, 35, Vector2(500, 500));
-    RedGhost redGhost(TurningPoints, walls, 3.f, Vector2(320, 300));
+    RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
     sf::RectangleShape rectangle(sf::Vector2f(60.f, 8.f));
+    sf::RectangleShape door(sf::Vector2f(60.f, 8.f));
+    door.setFillColor(sf::Color(189, 136, 4));
+
     sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
     sf::RectangleShape player2Sprite(sf::Vector2f(35.f, 35.f));
     sf::CircleShape circle_(10.f);
@@ -78,7 +83,7 @@ int main()
         }
         
         redGhost.Movement();
-      /*  if (Up)
+        if (Up)
         {
             temp = player1.GetPosition();
             player1.MoveUp();
@@ -135,7 +140,7 @@ int main()
             }
             if (Unmovable)
                 player1.SetPosition(temp);
-        }*/
+        }
         window->clear(sf::Color::Black);
 
 
@@ -147,10 +152,18 @@ int main()
           rectangle.setPosition(position.X, position.Y);
           window->draw(rectangle);
         }
-        for (auto TurningPoint : TurningPoints)
+        for (auto Door : Doors)
         {
-            auto position = TurningPoint.GetPosition();
-            auto radius = TurningPoint.GetRadius();
+            auto position = Door->GetPosition();
+            auto [width, height] = Door->getDimentions();
+            door.setSize(sf::Vector2f(width, height));
+            door.setPosition(position.X, position.Y);
+            window->draw(door);
+        }
+        for (auto Key : Keys)
+        {
+            auto position = Key.GetPosition();
+            auto radius = Key.GetRadius();
             circle_.setPosition(position.X, position.Y);
            // circle_.setOrigin(position.X, position.Y);
             window->draw(circle_);

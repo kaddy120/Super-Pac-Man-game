@@ -1,5 +1,9 @@
 #include "CircleSprite.h"
 
+CircleSprite::CircleSprite()
+{
+}
+
 CircleSprite::CircleSprite(const float& radius, const Vector2& position): Radius(radius)
 {
 	PositionCenter = std::make_shared<Vector2>(position.X, position.Y);

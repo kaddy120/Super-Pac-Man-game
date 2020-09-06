@@ -1,13 +1,16 @@
 #include "RedGhost.h"
+#include <iostream>
 
 RedGhost::RedGhost(
-	std::vector<CircleSprite> turningTiles,
-	std::vector<Sprite> walls,
+	const std::vector<CircleSprite>& turningTiles,
+	const std::vector<Sprite>& walls,
+	const std::vector<std::shared_ptr<Door>>& Doors,
 	const float& radius,
-	const Vector2& initPosition) : GhostAbstract(turningTiles,walls,radius,initPosition) {}
+	const Vector2& initPosition) : GhostAbstract(turningTiles,walls, Doors, radius,initPosition) {}
 
 void RedGhost::Movement()
 {
+	SetChaseMode();
 	switch (Mode_)
 	{
 	case Mode::Chase:

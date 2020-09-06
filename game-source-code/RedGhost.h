@@ -6,8 +6,9 @@ class RedGhost: public GhostAbstract
 {
 public:
 	RedGhost(
-		std::vector<CircleSprite> turningTiles,
-		std::vector<Sprite> walls,
+		const std::vector<CircleSprite>& turningTiles,
+		const std::vector<Sprite>& walls,
+		const std::vector<std::shared_ptr<Door>>& Doors,
 		const float& radius,
 		const Vector2& initPosition);
 	
