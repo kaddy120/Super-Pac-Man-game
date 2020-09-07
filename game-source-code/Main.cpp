@@ -8,6 +8,7 @@
 #include "PacMan.h"
 #include "Collision.h"
 #include "RedGhost.h"
+#include "SplashScreen.h"
 
 int main()
 {
@@ -50,8 +51,10 @@ int main()
     Vector2 temp;
     Sprite Wall_h(width_, height_, position);
     // end ------------------------
-
     bool Left = false, Right = false, Up = false, Down = false;
+
+    SplashScreen splashScreen(window);
+
     while (window->isOpen())
     {
         sf::Event event;

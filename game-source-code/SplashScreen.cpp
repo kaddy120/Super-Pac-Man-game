@@ -6,21 +6,17 @@ SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
     window->setVerticalSyncEnabled(true);
     // Load the text font
     sf::Font font;
-    font.loadFromFile("resources/sansation.ttf");
-    //if(!font.loadFromFile("resources/sansation.ttf"))
-    //return EXIT_FAILURE;
-    // Initialize the pause message
+    if(!font.loadFromFile("resources/sansation.ttf"));
+    {
+       
+    }
     sf::Text pauseMessage;
     pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(30);
     pauseMessage.setPosition(120.f, 40.f);
     pauseMessage.setFillColor(sf::Color::Red);
-    pauseMessage.setString("Welcome to Duel Invaders!\nPress ENTER to start the game\n\nFor the top player: \n"
-        "Press Left Key to move to the left\nPress Right Key to move to the right\n"
-        "Press down key to shoot\n\n\nFor bottom player : \n"
-        "Press Z Key to move to the left\nPress C Key to move to the right\n"
-        "Press space key to shoot\n\nESC to EXIT");
-
+    pauseMessage.setString("Welcome to Pack-Man Super!\n\nPress ENTER to start the game\n\n\nUse the arrouw Keys to move Pack-Man around \n"
+                            "\n""\n\nESC to EXIT");
 
     while (window->isOpen()) {
         // Handle events
@@ -32,16 +28,12 @@ SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
                 window->close();
                 break;
             }
-                    // Space key pressed: play
-            if ((event.type == sf::Event::Closed) ||
-                ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Enter))) {
-               // GameScreen play;
-                //window.close();
-                break;
+            if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Enter)) {
+                return;
             }
         }
         // Clear the window
-        window->clear(sf::Color(50, 200, 50));
+        window->clear(sf::Color(0, 0, 0));
 
         window->draw(pauseMessage);
 

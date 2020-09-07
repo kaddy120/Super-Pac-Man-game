@@ -7,6 +7,6 @@ class SplashScreen
 public:
 	SplashScreen(std::shared_ptr<sf::RenderWindow>& window);
 private:
-
+	sf::Text pauseMessage;
 };
 
