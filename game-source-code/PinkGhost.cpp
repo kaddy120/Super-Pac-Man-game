@@ -13,7 +13,7 @@ void PinkGhost::Movement()
 	switch (Mode_)
 	{
 	case Mode::Chase:
-		Target = *PacManPostion;
+		SetTarget();
 		ChaseTargetMovement();
 		break;
 	case Mode::Captured:
@@ -32,7 +32,31 @@ void PinkGhost::Movement()
 	}
 }
 
-void RedGhost::SetTarget()
+void PinkGhost::SetTarget()
 {
+	CircleSprite WithinRangeCircle{ 250, GetPosition() };
+	CircleSprite tempCircle{ 1, *PacManPostion };
+	auto pos = GetPosition();
+	if (Collision::CheckCollision(WithinRangeCircle, tempCircle))
+	{
+		Target = *PacManPostion;
+	}
+	else if (RedGhostPositionIsSet)
+	{
+		auto grad = (RedGhostPosition->Y -PacManPostion->Y) / (RedGhostPosition->X - PacManPostion->X);
+		auto X = PacManPostion->X + (PacManPostion->X - RedGhostPosition->X);
+		X = X / 3;
+		auto C = RedGhostPosition->Y - grad * (RedGhostPosition->X);
+		//straight line equation
+		auto Y = grad * X + C;
+		Target = Vector2(Y, X);
+	}
+	else
+		Target = *PacManPostion;
+}
 
+void PinkGhost::SetRedGhostPosition(const std::shared_ptr<Vector2>& position)
+{
+	RedGhostPositionIsSet = true;
+	RedGhostPosition = position;
 }

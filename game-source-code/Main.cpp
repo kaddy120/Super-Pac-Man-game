@@ -9,6 +9,7 @@
 #include "Collision.h"
 #include "RedGhost.h"
 #include "SplashScreen.h"
+#include "PinkGhost.h"
 
 int main()
 {
@@ -40,6 +41,9 @@ int main()
     PacMan player1(32.f, 32.f, Vector2(310, 500));
     PacMan player2(35, 35, Vector2(500, 500));
     RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
+    PinkGhost pinkGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
+    pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
+    pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
     sf::RectangleShape rectangle(sf::Vector2f(60.f, 8.f));
@@ -72,6 +76,7 @@ int main()
 
     while (window->isOpen())
     {
+        window->clear(sf::Color::Black);
         sf::Event event;
         while (window->pollEvent(event)) {
 
@@ -99,6 +104,8 @@ int main()
         }
         
         redGhost.Movement();
+        pinkGhost.Movement();
+        ////pacMan movement/////////////////
         auto temp = player1.GetPosition();
         player1.Movement(PacManCurrentDirection);
         auto Unmovable = false;
@@ -122,6 +129,7 @@ int main()
         }
         if (Unmovable_ || Unmovable)
             player1.SetPosition(temp);
+        //------------------------------------------------------
 
         for (auto it = Keys.begin(); it!=Keys.end(); it++)
         {
@@ -147,8 +155,6 @@ int main()
             }
         }
         
-        window->clear(sf::Color::Black);
-
         auto Score_str = to_string(player1.GetPoints());
 
         Score.setString("Score: "+ Score_str);
@@ -186,8 +192,10 @@ int main()
             window->draw(fruit_);
         }
         player1Sprite.setPosition(player1.GetPosition().X, player1.GetPosition().Y);
-        player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
         window->draw(player1Sprite);
+        player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
+        window->draw(player2Sprite);
+        player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
         window->draw(player2Sprite);
 
         window->display();
