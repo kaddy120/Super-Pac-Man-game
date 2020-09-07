@@ -30,12 +30,41 @@ int main()
     RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
+
+
+    sf::Texture texture;
+
+    if(!texture.loadFromFile("resources/Pacman.png"))
+    {
+        std::cout<<"Fileis not loaded "<<std::endl;
+    }
+
+
+    sf::Sprite player1Sprite;
+    player1Sprite.setTexture(texture);
+    player1Sprite.scale(0.05f,0.05f);
+
+     sf::Texture textureG;
+    if(!textureG.loadFromFile("resources/Ghost.png"))
+    {
+        std::cout<<"Fileis not loaded "<<std::endl;
+    }
+
+
+    sf::Sprite player2Sprite;
+    player2Sprite.setTexture(textureG);
+    player2Sprite.scale(0.05f,0.05f);
+
+
+
     sf::RectangleShape rectangle(sf::Vector2f(60.f, 8.f));
     sf::RectangleShape door(sf::Vector2f(60.f, 8.f));
     door.setFillColor(sf::Color(189, 136, 4));
 
-    sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
-    sf::RectangleShape player2Sprite(sf::Vector2f(35.f, 35.f));
+    //sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
+   // sf::RectangleShape player2Sprite(sf::Vector2f(35.f, 35.f));
+
+
     sf::CircleShape circle_(10.f);
     sf::CircleShape fruit_(10.f);
     circle_.setFillColor(sf::Color(89, 250, 150));
@@ -88,7 +117,7 @@ int main()
                 break;
             }
         }
-        
+
         redGhost.Movement();
         if (Up)
         {
@@ -104,7 +133,7 @@ int main()
             if (Unmovable)
                 player1.SetPosition(temp);
 
-            
+
         }
         if (Down)
         {
