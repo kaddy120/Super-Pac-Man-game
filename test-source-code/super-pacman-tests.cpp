@@ -46,7 +46,7 @@ TEST_CASE("PacMan is moving to the right correctly")
 {
   PacMan PacMan(35, 35, Vector2(300, 300));
   auto PositionBeforeMove = PacMan.GetPosition();
-  auto Speed = 2.f; 
+  auto Speed = 2.f;
   PacMan.SetSpeed(Speed);
   PacMan.Movement(Move::Right);
   CHECK(PositionBeforeMove.add(Vector2(Speed,0)) == PacMan.GetPosition());
@@ -109,7 +109,49 @@ TEST_CASE("Two rectangles closer to each other collide")
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
+
+
+TEST_CASE("Testing if two circles collide ")
+{
+    CircleSprite rectangle1(40, Vector2(0, 0));
+    CircleSprite rectangle2(40, Vector2(10, 10));
+    CHECK(Collision::CheckCollision(rectangle1, rectangle2));
+}
+
+
+
+TEST_CASE("Testing if a circle and a square collide ")
+{
+    Sprite rectangle1(40, 40, Vector2(0, 0));
+    CircleSprite rectangle2(40, Vector2(10, 10));
+    CHECK(Collision::CheckCollision(rectangle2, rectangle1));
+}
+
+
+TEST_CASE("Testing if a circle and a square cannnot collide if they are far apart ")
+{
+    Sprite rectangle1(40, 40, Vector2(0, 0));
+    CircleSprite rectangle2(40, Vector2(50, 50));
+    CHECK_FALSE(Collision::CheckCollision(rectangle2, rectangle1));
+}
+TEST_CASE("Testing if a two circles cannnot collide if they are far apart")
+{
+    CircleSprite rectangle1(40, Vector2(0, 0));
+    CircleSprite rectangle2(40, Vector2(100, 100));
+    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
+}
+TEST_CASE("Two rectangles apart cannot to collide")
+{
+    Sprite rectangle1(40, 40, Vector2(0, 0));
+    Sprite rectangle2(40, 40, Vector2(100, 100));
+    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
+}
+
+
 //-----------Test Key-----------------
+
+
+
 
 //------------Test Door ------------
 
