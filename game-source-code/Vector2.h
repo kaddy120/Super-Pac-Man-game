@@ -10,6 +10,12 @@ public:
 
     Vector2(const Vector2& other) : X(other.X), Y(other.Y){}
 
+    bool operator == (const Vector2& other) const
+    {
+        if (X == other.X && Y == other.Y) return true;
+        return false;
+    }
+
     Vector2& add(const Vector2& other) 
     {
        this->X += other.X;

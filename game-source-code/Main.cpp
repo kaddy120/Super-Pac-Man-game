@@ -69,7 +69,6 @@ int main()
     }
 //------------------------------------------------------------------
 
-
     player2Sprite.setTexture(textureGhost);
     player2Sprite.scale(0.05f,0.05f);
 
@@ -77,20 +76,14 @@ int main()
     {
         std::cout<<"Fileis not loaded "<<std::endl;
     }
-
-
     sf::Sprite fruit_;
     fruit_.setTexture(textureFruit);
     fruit_.scale(0.05f,0.05f);
 //------------------------------------------------------------------
-
-
     if(!texturekeys.loadFromFile("resources/Keys.png"))
     {
         std::cout<<"Fileis not loaded "<<std::endl;
     }
-
-
     sf::Sprite circle_;
     circle_.setTexture(texturekeys);
     circle_.scale(0.018f,0.018f);

@@ -16,6 +16,6 @@ public:
 
 private:
 	//void SetTarget();
-	Vector2 ScatterPosition = Vector2(900, 900.f);
+	Vector2 ScatterPosition = Vector2(600, 900.f);
 };
 
