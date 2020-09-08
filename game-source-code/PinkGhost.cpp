@@ -34,7 +34,7 @@ void PinkGhost::Movement()
 
 void PinkGhost::SetTarget()
 {
-	CircleSprite WithinRangeCircle{ 250, GetPosition() };
+	CircleSprite WithinRangeCircle{ 230, GetPosition() };
 	CircleSprite tempCircle{ 1, *PacManPostion };
 	auto pos = GetPosition();
 	if (Collision::CheckCollision(WithinRangeCircle, tempCircle))
@@ -44,8 +44,7 @@ void PinkGhost::SetTarget()
 	else if (RedGhostPositionIsSet)
 	{
 		auto grad = (RedGhostPosition->Y -PacManPostion->Y) / (RedGhostPosition->X - PacManPostion->X);
-		auto X = PacManPostion->X + (PacManPostion->X - RedGhostPosition->X);
-		X = X / 3;
+		auto X = PacManPostion->X + (PacManPostion->X - RedGhostPosition->X)/3;
 		auto C = RedGhostPosition->Y - grad * (RedGhostPosition->X);
 		//straight line equation
 		auto Y = grad * X + C;

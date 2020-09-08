@@ -19,6 +19,7 @@ private:
 	void SetTarget();
 	bool RedGhostPositionIsSet = false;
 	std::shared_ptr<const Vector2> RedGhostPosition;
+	//this need refactoring;
 	Vector2 ScatterPosition = Vector2(0.f, 0.f);
 
 	
