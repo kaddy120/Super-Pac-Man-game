@@ -2,6 +2,12 @@
 #include "Vector2.h"
 
 
+Sprite::Sprite()
+{
+	position = std::make_shared<Vector2>(0, 0);
+	Center = *position;
+}
+
 Sprite::Sprite(const float& width, const float& height, const Vector2& position_): Width(width), Height(height)
 {
 	position = std::make_shared<Vector2>(position_.X, position_.Y);
