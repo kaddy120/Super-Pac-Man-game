@@ -2,6 +2,7 @@
 
 CircleSprite::CircleSprite()
 {
+	PositionCenter = std::make_shared<Vector2>(0,0);
 }
 
 CircleSprite::CircleSprite(const float& radius, const Vector2& position): Radius(radius)
@@ -28,5 +29,6 @@ void CircleSprite::SetRadius(const float& radius)
 }
 void CircleSprite::SetPosition(const Vector2& position)
 {
-	PositionCenter = std::make_shared<Vector2>(position.X, position.Y);
+	PositionCenter->X = position.X;
+	PositionCenter->Y = position.Y;
 }
