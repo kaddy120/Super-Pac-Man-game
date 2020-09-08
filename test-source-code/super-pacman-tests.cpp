@@ -2,6 +2,8 @@
 #include "../game-source-code/CircleSprite.h"
 #include "../game-source-code/PacMan.h"
 #include "../game-source-code/Sprite.h"
+#include "../game-source-code/Key.h"
+#include "../game-source-code/Door.h"
 
 #include <vector>
 
@@ -99,24 +101,13 @@ TEST_CASE("position of the PacMan can be tracked using shared pointer as it chan
     CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
 }
 
-//TEST_CASE("Check if player moves left")
-//{
-//
-//	auto currentXPosition = pacplayer_.getPosition().X;
-//	pacplayer_.moveLeft();
-//	CHECK((current-1) == pacplayer_.getPosition().X);
-//}
-//
-//TEST_CASE("Check if player moves up")
-//{
-//	auto current = pacplayer_.getPosition().Y;
-//	pacplayer_.moveUp();
-//	CHECK((current-1) == playerObj.getPosition().Y);
-//}
-//
-//TEST_CASE("Check if player moves Down")
-//{
-//	auto current = playerObj.getPosition().Y;
-//	playerObj.moveDown();
-//	CHECK((current+1) == playerObj.getPosition().Y);
-//}
+//------------Test Collision ---------
+TEST_CASE("")
+{
+
+}
+
+//-----------Test Key-----------------
+
+//------------Test Door ------------
+

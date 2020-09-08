@@ -12,8 +12,6 @@ public:
 	Key(const float& radius, const Vector2& postion);
 
 	void SetKeyDimensions(const float& radius, const Vector2& postion);
-
-	//Key(const Key& key);
 	
 	bool operator ==(const Key& other) const;
 	std::string GetKeyId() const;
