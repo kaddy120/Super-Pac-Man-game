@@ -8,6 +8,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
+//------------Testing Vector2 --------------------------
 TEST_CASE("check that vector2 is initialized correctly")
 {
     Vector2 Vector(4.f, 8.6f);
@@ -29,6 +30,7 @@ TEST_CASE("check that vector with differet coordinates are not equal")
     CHECK_FALSE(Vector1 == Vector2);
 }
 
+//------------------Testing PacMan --------------------------------------
 
 TEST_CASE("Check that PacMan positio is initialised correctly")
 {
@@ -41,48 +43,60 @@ TEST_CASE("Check that PacMan positio is initialised correctly")
 TEST_CASE("PacMan is moving to the right correctly")
 {
   PacMan PacMan(35, 35, Vector2(300, 300));
-  auto CurrentPosition = PacMan.GetPosition();
-  auto Speed = 2.f;
+  auto PositionBeforeMove = PacMan.GetPosition();
+  auto Speed = 2.f; 
   PacMan.SetSpeed(Speed);
-  //CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
+  PacMan.Movement(Move::Right);
+  CHECK(PositionBeforeMove.add(Vector2(Speed,0)) == PacMan.GetPosition());
 }
 
 TEST_CASE("PacMan is moving to the Right correctly")
 {
     PacMan PacMan(35, 35, Vector2(300, 300));
-    auto CurrentPosition = PacMan.GetPosition();
+    auto PositionBeforeMove = PacMan.GetPosition();
     auto Speed = 2.f;
     PacMan.SetSpeed(Speed);
-    //CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
+    PacMan.Movement(Move::Right);
+    CHECK(PositionBeforeMove.add(Vector2(Speed, 0)) == PacMan.GetPosition());
 }
 TEST_CASE("PacMan is moving to the Left correctly")
 {
     PacMan PacMan(35, 35, Vector2(300, 300));
-    auto CurrentPosition = PacMan.GetPosition();
+    auto PositionBeforeMove = PacMan.GetPosition();
     auto Speed = 2.f;
     PacMan.SetSpeed(Speed);
-    //CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
+    PacMan.Movement(Move::Left);
+    CHECK(PositionBeforeMove.subtract(Vector2(Speed, 0)) == PacMan.GetPosition());
 }
-TEST_CASE("PacMan is moving Down  correctly")
+TEST_CASE("PacMan is moving Down correctly")
 {
     PacMan PacMan(35, 35, Vector2(300, 300));
-    auto CurrentPosition = PacMan.GetPosition();
+    auto PositionBeforeMove = PacMan.GetPosition();
     auto Speed = 2.f;
     PacMan.SetSpeed(Speed);
-    //CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
+    PacMan.Movement(Move::Down);
+    CHECK(PositionBeforeMove.add(Vector2(0,Speed)) == PacMan.GetPosition());
 }
 
-TEST_CASE("PacMan is moving to the right correctly")
+TEST_CASE("PacMan is moving Up correctly")
 {
     PacMan PacMan(35, 35, Vector2(300, 300));
-    auto CurrentPosition = PacMan.GetPosition();
+    auto PositionBeforeMove = PacMan.GetPosition();
     auto Speed = 2.f;
     PacMan.SetSpeed(Speed);
-    //CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
+    PacMan.Movement(Move::Up);
+    CHECK(PositionBeforeMove.subtract(Vector2(0, Speed)) == PacMan.GetPosition());
 }
+
 TEST_CASE("position of the PacMan can be tracked using shared pointer as it changes")
 {
-
+    PacMan PacMan(35, 35, Vector2(300, 450));
+    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
+    PacMan.SetPosition(Vector2(40, 60));
+    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
+    PacMan.Movement(Move::Down);
+    PacMan.Movement(Move::Left);
+    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
 }
 
 //TEST_CASE("Check if player moves left")
