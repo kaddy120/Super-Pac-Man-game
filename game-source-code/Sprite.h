@@ -11,7 +11,7 @@
 class Sprite
 {
 public:
-	Sprite() {}
+	Sprite();
 	Sprite(const float& width, const float& height, const Vector2& postion);
 	std::shared_ptr<Vector2> GetPosition_ptr() const;
 	Vector2 GetPosition() const;
