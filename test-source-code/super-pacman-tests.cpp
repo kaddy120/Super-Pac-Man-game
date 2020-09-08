@@ -7,15 +7,14 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-Sprite positionObj;
-PacMan pacplayer_(35.f, 35.f, Vector2(300.f, 300.f));
+PacMan pacplayer_(35, 35, Vector2(300, 300));
+const Sprite positionObj;
 TEST_CASE("Check if player moves right")
 {
-  positionObj.SetPosition(Vector2(300, 300));
-  CHECK(true);
-  //auto currentXPosition=pacplayer_.GetPosition().X;
-  //pacplayer_.Movement(Move::Right);
-  //CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
+  auto positionX=positionObj.SetPosition(Vector2(300, 300));
+  auto currentXPosition=pacplayer_.GetPostion().X;
+  pacplayer_.MoveRight();
+  CHECK((currentXPosition+1) ==pacplayer_.GetPosition().X);
 }
 
 //TEST_CASE("Check if player moves left")
