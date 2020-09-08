@@ -3,10 +3,10 @@
 
 void Application::Start() const
 {
-    sf::RenderWindow Game_Screen(sf::VideoMode(800, 600, 32), 
-        "Duel Invaders", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow Game_Screen(sf::VideoMode(800, 600, 32),
+        "Super Pacman", sf::Style::Titlebar | sf::Style::Close);
 
-    while (Game_Screen.isOpen()) 
+    while (Game_Screen.isOpen())
     {
         sf::Event event;
         while (Game_Screen.pollEvent(event))

@@ -8,14 +8,14 @@ SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
     sf::Font font;
     if(!font.loadFromFile("resources/sansation.ttf"));
     {
-       
+
     }
     sf::Text pauseMessage;
     pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(30);
     pauseMessage.setPosition(120.f, 40.f);
     pauseMessage.setFillColor(sf::Color::Red);
-    pauseMessage.setString("Welcome to Pack-Man Super!\n\nPress ENTER to start the game\n\n\nUse the arrouw Keys to move Pack-Man around \n"
+    pauseMessage.setString("Welcome to Super Pacman!\n\nPress ENTER to start the game\n\n\nUse the arrows Keys to move PacMan around \n"
                             "\n""\n\nESC to EXIT");
 
     while (window->isOpen()) {

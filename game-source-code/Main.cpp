@@ -21,7 +21,7 @@ int main()
 
     sf::Font font;
     if (!font.loadFromFile("resources/sansation.ttf"));
-    { 
+    {
         std::cout << "Failed to load a font" << std::endl;
     }
     sf::Text Score;
@@ -29,7 +29,7 @@ int main()
     Score.setCharacterSize(30);
     Score.setPosition(20.f, 18.f);
     Score.setFillColor(sf::Color::White);
-    
+
     //window->setFramerateLimit(60);
     // test -----------------------
 
@@ -49,17 +49,57 @@ int main()
     yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
+
+    sf::Sprite player2Sprite;
+    sf::Texture texture;
+    sf::Texture textureGhost;
+    sf::Texture textureFruit;
+    sf::Texture texturekeys;
+    if(!texture.loadFromFile("resources/Pacman.png"))
+    {
+        std::cout<<"Fileis not loaded "<<std::endl;
+    }
+
+    sf::Sprite player1Sprite;
+    player1Sprite.setTexture(texture);
+    player1Sprite.scale(0.05f,0.05f);
+    if(!textureGhost.loadFromFile("resources/Ghost.png"))
+    {
+        std::cout<<"Fileis not loaded "<<std::endl;
+    }
+//------------------------------------------------------------------
+
+
+    player2Sprite.setTexture(textureGhost);
+    player2Sprite.scale(0.05f,0.05f);
+
+    if(!textureFruit.loadFromFile("resources/Fruit.png"))
+    {
+        std::cout<<"Fileis not loaded "<<std::endl;
+    }
+
+
+    sf::Sprite fruit_;
+    fruit_.setTexture(textureFruit);
+    fruit_.scale(0.05f,0.05f);
+//------------------------------------------------------------------
+
+
+    if(!texturekeys.loadFromFile("resources/Keys.png"))
+    {
+        std::cout<<"Fileis not loaded "<<std::endl;
+    }
+
+
+    sf::Sprite circle_;
+    circle_.setTexture(texturekeys);
+    circle_.scale(0.018f,0.018f);
+
     sf::RectangleShape rectangle(sf::Vector2f(60.f, 8.f));
     sf::RectangleShape door(sf::Vector2f(60.f, 8.f));
     door.setFillColor(sf::Color(189, 136, 4));
 
-    sf::RectangleShape player1Sprite(sf::Vector2f(35.f, 35.f));
-    player1Sprite.setFillColor(sf::Color(230, 207, 5));
-    sf::RectangleShape player2Sprite(sf::Vector2f(35.f, 35.f));
-    sf::CircleShape circle_(10.f);
-    sf::CircleShape fruit_(10.f);
-    circle_.setFillColor(sf::Color(89, 250, 150));
-    fruit_.setFillColor(sf::Color(193, 237, 36));
+
 
     Vector2 position(0, 0);
     Vector2 VerticalIncremet(80.0f, 0.0f);
@@ -106,8 +146,9 @@ int main()
                 break;
             }
         }
-        
+
         redGhost.Movement();
+
         pinkGhost.Movement();
         yellowGhost.Movement();
         ////pacMan movement/////////////////
@@ -116,6 +157,7 @@ int main()
         auto Unmovable = false;
         auto Unmovable_ = false;
         for (auto wall : walls)
+
         {
             Unmovable = Collision::CheckCollision(player1, wall);
             if (Unmovable)
@@ -159,7 +201,7 @@ int main()
                 break;
             }
         }
-        
+
         auto Score_str = to_string(player1.GetPoints());
 
         Score.setString("Score: "+ Score_str);
@@ -192,7 +234,7 @@ int main()
         for (auto Fruit : Fruits)
         {
             auto position = Fruit.GetPosition();
-            fruit_.setRadius(Fruit.GetRadius());
+           // fruit_.setRadius(Fruit.GetRadius());
             fruit_.setPosition(position.X, position.Y);
             window->draw(fruit_);
         }
