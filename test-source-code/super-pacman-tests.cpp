@@ -102,9 +102,11 @@ TEST_CASE("position of the PacMan can be tracked using shared pointer as it chan
 }
 
 //------------Test Collision ---------
-TEST_CASE("")
+TEST_CASE("Two rectangles closer to each other collide")
 {
-
+    Sprite rectangle1(40, 40, Vector2(0, 0));
+    Sprite rectangle2(40, 40, Vector2(10, 10));
+    CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
 //-----------Test Key-----------------
