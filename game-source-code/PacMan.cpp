@@ -13,6 +13,31 @@ unsigned int PacMan::IncreamentPoints(const unsigned int& points)
 void PacMan::SetState(const State& state_)
 {
 	state = state_;
+	if (state_ == State::Dead)
+	{
+		Lifes--;
+	}
+}
+Vector2 PacMan::Movement(const Move& direction)
+{
+	switch (direction)
+	{
+	case Move::Down:
+		MoveDown();
+		break;
+	case Move::Right:
+		MoveRight();
+		break;
+	case Move::Left:
+		MoveLeft();
+		break;
+	case Move::Up:
+		MoveUp();
+		break;
+	default:
+		break;
+	}
+	return GetPosition();
 }
 unsigned int PacMan::GetLifes() const { return Lifes; }
 
@@ -40,3 +65,4 @@ void PacMan::MoveRight()
 	temp.add(Vector2(Speed, 0));
 	SetPosition(temp);
 }
+
