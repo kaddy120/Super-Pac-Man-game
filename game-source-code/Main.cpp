@@ -108,8 +108,8 @@ int main()
 
     SplashScreen splashScreen(window);
 
-    Move PacManCurrentDirection;
-    PacManCurrentDirection = Move::NotMoving;
+    Direction PacManCurrentDirection;
+    //PacManCurrentDirection = Move::NotMoving;
 
     while (window->isOpen())
     {
@@ -120,17 +120,17 @@ int main()
             switch (event.type) {
             case sf::Event::KeyPressed:
                 if (event.key.code == sf::Keyboard::Right)
-                    PacManCurrentDirection = Move::Right;
+                    PacManCurrentDirection = Direction::Right;
                 //Right = true;
                 else if (event.key.code == sf::Keyboard::Left)
                     //Left = true;
-                    PacManCurrentDirection = Move::Left;
+                    PacManCurrentDirection = Direction::Left;
                 else if (event.key.code == sf::Keyboard::Up)
                     //Up = true;
-                    PacManCurrentDirection = Move::Up;
+                    PacManCurrentDirection = Direction::Up;
                 else if (event.key.code == sf::Keyboard::Down)
                     //Down = true;
-                    PacManCurrentDirection = Move::Down;
+                    PacManCurrentDirection = Direction::Down;
                 break;
             case sf::Event::Closed:
                 window->close();
@@ -146,7 +146,7 @@ int main()
         yellowGhost.Movement();
         ////pacMan movement/////////////////
         auto temp = player1.GetPosition();
-        player1.Movement(PacManCurrentDirection);
+        player1.Move(PacManCurrentDirection);
         auto Unmovable = false;
         auto Unmovable_ = false;
         for (auto wall : walls)

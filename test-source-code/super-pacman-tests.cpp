@@ -4,6 +4,7 @@
 #include "../game-source-code/Sprite.h"
 #include "../game-source-code/Key.h"
 #include "../game-source-code/Door.h"
+#include "../game-source-code/Movables.h"
 
 #include <vector>
 
@@ -109,16 +110,12 @@ TEST_CASE("Two rectangles closer to each other collide")
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
-
-
-TEST_CASE("Testing if two circles collide ")
+TEST_CASE("Testing if two circles collide")
 {
     CircleSprite rectangle1(40, Vector2(0, 0));
     CircleSprite rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
-
-
 
 TEST_CASE("Testing if a circle and a square collide ")
 {
@@ -126,7 +123,6 @@ TEST_CASE("Testing if a circle and a square collide ")
     CircleSprite rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle2, rectangle1));
 }
-
 
 TEST_CASE("Testing if a circle and a square cannnot collide if they are far apart ")
 {
