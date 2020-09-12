@@ -43,7 +43,7 @@ int main()
     PacMan player2(35, 35, Vector2(500, 500));
     RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
     PinkGhost pinkGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
-    YellowGhost yellowGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
+    YellowGhost yellowGhost(TurningPoints, walls, Doors);
     pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
     pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
     yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
@@ -140,10 +140,11 @@ int main()
             }
         }
 
-        redGhost.Movement();
+        redGhost.Move();
+        yellowGhost.Move();
 
-        pinkGhost.Movement();
-        yellowGhost.Movement();
+        /*pinkGhost.Movement();
+        yellowGhost.Movement();*/
         ////pacMan movement/////////////////
         auto temp = player1.GetPosition();
         player1.Move(PacManCurrentDirection);
@@ -235,8 +236,8 @@ int main()
         window->draw(player1Sprite);
         player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
         window->draw(player2Sprite);
-        player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
-        window->draw(player2Sprite);
+       /* player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
+        window->draw(player2Sprite);*/
         player2Sprite.setPosition(yellowGhost.GetPosition().X, yellowGhost.GetPosition().Y);
         window->draw(player2Sprite);
 
