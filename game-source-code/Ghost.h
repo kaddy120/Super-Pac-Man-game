@@ -9,8 +9,7 @@
 #include <chrono> 
 #include "Door.h"
 #include "Movement.h"
-//capture == eaten
-enum Mode { Chase, Frightened, InTheBox, Captured, Scatter };
+
 
 //enum Direction { Up =1, Down, Right, Left };
 //ghost interface

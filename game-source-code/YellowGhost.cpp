@@ -8,21 +8,23 @@ YellowGhost::YellowGhost(
 	const float& radius,
 	const Vector2& initPosition) : AbstractGhost(turningTiles, walls, Doors, radius, initPosition) 
 {
-	//PacManPreviousPosition=*PacManPostion;
 	ScatterPosition = Vector2(900.f, 0.f);
-	PacManPreviousPosition = GetPosition();
+}
+
+void YellowGhost::SetPackManPosition(const std::shared_ptr<Vector2>& position)
+{
+	PacManPosition = position;
+	PacManPreviousPosition = *position;
 }
 
 void YellowGhost::SetTarget()
 {
 	auto Now = std::chrono::steady_clock::now();
-	auto InFrontBy = 225.f;
+	auto InFrontBy = 180.f;
 	std::chrono::duration<float> elapsed_seconds = Now - StartTime;
-	auto pos = *GetPosition_ptr();
-	if (elapsed_seconds.count() > 1.5)
+	auto pos = *PacManPosition;
+	if (elapsed_seconds.count() > 1.2 )
 	{
-		std::cout << PacManPreviousPosition.X - GetPosition().X << std::endl;
-		std::cout << PacManPreviousPosition.Y - GetPosition().Y << std::endl;
 		if ((PacManPreviousPosition.X - GetPosition().X)>45)
 		{
 			//left
@@ -44,7 +46,7 @@ void YellowGhost::SetTarget()
 			pos.add(Vector2(0, InFrontBy));
 		}
 			Navigator.SetTarget(pos);
-			PacManPreviousPosition = *GetPosition_ptr();
+			PacManPreviousPosition = *PacManPosition;
 			StartTime = std::chrono::steady_clock::now();
 	}
 }

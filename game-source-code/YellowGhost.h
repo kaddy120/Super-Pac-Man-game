@@ -11,6 +11,7 @@ public:
 		const std::vector<std::shared_ptr<Door>>& Doors,
 		const float& radius = 15.f,
 		const Vector2& initPosition = Vector2(320, 300));
+	void SetPackManPosition(const std::shared_ptr<Vector2>& position) override;
 
 private:
 	void SetTarget() override;

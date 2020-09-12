@@ -142,16 +142,14 @@ int main()
 
         redGhost.Move();
         yellowGhost.Move();
+        pinkGhost.Move();
 
-        /*pinkGhost.Movement();
-        yellowGhost.Movement();*/
         ////pacMan movement/////////////////
         auto temp = player1.GetPosition();
         player1.Move(PacManCurrentDirection);
         auto Unmovable = false;
         auto Unmovable_ = false;
         for (auto wall : walls)
-
         {
             Unmovable = Collision::CheckCollision(player1, wall);
             if (Unmovable)
@@ -228,7 +226,6 @@ int main()
         for (auto Fruit : Fruits)
         {
             auto position = Fruit.GetPosition();
-           // fruit_.setRadius(Fruit.GetRadius());
             fruit_.setPosition(position.X, position.Y);
             window->draw(fruit_);
         }
@@ -236,8 +233,8 @@ int main()
         window->draw(player1Sprite);
         player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
         window->draw(player2Sprite);
-       /* player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
-        window->draw(player2Sprite);*/
+        player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
+        window->draw(player2Sprite);
         player2Sprite.setPosition(yellowGhost.GetPosition().X, yellowGhost.GetPosition().Y);
         window->draw(player2Sprite);
 

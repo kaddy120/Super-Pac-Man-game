@@ -15,6 +15,7 @@ public:
 		std::vector<Sprite> Walls,
 		std::vector<std::shared_ptr<Door>> Doors,
 	    std::shared_ptr<Vector2> ghostPosition_ptr);
+
     void FindDirectionToTarget();
 	void RandomDirection();
 	//Direction FindDirectionInScaredMode();
