@@ -11,6 +11,7 @@
 #include "SplashScreen.h"
 #include "PinkGhost.h"
 #include "YellowGhost.h"
+#include "BlueGhost.h"
 
 int main()
 {
@@ -44,8 +45,14 @@ int main()
     RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
     PinkGhost pinkGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
     YellowGhost yellowGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
+    BlueGhost blueGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
+
+    blueGhost.SetPackManPosition(player1.GetPosition_ptr());
+    blueGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
+
     pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
     pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
+
     yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
@@ -139,12 +146,13 @@ int main()
                 break;
             }
         }
-
+         blueGhost.Movement();
         redGhost.Movement();
 
         pinkGhost.Movement();
         yellowGhost.Movement();
-        ////pacMan movement/////////////////
+        //pacMan movement/////////////////
+
         auto temp = player1.GetPosition();
         player1.Movement(PacManCurrentDirection);
         auto Unmovable = false;
@@ -238,6 +246,8 @@ int main()
         player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
         window->draw(player2Sprite);
         player2Sprite.setPosition(yellowGhost.GetPosition().X, yellowGhost.GetPosition().Y);
+        window->draw(player2Sprite);
+        player2Sprite.setPosition(blueGhost.GetPosition().X, blueGhost.GetPosition().Y);
         window->draw(player2Sprite);
 
         window->display();
