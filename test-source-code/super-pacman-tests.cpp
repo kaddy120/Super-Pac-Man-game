@@ -18,7 +18,7 @@ TEST_CASE("check that vector2 is initialized correctly")
     CHECK(Vector.Y == 8.6f);
 }
 
-TEST_CASE("check that vector with same coordinates are equal")
+TEST_CASE("check that vector with the same coordinates are equal")
 {
     Vector2 Vector1(4.f, 8.f);
     Vector2 Vector2(4.f, 8.f);
