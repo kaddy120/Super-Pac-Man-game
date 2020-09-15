@@ -9,8 +9,8 @@ public:
 		const std::vector<CircleSprite>& turningTiles,
 		const std::vector<Sprite>& walls,
 		const std::vector<std::shared_ptr<Door>>& Doors,
-		const float& radius,
-		const Vector2& initPosition);
+		const float& radius = 25.f,
+		const Vector2& initPosition = Vector2(320, 300));
 
 	void SetRedGhostPosition(const std::shared_ptr<Vector2>& position);
 

@@ -4,12 +4,9 @@
 class Input
 {
 public:
-    Input(std::shared_ptr<sf::RenderWindow>& window_)
-    {
-        //window = window_;
-    }
+    Input();
     void HandleEvent();
 
 private:
-    //std::unique_ptr<Direction>
+
 };

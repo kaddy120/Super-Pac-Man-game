@@ -17,8 +17,9 @@ int main()
     srand(time(NULL));
     Window Game_Screan;
     std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();
+    //should go inside window class
     window->setVerticalSyncEnabled(true);
-
+    //window->setFramerateLimit(60);
     sf::Font font;
     if (!font.loadFromFile("resources/sansation.ttf"));
     {
@@ -41,14 +42,23 @@ int main()
     auto Fruits = testMap.GetFruits();
     PacMan player1(32.f, 32.f, Vector2(310, 500));
     PacMan player2(35, 35, Vector2(500, 500));
-    RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
-    PinkGhost pinkGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
+    RedGhost redGhost(TurningPoints, walls, Doors);
+    PinkGhost pinkGhost(TurningPoints, walls, Doors);
     YellowGhost yellowGhost(TurningPoints, walls, Doors);
     pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
     pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
     yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
+    /*std::unique_ptr<PinkGhost> pinky = std::make_unique<PinkGhost>(TurningPoints, walls, Doors);
+    std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
+    Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
+    Ghosts.push_back(pinky);
+    Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
+    for (auto i = 0; i<Ghosts.size(); i++)
+    {
+        Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
+    }*/
 
     sf::Sprite player2Sprite;
     sf::Texture texture;
