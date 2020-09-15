@@ -1,22 +1,21 @@
 #pragma once
-#include "Ghost.h"
-class YellowGhost: public GhostAbstract
+#include "AbstractGhost.h"
+
+class YellowGhost: public AbstractGhost
 {
 public:
 	YellowGhost(
 		const std::vector<CircleSprite>& turningTiles,
 		const std::vector<Sprite>& walls,
 		const std::vector<std::shared_ptr<Door>>& Doors,
-		const float& radius,
-		const Vector2& initPosition);
+		const float& radius = 15.f,
+		const Vector2& initPosition = Vector2(320, 300));
+	void SetPackManPosition(const std::shared_ptr<Vector2>& position) override;
 
-	virtual void SetPackManPosition(const std::shared_ptr<Vector2>& position) override;
-
-	virtual void Movement() override;
 private:
-	void SetTarget();
+	void SetTarget() override;
 	Vector2 PacManPreviousPosition;
-	std::chrono::steady_clock::time_point StartTime;
-	Vector2 ScatterPosition = Vector2(900.f, 0.f);
+	//std::shared_ptr<Vector2> PacManPostion;  //redPacManPosition
+	std::chrono::steady_clock::time_point StartTime = std::chrono::steady_clock::now();
 };
 

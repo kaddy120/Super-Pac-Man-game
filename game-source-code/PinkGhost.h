@@ -1,8 +1,8 @@
 #pragma once
-#include "Ghost.h"
+#include "AbstractGhost.h"
 
 
-class PinkGhost: public GhostAbstract
+class PinkGhost: public AbstractGhost
 {
 public:
 	PinkGhost(
@@ -12,7 +12,6 @@ public:
 		const float& radius,
 		const Vector2& initPosition);
 
-	virtual void Movement() override;
 	void SetRedGhostPosition(const std::shared_ptr<Vector2>& position);
 
 private:

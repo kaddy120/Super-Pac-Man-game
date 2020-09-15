@@ -11,7 +11,6 @@
 #include "SplashScreen.h"
 #include "PinkGhost.h"
 #include "YellowGhost.h"
-#include "BlueGhost.h"
 
 int main()
 {
@@ -44,15 +43,9 @@ int main()
     PacMan player2(35, 35, Vector2(500, 500));
     RedGhost redGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
     PinkGhost pinkGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
-    YellowGhost yellowGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
-    BlueGhost blueGhost(TurningPoints, walls, Doors, 3.f, Vector2(320, 300));
-
-    blueGhost.SetPackManPosition(player1.GetPosition_ptr());
-    blueGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
-
+    YellowGhost yellowGhost(TurningPoints, walls, Doors);
     pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
     pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
-
     yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
     redGhost.SetPackManPosition(player1.GetPosition_ptr());
 
@@ -115,8 +108,8 @@ int main()
 
     SplashScreen splashScreen(window);
 
-    Move PacManCurrentDirection;
-    PacManCurrentDirection = Move::NotMoving;
+    Direction PacManCurrentDirection;
+    //PacManCurrentDirection = Move::NotMoving;
 
     while (window->isOpen())
     {
@@ -127,17 +120,17 @@ int main()
             switch (event.type) {
             case sf::Event::KeyPressed:
                 if (event.key.code == sf::Keyboard::Right)
-                    PacManCurrentDirection = Move::Right;
+                    PacManCurrentDirection = Direction::Right;
                 //Right = true;
                 else if (event.key.code == sf::Keyboard::Left)
                     //Left = true;
-                    PacManCurrentDirection = Move::Left;
+                    PacManCurrentDirection = Direction::Left;
                 else if (event.key.code == sf::Keyboard::Up)
                     //Up = true;
-                    PacManCurrentDirection = Move::Up;
+                    PacManCurrentDirection = Direction::Up;
                 else if (event.key.code == sf::Keyboard::Down)
                     //Down = true;
-                    PacManCurrentDirection = Move::Down;
+                    PacManCurrentDirection = Direction::Down;
                 break;
             case sf::Event::Closed:
                 window->close();
@@ -146,19 +139,17 @@ int main()
                 break;
             }
         }
-         blueGhost.Movement();
-        redGhost.Movement();
 
-        pinkGhost.Movement();
-        yellowGhost.Movement();
-        //pacMan movement/////////////////
+        redGhost.Move();
+        yellowGhost.Move();
+        pinkGhost.Move();
 
+        ////pacMan movement/////////////////
         auto temp = player1.GetPosition();
-        player1.Movement(PacManCurrentDirection);
+        player1.Move(PacManCurrentDirection);
         auto Unmovable = false;
         auto Unmovable_ = false;
         for (auto wall : walls)
-
         {
             Unmovable = Collision::CheckCollision(player1, wall);
             if (Unmovable)
@@ -235,7 +226,6 @@ int main()
         for (auto Fruit : Fruits)
         {
             auto position = Fruit.GetPosition();
-           // fruit_.setRadius(Fruit.GetRadius());
             fruit_.setPosition(position.X, position.Y);
             window->draw(fruit_);
         }
@@ -246,8 +236,6 @@ int main()
         player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
         window->draw(player2Sprite);
         player2Sprite.setPosition(yellowGhost.GetPosition().X, yellowGhost.GetPosition().Y);
-        window->draw(player2Sprite);
-        player2Sprite.setPosition(blueGhost.GetPosition().X, blueGhost.GetPosition().Y);
         window->draw(player2Sprite);
 
         window->display();

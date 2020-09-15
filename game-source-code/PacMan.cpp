@@ -1,9 +1,10 @@
 #include "PacMan.h"
 
-PacMan::PacMan(const float& width, const float& height, const Vector2& postion): Sprite(width,height, postion)
+PacMan::PacMan(const float& width, const float& height, const Vector2& postion): Sprite(width,height, postion),
+Movement_()
 {}
 
-void PacMan::SetSpeed(const float& speed) {Speed = speed; }
+void PacMan::SetSpeed(const float& speed) {Movement_.SetSpeed(speed); }
 
 unsigned int PacMan::IncreamentPoints(const unsigned int& points)
 {
@@ -18,51 +19,11 @@ void PacMan::SetState(const State& state_)
 		Lifes--;
 	}
 }
-Vector2 PacMan::Movement(const Move& direction)
+Vector2 PacMan::Move(const Direction& direction)
 {
-	switch (direction)
-	{
-	case Move::Down:
-		MoveDown();
-		break;
-	case Move::Right:
-		MoveRight();
-		break;
-	case Move::Left:
-		MoveLeft();
-		break;
-	case Move::Up:
-		MoveUp();
-		break;
-	default:
-		break;
-	}
-	return GetPosition();
+    return Movement_.Move(GetPosition_ptr(),direction);
 }
+
 unsigned int PacMan::GetLifes() const { return Lifes; }
 
-void PacMan::MoveUp()
-{
-	auto temp = GetPosition();
-	temp.subtract(Vector2(0, Speed));
-	SetPosition(temp);
-}
-void PacMan::MoveDown() {
-
-	auto temp = GetPosition();
-	temp.add(Vector2(0, Speed));
-	SetPosition(temp);
-}
-void PacMan::MoveLeft()
-{
-	auto temp = GetPosition();
-	temp.subtract(Vector2(Speed, 0));
-	SetPosition(temp);
-}
-void PacMan::MoveRight()
-{
-	auto temp = GetPosition();
-	temp.add(Vector2(Speed, 0));
-	SetPosition(temp);
-}
 
