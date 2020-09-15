@@ -22,7 +22,7 @@ void AbstractGhost::Move()
 		SetTarget();
 		ChaseTargetMovement();
 		break;
-	case Mode::Captured:
+	case Mode::Eaten:
 		Navigator.SetTarget(DoorPosition);
 		ChaseTargetMovement();
 		break;

@@ -6,9 +6,9 @@ using namespace std;
 class Application
 {
 public:
-	Application()
-	{}
-	void Start() const;
+	Application();
+	void Start();
 private:
+     
 };
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "Ghost.h"
 #include "AbstractGhost.h"
 
 class YellowGhost: public AbstractGhost
