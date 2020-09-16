@@ -61,6 +61,15 @@ void Render::RenderFruits(const std::vector<SpriteModelView>& spriteModelView)
 
 void Render::Initialise()
 {
+    PackManSprite.setScale(sf::Vector2f(50,50));
+    GhostSprite.setScale(sf::Vector2f(50, 50));
+    Fruit.setScale(sf::Vector2f(50, 50));
+
+    font;
+    ScoreText;
+    LevelText;
+    HighestScoreText;
+    GeneralText;
 }
 //void Render::RenderGhosts()
 //{

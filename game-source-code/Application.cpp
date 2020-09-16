@@ -5,14 +5,14 @@ Application::Application():
     yellowGhost(TurningPoints, walls, Doors),
     redGhost(TurningPoints, walls, Doors),
     pinkGhost(TurningPoints, walls, Doors),
-    Render_(window),
-    SplashScreen_(window)
+    Render_(window)
 {
     InitialiseEntities();
 }
     
 void Application::Start()
 {
+    SplashScreen splashScreen(window);
 
     while (window->isOpen())
     {

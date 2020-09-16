@@ -3,40 +3,14 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "Vector2.h"
 #include "SplashScreen.h"
+#include "ModelViews.h"
 
 using std::string;
 using std::vector;
 
 class FaildeToLoadResourceException
 {
-};
-
-class TextModelView
-{
-public:
-    string Level;
-    string Lifes;
-    string HighestScore;
-};
-
-class SpriteModelView
-{
-public:
-    std::string Title;
-    Vector2 Positon;
-    Vector2 Dimention;
-};
-
-class GhostModelView : public SpriteModelView
-{
-
-};
-
-class PacManModelView : public SpriteModelView
-{
-
 };
 
 class Render
@@ -58,16 +32,17 @@ private:
     sf::Texture FruitsTextutre;
     sf::Texture keyTexture;
     sf::Sprite FruitSprite;
+
     sf::Sprite PackManSprite;
     sf::Sprite GhostSprite;
     sf::RectangleShape Wall;
     sf::RectangleShape Door;
-
+    sf::RectangleShape Fruit;
 
     sf::Font font;
-    sf::Text Score;
-    sf::Text Level;
-    sf::Text HighestScore;
+    sf::Text ScoreText;
+    sf::Text LevelText;
+    sf::Text HighestScoreText;
     sf::Text GeneralText;
 
 private:

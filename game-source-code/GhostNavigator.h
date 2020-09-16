@@ -6,7 +6,6 @@
 #include "Movement.h"  ///this is just temporary
 #include "Collision.h"
 
-
 //think of this as real navigator that is navigating game maze
 class GhostNavigator
 {

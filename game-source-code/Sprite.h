@@ -6,8 +6,6 @@
 #include "string"
 #include <memory>
 
-//square shape sprite
-//i'll rename it later
 class Sprite
 {
 public:

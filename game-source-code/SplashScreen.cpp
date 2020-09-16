@@ -3,12 +3,10 @@
 SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
 {
     // Create the window of the application
-    window->setVerticalSyncEnabled(true);
     // Load the text font
     sf::Font font;
     if(!font.loadFromFile("resources/sansation.ttf"));
     {
-
     }
     sf::Text pauseMessage;
     pauseMessage.setFont(font);

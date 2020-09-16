@@ -21,7 +21,6 @@ public:
 	void Start();
 
 private:
-
 	Render Render_;
 	PacMan player1;
 	Direction PacManCurrentDirection;
@@ -30,17 +29,18 @@ private:
 	vector<std::shared_ptr<Door>> Doors;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
-//// i should store all this ghost in one container/////////////
+//========I should store all these ghosts in one container======
 	RedGhost redGhost;
 	PinkGhost pinkGhost;
 	YellowGhost yellowGhost;
 //=============================================================
 	std::shared_ptr<sf::RenderWindow> window;
-	SplashScreen SplashScreen_;
-
-	TextModelView& textModelView;
+	
+	TextModelView textModelView;
 	vector<GhostModelView> ghostModelView;
+	vector<SpriteModelView> StaticEntityModelView;
 	PacManModelView pacManModelVIew;
+	void MapEntitiesToModelView();
 
 private:
 	void Update();
@@ -55,6 +55,9 @@ private:
 	bool IsGameOver();
 	bool MovingToTheNextLevel();
 	void MovablesExitMaize();
+	void MapTextModelView();
+	void MapacManModelView();
+	void MapGhostModelView()
 
 	/// --- this is temporary
 
