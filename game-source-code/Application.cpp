@@ -2,9 +2,6 @@
 
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
     player1(32.f, 32.f, Vector2(310, 500)),
-    yellowGhost(TurningPoints, walls, Doors),
-    redGhost(TurningPoints, walls, Doors),
-    pinkGhost(TurningPoints, walls, Doors),
     window(window_),
     Render_(window_)
 {
@@ -75,10 +72,14 @@ void Application::InitialiseEntities()
     Keys = GameMap.GetKeys();
     Fruits = GameMap.GetFruits();
 
-    pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
-    pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
-    yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
-    redGhost.SetPackManPosition(player1.GetPosition_ptr());
+    
+    Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
+    Ghosts.push_back(std::make_unique<PinkGhost>(TurningPoints, walls, Doors, Ghosts[0]->GetPosition_ptr()));
+    Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
+    for (auto i = 0; i < Ghosts.size(); i++)
+    {
+        Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
+    }
 }
 void Application::CheckGameEnd()
 {
@@ -86,36 +87,11 @@ void Application::CheckGameEnd()
 
 bool Application::IsGameOver()
 {
-    // here i have violated dry prinple
-    if (Collision::CheckCollision(redGhost, player1)) return true;
-    if (Collision::CheckCollision(yellowGhost, player1)) return true;
-    if (Collision::CheckCollision(pinkGhost, player1)) return true;
-    return false;
-}
-
-void Application::InputHandler(const sf::Event& event)
-{
-    switch (event.type) {
-    case sf::Event::KeyPressed:
-        if (event.key.code == sf::Keyboard::Right)
-            PacManCurrentDirection = Direction::Right;
-        //Right = true;
-        else if (event.key.code == sf::Keyboard::Left)
-            //Left = true;
-            PacManCurrentDirection = Direction::Left;
-        else if (event.key.code == sf::Keyboard::Up)
-            //Up = true;
-            PacManCurrentDirection = Direction::Up;
-        else if (event.key.code == sf::Keyboard::Down)
-            //Down = true;
-            PacManCurrentDirection = Direction::Down;
-        break;
-    case sf::Event::Closed:
-        window->close();
-        break;
-    default:
-        break;
+    for (auto i = 0; i < Ghosts.size(); i++)
+    {
+        if(Collision::CheckCollision(*Ghosts[i],player1)) return true;
     }
+    return false;
 }
 
 void Application::EatFruits()
@@ -148,11 +124,13 @@ void Application::OpenDoors()
     }
 }
 
+// if i remove this fucntion i will reduce the line of code by 3 lines
 void Application::MoveGhost()
 {
-    redGhost.Move();
-    yellowGhost.Move();
-    pinkGhost.Move();
+    for (auto i = 0; i < Ghosts.size(); i++)
+    {
+        Ghosts[i]->Move();
+    }
 }
 
 void Application::MovePacMan()
@@ -215,7 +193,13 @@ void Application::MapPacManModelView() {
 
 void Application::MapGhostModelView()
 {
-    //i need to fix ghost first or i'll repeate Myself
+    for (auto i = 0; i < Ghosts.size(); i++)
+    {
+        ghostModelView[i].Positon = Ghosts[i]->GetPosition();
+        ghostModelView[i].Dimention = Ghosts[i]->GetPosition();
+        ghostModelView[i].Mode = Ghosts[i]->GetMode();
+        //ghostModelView[i].Title ;
+    }
 }
 void Application::MapStaticEntitiesModelView()
 {
@@ -238,6 +222,23 @@ void Application::MapStaticEntitiesModelView()
         auto [width, height] = wall.getDimentions();
         model.Dimention = Vector2(width, height);
         model.Positon = wall.GetPosition();
+        StaticEntityModelView.push_back(model);
+    }
+
+    for (auto fruit : Fruits)
+    {
+        model.Title = "Fruit";
+        auto radius = fruit.GetRadius();
+        model.Dimention = Vector2(radius*2, radius*2);
+        model.Positon = fruit.GetPosition();
+        StaticEntityModelView.push_back(model);
+    }
+    for (auto key : Keys)
+    {
+        model.Title = "Key";
+        auto radius = key.GetRadius();
+        model.Dimention = Vector2(radius * 2, radius * 2);
+        model.Positon = key.GetPosition();
         StaticEntityModelView.push_back(model);
     }
 }

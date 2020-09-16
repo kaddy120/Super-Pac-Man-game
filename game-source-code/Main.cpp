@@ -19,6 +19,7 @@ int main()
     auto window = Game_Screan.getWindow();
     Application SuperPacManGame{window};
     SuperPacManGame.Start();
+
 //    Window Game_Screan;
 //    std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();
 //    //should go inside window class
@@ -46,23 +47,21 @@ int main()
 //    auto Fruits = testMap.GetFruits();
 //    PacMan player1(32.f, 32.f, Vector2(310, 500));
 //    PacMan player2(35, 35, Vector2(500, 500));
-//    RedGhost redGhost(TurningPoints, walls, Doors);
-//    PinkGhost pinkGhost(TurningPoints, walls, Doors);
+//   /* RedGhost redGhost(TurningPoints, walls, Doors);
+//    PinkGhost pinkGhost(TurningPoints, walls, Doors,redGhost.GetPosition_ptr());
 //    YellowGhost yellowGhost(TurningPoints, walls, Doors);
 //    pinkGhost.SetPackManPosition(player1.GetPosition_ptr());
-//    pinkGhost.SetRedGhostPosition(redGhost.GetPosition_ptr());
 //    yellowGhost.SetPackManPosition(player1.GetPosition_ptr());
-//    redGhost.SetPackManPosition(player1.GetPosition_ptr());
+//    redGhost.SetPackManPosition(player1.GetPosition_ptr());*/
 //
-//    /*std::unique_ptr<PinkGhost> pinky = std::make_unique<PinkGhost>(TurningPoints, walls, Doors);
 //    std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
 //    Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
-//    Ghosts.push_back(pinky);
+//    Ghosts.push_back(std::make_unique<PinkGhost>(TurningPoints, walls, Doors,Ghosts[0]->GetPosition_ptr()));
 //    Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
 //    for (auto i = 0; i<Ghosts.size(); i++)
 //    {
 //        Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
-//    }*/
+//    }
 //
 //    sf::Sprite player2Sprite;
 //    sf::Texture texture;
@@ -148,9 +147,14 @@ int main()
 //            }
 //        }
 //
-//        redGhost.Move();
+//       /* redGhost.Move();
 //        yellowGhost.Move();
-//        pinkGhost.Move();
+//        pinkGhost.Move();*/
+//
+//        for (auto i = 0; i < Ghosts.size(); i++)
+//        {
+//            Ghosts[i]->Move();
+//        }
 //
 //        ////pacMan movement/////////////////
 //        auto temp = player1.GetPosition();
@@ -239,13 +243,17 @@ int main()
 //        }
 //        player1Sprite.setPosition(player1.GetPosition().X, player1.GetPosition().Y);
 //        window->draw(player1Sprite);
-//        player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
+//        /*player2Sprite.setPosition(redGhost.GetPosition().X, redGhost.GetPosition().Y);
 //        window->draw(player2Sprite);
 //        player2Sprite.setPosition(pinkGhost.GetPosition().X, pinkGhost.GetPosition().Y);
 //        window->draw(player2Sprite);
 //        player2Sprite.setPosition(yellowGhost.GetPosition().X, yellowGhost.GetPosition().Y);
+//        window->draw(player2Sprite);*/
+//        for (auto i = 0; i < Ghosts.size(); i++)
+//        {
+//            player2Sprite.setPosition(Ghosts[i]->GetPosition().X, Ghosts[i]->GetPosition().Y);
 //        window->draw(player2Sprite);
-//
+//        }
 //        window->display();
 //    }
 

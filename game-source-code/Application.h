@@ -29,11 +29,9 @@ private:
 	vector<std::shared_ptr<Door>> Doors;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
-//========I should store all these ghosts in one container======
-	RedGhost redGhost;
-	PinkGhost pinkGhost;
-	YellowGhost yellowGhost;
-//=============================================================
+
+	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
+
 	std::shared_ptr<sf::RenderWindow> window;
 	
 	TextModelView textModelView;

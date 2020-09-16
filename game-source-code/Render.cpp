@@ -17,9 +17,11 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
     {
         if (modelView.Title == "Fruit")
         {
+            RenderRectangleShape(modelView, Fruit);
         }
         else if (modelView.Title == "Key")
         {
+            RenderRectangleShape(modelView, Key);
         }
         else if (modelView.Title == "Door")
         {
@@ -68,12 +70,14 @@ void Render::RenderFruits(const SpriteModelView& spriteModelView)
 
 void Render::Initialise()
 {
-    PackManSprite.setScale(sf::Vector2f(50,50));
+    PackManSprite.setSize(sf::Vector2f(50,50));
     PackManSprite.setTexture(&PacManTexture);
-    GhostSprite.setScale(sf::Vector2f(50, 50));
+    GhostSprite.setSize(sf::Vector2f(50, 50));
     GhostSprite.setTexture(&GhostsTexture);
-    Fruit.setScale(sf::Vector2f(50, 50));
+    Fruit.setSize(sf::Vector2f(50, 50));
     Fruit.setTexture(&FruitsTextutre);
+    Key.setSize(sf::Vector2f(50,30));
+    Key.setTexture(&keyTexture);
     Door.setFillColor(sf::Color(153, 94, 0));
    //set door colour
     font;

@@ -32,13 +32,14 @@ private:
     sf::Texture GhostsTexture;
     sf::Texture FruitsTextutre;
     sf::Texture keyTexture;
-    sf::Sprite FruitSprite;
+    //sf::Sprite FruitSprite;
 
     sf::RectangleShape PackManSprite;
     sf::RectangleShape GhostSprite;
     sf::RectangleShape Wall;
     sf::RectangleShape Door;
     sf::RectangleShape Fruit;
+    sf::RectangleShape Key;
 
     sf::Font font;
     sf::Text ScoreText;

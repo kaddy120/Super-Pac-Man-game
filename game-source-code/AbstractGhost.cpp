@@ -37,6 +37,11 @@ void AbstractGhost::Move()
 		break;
 	}
 }
+Mode AbstractGhost::GetMode() const
+{
+	return Mode_;
+}
+
 void AbstractGhost::UpdateMode(const Mode& mode)
 {
 	if (mode == Mode::Frightened)
