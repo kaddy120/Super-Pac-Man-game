@@ -30,13 +30,17 @@ private:
 	vector<std::shared_ptr<Door>> Doors;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
-	//Input Input;
-	//std::vector<AbstractGhost> Ghosts;
+//// i should store all this ghost in one container/////////////
 	RedGhost redGhost;
 	PinkGhost pinkGhost;
 	YellowGhost yellowGhost;
+//=============================================================
 	std::shared_ptr<sf::RenderWindow> window;
 	SplashScreen SplashScreen_;
+
+	TextModelView& textModelView;
+	vector<GhostModelView> ghostModelView;
+	PacManModelView pacManModelVIew;
 
 private:
 	void Update();

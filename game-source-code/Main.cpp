@@ -107,14 +107,8 @@ int main()
     Vector2 position(0, 0);
     Vector2 VerticalIncremet(80.0f, 0.0f);
     Vector2 HorizontalIncrement(0, 80);
-    float width_ = 80;
-    float height_ = 10;
-    float width = 10;
-    float height = 80;
-    Vector2 temp;
-    Sprite Wall_h(width_, height_, position);
     // end ------------------------
-    //bool Left = false, Right = false, Up = false, Down = false;
+
 
     SplashScreen splashScreen(window);
 
