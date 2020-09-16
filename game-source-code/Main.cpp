@@ -11,6 +11,7 @@
 #include "SplashScreen.h"
 #include "PinkGhost.h"
 #include "YellowGhost.h"
+#include <fstream>
 
 int main()
 {
@@ -29,6 +30,13 @@ int main()
     Score.setCharacterSize(30);
     Score.setPosition(20.f, 18.f);
     Score.setFillColor(sf::Color::White);
+//----------------------------------------------------------
+
+    sf::Text highestScore;
+    highestScore.setFont(font);
+    highestScore.setCharacterSize(30);
+    highestScore.setPosition(550.f, 18.f);
+    highestScore.setFillColor(sf::Color::White);
 
     //window->setFramerateLimit(60);
     // test -----------------------
@@ -142,7 +150,7 @@ int main()
 
         redGhost.Move();
         yellowGhost.Move();
-        pinkGhost.Move();
+        //pinkGhost.Move();
 
         ////pacMan movement/////////////////
         auto temp = player1.GetPosition();
@@ -195,9 +203,21 @@ int main()
         }
 
         auto Score_str = to_string(player1.GetPoints());
+        auto high_score=to_string(player1.GetPoints());
 
         Score.setString("Score: "+ Score_str);
+        //if(Score_str>high_score)
+        {
+
+        high_score=Score_str;
+        highestScore.setString("Highest Score: "+high_score);
+        }
+        window->draw(highestScore);
         window->draw(Score);
+
+
+
+
         for (auto wall : walls)
         {
           auto position = wall.GetPosition();
