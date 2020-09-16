@@ -17,7 +17,7 @@ using std::vector;
 class Application
 {
 public:
-	Application();
+	Application(std::shared_ptr<sf::RenderWindow> window);
 	void Start();
 
 private:
@@ -56,8 +56,9 @@ private:
 	bool MovingToTheNextLevel();
 	void MovablesExitMaize();
 	void MapTextModelView();
-	void MapacManModelView();
-	void MapGhostModelView()
+	void MapPacManModelView();
+	void MapGhostModelView();
+	void MapStaticEntitiesModelView();
 
 	/// --- this is temporary
 

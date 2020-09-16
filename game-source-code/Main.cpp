@@ -15,8 +15,9 @@
 int main()
 {
     srand(time(NULL));
-
-    Application SuperPacManGame{};
+    Window Game_Screan;
+    auto window = Game_Screan.getWindow();
+    Application SuperPacManGame{window};
     SuperPacManGame.Start();
 //    Window Game_Screan;
 //    std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();

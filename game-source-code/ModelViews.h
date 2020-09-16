@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Vector2.h"
+#include "Definitions.h"
 
 using std::string;
 
@@ -10,6 +11,7 @@ public:
     string Level;
     string Lifes;
     string HighestScore;
+    string CurrentScore;
 };
 
 class SpriteModelView
@@ -23,12 +25,11 @@ public:
 class GhostModelView : public SpriteModelView
 {
 public:
-
+    Mode Mode;
 };
 
 class PacManModelView : public SpriteModelView
 {
 public:
-
-
+    Direction Direction;
 };

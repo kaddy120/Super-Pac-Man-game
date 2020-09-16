@@ -1,11 +1,12 @@
 #include "Application.h"
 
-Application::Application(): 
+Application::Application(std::shared_ptr<sf::RenderWindow> window_):
     player1(32.f, 32.f, Vector2(310, 500)),
     yellowGhost(TurningPoints, walls, Doors),
     redGhost(TurningPoints, walls, Doors),
     pinkGhost(TurningPoints, walls, Doors),
-    Render_(window)
+    window(window_),
+    Render_(window_)
 {
     InitialiseEntities();
 }
@@ -19,9 +20,30 @@ void Application::Start()
         window->clear(sf::Color::Black);
         sf::Event event;
         while (window->pollEvent(event)) {
-            InputHandler(event);
+            switch (event.type) {
+            case sf::Event::KeyPressed:
+                if (event.key.code == sf::Keyboard::Right)
+                    PacManCurrentDirection = Direction::Right;
+                //Right = true;
+                else if (event.key.code == sf::Keyboard::Left)
+                    //Left = true;
+                    PacManCurrentDirection = Direction::Left;
+                else if (event.key.code == sf::Keyboard::Up)
+                    //Up = true;
+                    PacManCurrentDirection = Direction::Up;
+                else if (event.key.code == sf::Keyboard::Down)
+                    //Down = true;
+                    PacManCurrentDirection = Direction::Down;
+                break;
+            case sf::Event::Closed:
+                window->close();
+                break;
+            default:
+                break;
+            }
         }
         Update();
+        Render();
     }
 }
 
@@ -34,11 +56,18 @@ void Application::Update()
     //isGameOver();
 }
 
+void Application::Render()
+{
+    MapEntitiesToModelView();
+    //Render_.RenderPacMan(pacManModelVIew);
+    Render_.RenderStaticSprites(StaticEntityModelView);
+    //Render_.RenderText(textModelView);
+    window->display();
+    StaticEntityModelView.clear();
+}
+
 void Application::InitialiseEntities()
 {
-    Window Game_Screan;
-    window = Game_Screan.getWindow();
-
     GameMap GameMap{};
     walls = GameMap.GetWalls();
     TurningPoints = GameMap.GetTurningPoinints();
@@ -53,8 +82,6 @@ void Application::InitialiseEntities()
 }
 void Application::CheckGameEnd()
 {
-   
-
 }
 
 bool Application::IsGameOver()
@@ -157,4 +184,60 @@ void Application::MovePacMan()
 
 void Application::MovablesExitMaize()
 {
+}
+
+bool Application::MovingToTheNextLevel() 
+{
+    return false;
+}
+
+void Application::MapEntitiesToModelView()
+{
+    MapPacManModelView();
+    MapTextModelView();
+    MapStaticEntitiesModelView();
+    MapGhostModelView();   
+}
+
+void Application::MapTextModelView()
+{
+    textModelView.Lifes = to_string(player1.GetLifes());
+    textModelView.HighestScore = "None";
+    textModelView.Level = "1";
+    textModelView.CurrentScore = to_string(player1.GetPoints());
+}
+void Application::MapPacManModelView() {
+    pacManModelVIew.Direction = PacManCurrentDirection;
+    pacManModelVIew.Positon = player1.GetPosition();
+    auto [width, height] = player1.getDimentions();
+    pacManModelVIew.Dimention = Vector2(width, height);
+}
+
+void Application::MapGhostModelView()
+{
+    //i need to fix ghost first or i'll repeate Myself
+}
+void Application::MapStaticEntitiesModelView()
+{
+    SpriteModelView model;
+    for (auto door : Doors)
+    {
+        if (door->IsDoorLocked())
+        {
+            model.Title = "Door";
+            auto [width, height] = door->getDimentions();
+            model.Dimention = Vector2(width, height);
+            model.Positon = door->GetPosition();
+            StaticEntityModelView.push_back(model);
+        }
+    }
+
+    for (auto wall : walls)
+    {
+        model.Title = "Wall";
+        auto [width, height] = wall.getDimentions();
+        model.Dimention = Vector2(width, height);
+        model.Positon = wall.GetPosition();
+        StaticEntityModelView.push_back(model);
+    }
 }

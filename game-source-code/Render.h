@@ -23,6 +23,7 @@ public:
     void RenderPacMan(const PacManModelView& pacManModelVIew);
     void RenderSplashScreen();
     void RenderEndGameScreen();
+    void ClearWindow();
 private:
     
 	std::shared_ptr<sf::RenderWindow> window;
@@ -33,8 +34,8 @@ private:
     sf::Texture keyTexture;
     sf::Sprite FruitSprite;
 
-    sf::Sprite PackManSprite;
-    sf::Sprite GhostSprite;
+    sf::RectangleShape PackManSprite;
+    sf::RectangleShape GhostSprite;
     sf::RectangleShape Wall;
     sf::RectangleShape Door;
     sf::RectangleShape Fruit;
@@ -46,9 +47,10 @@ private:
     sf::Text GeneralText;
 
 private:
-    void RenderDoors(const std::vector<SpriteModelView>& spriteModelView);
-    void RenderKeys(const std::vector<SpriteModelView>& spriteModelView);
-    void RenderFruits(const std::vector<SpriteModelView>& spriteModelView);
+    void RenderRectangleShape(const SpriteModelView& modelView,sf::RectangleShape& rect);
+    void RenderWall(const SpriteModelView& spriteModelView);
+    void RenderKeys(const SpriteModelView& spriteModelView);
+    void RenderFruits(const SpriteModelView& spriteModelView);
     void Initialise();
     //void RenderGhosts(const std::vector<SpriteModelView>& spriteModelView);
     //void RenderPacMan(const std::vector<SpriteModelView>& spriteModelView);

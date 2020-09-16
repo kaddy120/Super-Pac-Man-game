@@ -3,8 +3,7 @@
 #include "Movement.h"
 #include "GhostNavigator.h"
 #include <chrono>
-
-enum class Mode { Chase, Frightened, InTheBox, Eaten, Scatter };
+#include "Definitions.h"
 
 class AbstractGhost: public CircleSprite
 {
