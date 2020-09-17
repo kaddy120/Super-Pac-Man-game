@@ -135,9 +135,3 @@ void Render::ClearWindow()
 {
     window->clear();
 }
-//void Render::RenderGhosts()
-//{
-//}
-//void Render::RenderPacMan()
-//{
-//}

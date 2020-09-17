@@ -27,3 +27,4 @@ Vector2 Movement::Move(std::shared_ptr<Vector2> Position, const Direction& direc
 	}
 	return *Position;
 }
+

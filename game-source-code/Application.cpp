@@ -1,7 +1,8 @@
 #include "Application.h"
 
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
-    player1(32.f, 32.f, Vector2(310, 500)),
+    player1(50.f, 50.f, Vector2(310, 500)),
+    //player1(32.f, 32.f, Vector2(310, 300)),
     window(window_),
     Render_(window_)
 {
@@ -23,17 +24,18 @@ void Application::Start()
             switch (event.type) {
             case sf::Event::KeyPressed:
                 if (event.key.code == sf::Keyboard::Right)
-                    PacManCurrentDirection = Direction::Right;
+                    ProposedDirection = Direction::Right;
                 //Right = true;
                 else if (event.key.code == sf::Keyboard::Left)
                     //Left = true;
-                    PacManCurrentDirection = Direction::Left;
+                    ProposedDirection = Direction::Left;
                 else if (event.key.code == sf::Keyboard::Up)
                     //Up = true;
-                    PacManCurrentDirection = Direction::Up;
+                    ProposedDirection = Direction::Up;
                 else if (event.key.code == sf::Keyboard::Down)
                     //Down = true;
-                    PacManCurrentDirection = Direction::Down;
+                    ProposedDirection = Direction::Down;
+                proposed = true;
                 break;
             case sf::Event::Closed:
                 window->close();
@@ -141,9 +143,17 @@ void Application::MoveGhost()
 void Application::MovePacMan()
 {
     auto temp = player1.GetPosition();
-    player1.Move(PacManCurrentDirection);
     auto Unmovable = false;
     auto Unmovable_ = false;
+    if (proposed)
+    {
+        if (isProsedDirectionMovable())
+        {
+            PacManCurrentDirection = ProposedDirection;
+            proposed = false;
+        }
+    }
+    player1.Move(PacManCurrentDirection);
     for (auto wall : walls)
     {
         Unmovable = Collision::CheckCollision(player1, wall);
@@ -163,6 +173,22 @@ void Application::MovePacMan()
     }
     if (Unmovable_ || Unmovable)
         player1.SetPosition(temp);
+}
+
+bool Application::isProsedDirectionMovable()
+{
+    Sprite Temp(50,50,player1.GetPosition());
+    Movement move_{ 5.f};
+    move_.Move(Temp.GetPosition_ptr(), ProposedDirection);
+    if(Collision::CheckCollision(Temp, walls)) return false;
+    for (auto Door : Doors)
+    {
+        if (Door->IsDoorLocked())
+        {
+            if (Collision::CheckCollision(Temp, *Door)) return false;
+        }
+    }
+    return true;
 }
 
 void Application::MovablesExitMaize()

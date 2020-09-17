@@ -24,6 +24,7 @@ private:
 	Render Render_;
 	PacMan player1;
 	Direction PacManCurrentDirection;
+	Direction ProposedDirection;
 	vector<Sprite> walls;
 	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
@@ -37,6 +38,7 @@ private:
 	PacManModelView pacManModelVIew;
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
+	bool proposed = true;
 
 private:
 	void Update();
@@ -57,6 +59,7 @@ private:
 	void MapPacManModelView();
 	void MapGhostModelView();
 	void MapStaticEntitiesModelView();
+	bool isProsedDirectionMovable();
 
 	/// --- this is temporary
 
