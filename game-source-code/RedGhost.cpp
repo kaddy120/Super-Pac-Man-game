@@ -8,6 +8,7 @@ RedGhost::RedGhost(
 	const float& radius,
 	const Vector2& initPosition) : AbstractGhost(turningTiles,walls, Doors, radius,initPosition) {
 	ScatterPosition = Vector2(600, 900.f);
+	this->Name("RedGhost");
 }
 
 void RedGhost::SetTarget()

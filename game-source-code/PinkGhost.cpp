@@ -10,6 +10,7 @@ PinkGhost::PinkGhost(
 {
 	RedGhostPositionIsSet = true;
 	RedGhostPosition = RedGhostposition;
+	Name("PinkGhost");
 }
 
 

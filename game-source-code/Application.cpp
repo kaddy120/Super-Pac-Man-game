@@ -12,8 +12,11 @@ void Application::Start()
 {
     SplashScreen splashScreen(window);
 
+    sf::Clock clock;
     while (window->isOpen())
     {
+        deltaTime = clock.restart().asSeconds();
+
         window->clear(sf::Color::Black);
         sf::Event event;
         while (window->pollEvent(event)) {
@@ -56,11 +59,13 @@ void Application::Update()
 void Application::Render()
 {
     MapEntitiesToModelView();
-    //Render_.RenderPacMan(pacManModelVIew);
     Render_.RenderStaticSprites(StaticEntityModelView);
+    Render_.RenderPacMan(pacManModelVIew, deltaTime);
+    Render_.RenderGhost(ghostModelView, deltaTime);
     //Render_.RenderText(textModelView);
     window->display();
     StaticEntityModelView.clear();
+    ghostModelView.clear();
 }
 
 void Application::InitialiseEntities()
@@ -199,7 +204,7 @@ void Application::MapGhostModelView()
         tempModel.Positon = Ghosts[i]->GetPosition();
         tempModel.Dimention = Ghosts[i]->GetPosition();
         tempModel.Mode = Ghosts[i]->GetMode();
-        ///ghost title
+        tempModel.Title = Ghosts[i]->Name();
         ghostModelView.push_back(tempModel);
     }
 }

@@ -9,6 +9,7 @@ YellowGhost::YellowGhost(
 	const Vector2& initPosition) : AbstractGhost(turningTiles, walls, Doors, radius, initPosition) 
 {
 	ScatterPosition = Vector2(900.f, 0.f);
+	Name("YellowGhost");
 }
 
 void YellowGhost::SetPackManPosition(const std::shared_ptr<Vector2>& position)

@@ -3,6 +3,7 @@
 class Animation
 {
 public:
+	Animation() {}
 	Animation(sf::Texture* texture, const sf::Vector2u& imageCount, const float& switchTime);
 	void Update(const unsigned int& row, const float& deltaTime);
 	sf::IntRect GetIntRect();

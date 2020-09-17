@@ -36,6 +36,7 @@ private:
 	vector<SpriteModelView> StaticEntityModelView;
 	PacManModelView pacManModelVIew;
 	void MapEntitiesToModelView();
+	float deltaTime = 0.f;
 
 private:
 	void Update();

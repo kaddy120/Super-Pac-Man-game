@@ -5,6 +5,7 @@
 #include <string>
 #include "SplashScreen.h"
 #include "ModelViews.h"
+#include "Animation.h"
 
 using std::string;
 using std::vector;
@@ -19,8 +20,8 @@ public:
 	Render(const std::shared_ptr<sf::RenderWindow>& window);
     void RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView);
     void RenderText(const TextModelView& textModelView);
-    void RenderGhost(const vector<GhostModelView>& ghostModelView);
-    void RenderPacMan(const PacManModelView& pacManModelVIew);
+    void RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTime);
+    void RenderPacMan(const PacManModelView& pacManModelVIew, const float& deltaTime);
     void RenderSplashScreen();
     void RenderEndGameScreen();
     void ClearWindow();
@@ -46,6 +47,10 @@ private:
     sf::Text LevelText;
     sf::Text HighestScoreText;
     sf::Text GeneralText;
+
+    Animation GhostAnimation;
+    Animation PacManAnimation;
+
 
 private:
     void RenderRectangleShape(const SpriteModelView& modelView,sf::RectangleShape& rect);
