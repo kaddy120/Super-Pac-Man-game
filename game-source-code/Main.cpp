@@ -15,8 +15,10 @@
 
 int main()
 {
-
-//    Window Game_Screan;
+      srand(time(0));
+      Window Game_Screan;
+      Application PacManGame(Game_Screan.getWindow());
+      PacManGame.Start();
 //    std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();
 //    //should go inside window class
 //    window->setVerticalSyncEnabled(true);
