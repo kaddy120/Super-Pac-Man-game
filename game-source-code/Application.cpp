@@ -195,10 +195,12 @@ void Application::MapGhostModelView()
 {
     for (auto i = 0; i < Ghosts.size(); i++)
     {
-        ghostModelView[i].Positon = Ghosts[i]->GetPosition();
-        ghostModelView[i].Dimention = Ghosts[i]->GetPosition();
-        ghostModelView[i].Mode = Ghosts[i]->GetMode();
-        //ghostModelView[i].Title ;
+        GhostModelView tempModel;
+        tempModel.Positon = Ghosts[i]->GetPosition();
+        tempModel.Dimention = Ghosts[i]->GetPosition();
+        tempModel.Mode = Ghosts[i]->GetMode();
+        ///ghost title
+        ghostModelView.push_back(tempModel);
     }
 }
 void Application::MapStaticEntitiesModelView()
