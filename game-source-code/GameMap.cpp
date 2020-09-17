@@ -50,10 +50,10 @@ void GameMap::Map()
 	Vector2 HorizontalIncrement(60,0);
 	Vector2 CircleHorizontalIncrement(24.f, 0);
 
-	float width_ = 60;
+	float width_ = 68;
 	float height_ = 8;
 	float width = 8;
-	float height = 60;
+	float height = 68;
 	Sprite Wall_h(width_, height_, position);
 
 	auto tempPosition = position;///////////////////

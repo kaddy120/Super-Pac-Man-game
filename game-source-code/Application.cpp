@@ -178,7 +178,7 @@ void Application::MovePacMan()
 bool Application::isProsedDirectionMovable()
 {
     Sprite Temp(50,50,player1.GetPosition());
-    Movement move_{ 5.f};
+    Movement move_{ 8.f};
     move_.Move(Temp.GetPosition_ptr(), ProposedDirection);
     if(Collision::CheckCollision(Temp, walls)) return false;
     for (auto Door : Doors)
