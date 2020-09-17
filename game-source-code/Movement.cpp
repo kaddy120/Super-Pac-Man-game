@@ -1,4 +1,5 @@
 #include "Movement.h"
+#include "Definitions.h"
 
 Movement::Movement(const float& speed): Speed(speed) {}
 

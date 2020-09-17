@@ -1,8 +1,7 @@
 #pragma once
 #include "Vector2.h"
 #include <memory>
-
-enum Direction { Up = 1, Down, Right, Left };
+#include "Definitions.h"
 
 class Movement
 {

@@ -4,8 +4,13 @@ PinkGhost::PinkGhost(
 	const std::vector<CircleSprite>& turningTiles,
 	const std::vector<Sprite>& walls,
 	const std::vector<std::shared_ptr<Door>>& Doors,
+	const std::shared_ptr<Vector2>& RedGhostposition,
 	const float& radius,
-	const Vector2& initPosition) : AbstractGhost(turningTiles, walls, Doors, radius, initPosition) {}
+	const Vector2& initPosition) : AbstractGhost(turningTiles, walls, Doors, radius, initPosition)
+{
+	RedGhostPositionIsSet = true;
+	RedGhostPosition = RedGhostposition;
+}
 
 
 void PinkGhost::SetTarget()
@@ -30,8 +35,8 @@ void PinkGhost::SetTarget()
 		Navigator.SetTarget(*PacManPosition);
 }
 
-void PinkGhost::SetRedGhostPosition(const std::shared_ptr<Vector2>& position)
-{
-	RedGhostPositionIsSet = true;
-	RedGhostPosition = position;
-}
+//void PinkGhost::SetRedGhostPosition(const std::shared_ptr<Vector2>& position)
+//{
+//	RedGhostPositionIsSet = true;
+//	RedGhostPosition = position;
+//}

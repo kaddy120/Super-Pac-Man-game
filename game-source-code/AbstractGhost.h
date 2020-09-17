@@ -3,8 +3,7 @@
 #include "Movement.h"
 #include "GhostNavigator.h"
 #include <chrono>
-
-enum class Mode { Chase, Frightened, InTheBox, Eaten, Scatter };
+#include "Definitions.h"
 
 class AbstractGhost: public CircleSprite
 {
@@ -20,6 +19,7 @@ public:
 	virtual void SetPackManPosition(const std::shared_ptr<Vector2>& position);
 	virtual void UpdateMode(const Mode& mode);
 	void SetSpeed(const float& speed);
+	Mode GetMode() const;
 
 protected:
 	int count_ = 4;
