@@ -29,11 +29,8 @@ private:
 	vector<std::shared_ptr<Door>> Doors;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
-
 	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
-
 	std::shared_ptr<sf::RenderWindow> window;
-	
 	TextModelView textModelView;
 	vector<GhostModelView> ghostModelView;
 	vector<SpriteModelView> StaticEntityModelView;
@@ -49,10 +46,12 @@ private:
 	void CheckGameEnd();
 	void EatFruits();
 	void OpenDoors();
-	void InputHandler(const sf::Event& event);
+	//void InputHandler(const sf::Event& event);
 	bool IsGameOver();
 	bool MovingToTheNextLevel();
 	void MovablesExitMaize();
+
+    //==All this functions below can be implemented in their own class
 	void MapTextModelView();
 	void MapPacManModelView();
 	void MapGhostModelView();
