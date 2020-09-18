@@ -54,7 +54,7 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
         }
         else if (model.Title =="PinkGhost")
         {
-            GhostAnimation.Update(1, deltaTIme);
+            GhostAnimation.Update(1, 0);
             GhostSprite.setTextureRect(GhostAnimation.GetIntRect());
             auto position = model.Positon;
             GhostSprite.setPosition(sf::Vector2f(position.X, position.Y));
@@ -63,6 +63,11 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
         else if (model.Title == "BlueGhost")
         {
             GhostAnimation.Update(2, 0);
+            GhostSprite.setTextureRect(GhostAnimation.GetIntRect());
+            auto position = model.Positon;
+            GhostSprite.setPosition(sf::Vector2f(position.X, position.Y));
+            window->draw(GhostSprite);
+
         }
         else if (model.Title=="YellowGhost")
         {
@@ -80,7 +85,7 @@ void Render::RenderPacMan(const PacManModelView& pacManModelVIew, const float& d
     PackManSprite.setTextureRect(PacManAnimation.GetIntRect());
     auto position = pacManModelVIew.Positon;
     PackManSprite.setPosition(sf::Vector2f(position.X, position.Y));
-    //PackManSprite.setRotation(90);
+     //PackManSprite.setRotation(90);
     window->draw(PackManSprite);
 }
 void Render::RenderSplashScreen()

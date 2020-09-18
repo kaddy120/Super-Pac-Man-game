@@ -10,6 +10,7 @@
 #include "GameMap.h"
 #include "SplashScreen.h"
 #include "Render.h"
+#include "BlueGhost.h"
 
 using namespace std;
 using std::vector;
@@ -63,6 +64,6 @@ private:
 
 	/// --- this is temporary
 
-     
+
 };
 

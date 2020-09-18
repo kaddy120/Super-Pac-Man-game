@@ -8,7 +8,7 @@ Application::Application(std::shared_ptr<sf::RenderWindow> window_):
 {
     InitialiseEntities();
 }
-    
+
 void Application::Start()
 {
     SplashScreen splashScreen(window);
@@ -79,10 +79,12 @@ void Application::InitialiseEntities()
     Keys = GameMap.GetKeys();
     Fruits = GameMap.GetFruits();
 
-    
+
     Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
     Ghosts.push_back(std::make_unique<PinkGhost>(TurningPoints, walls, Doors, Ghosts[0]->GetPosition_ptr()));
     Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
+    Ghosts.push_back(std::make_unique<BlueGhost>(TurningPoints, walls, Doors));
+
     for (auto i = 0; i < Ghosts.size(); i++)
     {
         Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
@@ -195,7 +197,7 @@ void Application::MovablesExitMaize()
 {
 }
 
-bool Application::MovingToTheNextLevel() 
+bool Application::MovingToTheNextLevel()
 {
     return false;
 }
@@ -205,7 +207,7 @@ void Application::MapEntitiesToModelView()
     MapPacManModelView();
     MapTextModelView();
     MapStaticEntitiesModelView();
-    MapGhostModelView();   
+    MapGhostModelView();
 }
 
 void Application::MapTextModelView()
