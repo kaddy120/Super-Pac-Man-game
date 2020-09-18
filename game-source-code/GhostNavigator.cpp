@@ -25,7 +25,7 @@ void GhostNavigator::FindDirectionToTarget()
 					CurrentDirection = Right;
 					return;
 				}
-				else
+				else if(isSelectedDirectionMovable(Left))
 				{
 					CurrentDirection = Left;
 					return;
@@ -38,7 +38,7 @@ void GhostNavigator::FindDirectionToTarget()
 					CurrentDirection = Left;
 					return;
 				}
-				else
+				else if (isSelectedDirectionMovable(Right))
 				{
 					CurrentDirection = Right;
 					return;
@@ -116,7 +116,7 @@ bool GhostNavigator::isInsideTurningTiles()
 bool GhostNavigator::isSelectedDirectionMovable(const Direction& direction)
 {
 	Sprite tempSprite(30, 30, Vector2(0, 0));
-	auto displace_test = 35.f;
+	auto displace_test = 38.f;
 	auto isMovable = true;
 	auto temp = *GhostPosition_ptr;
 	switch (direction)

@@ -30,7 +30,7 @@ void PinkGhost::SetTarget()
 		auto C = RedGhostPosition->Y - grad * (RedGhostPosition->X);
 		//straight line equation
 		auto Y = grad * X + C;
-		Navigator.SetTarget(Vector2(Y, X));
+		Navigator.SetTarget(Vector2(X, Y));
 	}
 	else
 		Navigator.SetTarget(*PacManPosition);

@@ -33,12 +33,6 @@ GameMap::GameMap()
 
 	Map();
 	AssignKeyToDoor();
-	//////
-	//for (auto door : Doors)
-	//{
-	//	std::cout << door.HasKey() << std::endl;
-	//}
-	////
 }
 
 void GameMap::Map()
