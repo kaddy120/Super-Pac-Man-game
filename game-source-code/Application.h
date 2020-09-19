@@ -40,6 +40,8 @@ private:
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
 	bool proposed = true;
+	//this should be initialised to a level from a file
+	unsigned int Level = 0;
 
 private:
 	void Update();
@@ -52,7 +54,7 @@ private:
 	void OpenDoors();
 	//void InputHandler(const sf::Event& event);
 	bool IsGameOver();
-	bool MovingToTheNextLevel();
+    void MovingToTheNextLevel();
 	void MovablesExitMaize();
 
     //==All this functions below can be implemented in their own class
@@ -61,6 +63,7 @@ private:
 	void MapGhostModelView();
 	void MapStaticEntitiesModelView();
 	bool isProsedDirectionMovable();
+	void CloseGame();
 
 	/// --- this is temporary
 

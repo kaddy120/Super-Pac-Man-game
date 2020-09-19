@@ -6,6 +6,7 @@
 #include "SplashScreen.h"
 #include "ModelViews.h"
 #include "Animation.h"
+#include "GameEndScreen.h"
 
 using std::string;
 using std::vector;
@@ -23,12 +24,13 @@ public:
     void RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTime);
     void RenderPacMan(const PacManModelView& pacManModelVIew, const float& deltaTime);
     void RenderSplashScreen();
-    void RenderEndGameScreen();
+    void RenderGameEndScreen(const unsigned int& Level, const string& textMessage, bool haveWon = true);
     void ClearWindow();
 private:
     
 	std::shared_ptr<sf::RenderWindow> window;
     //SplashScreen SplashScreen_;
+    GameEndScreen GameEndScreen;
     sf::Texture PacManTexture;
     sf::Texture GhostsTexture;
     sf::Texture FruitsTextutre;

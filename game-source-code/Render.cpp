@@ -1,7 +1,8 @@
 #include "Render.h"
 
 Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
-    window(window_)
+    window(window_), 
+    GameEndScreen(window_, GeneralText)
 {
 	//i should load resouces
     if (!PacManTexture.loadFromFile("resources/Pacman.png")) throw FaildeToLoadResourceException{};
@@ -10,6 +11,9 @@ Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
     if (!keyTexture.loadFromFile("resources/Keys.png")) throw FaildeToLoadResourceException{};
     if (!font.loadFromFile("resources/sansation.ttf")) throw FaildeToLoadResourceException{};
     Initialise();
+
+  /*  { window, sf::Text{} };
+    NextLevel.Render(1, "");*/
 }
 
 void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView)
@@ -91,8 +95,9 @@ void Render::RenderPacMan(const PacManModelView& pacManModelVIew, const float& d
 void Render::RenderSplashScreen()
 {
 }
-void Render::RenderEndGameScreen()
+void Render::RenderGameEndScreen(const unsigned int& level, const string& textMessage, bool haveWon)
 {
+    GameEndScreen.Render(level, textMessage);
 }
 
 void Render::RenderRectangleShape(const SpriteModelView& modelView, sf::RectangleShape& rect)

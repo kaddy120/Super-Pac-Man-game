@@ -1,8 +1,8 @@
 #include "Application.h"
+#include "GameEndScreen.h"
 
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
-    player1(50.f, 50.f, Vector2(310, 500)),
-    //player1(32.f, 32.f, Vector2(310, 300)),
+    player1(50.f, 50.f, Vector2(310, 490)),
     window(window_),
     Render_(window_)
 {
@@ -55,6 +55,7 @@ void Application::Update()
     MoveGhost();
     EatFruits();
     OpenDoors();
+    MovingToTheNextLevel();
     //isGameOver();
 }
 
@@ -79,7 +80,12 @@ void Application::InitialiseEntities()
     Keys = GameMap.GetKeys();
     Fruits = GameMap.GetFruits();
 
+    PacManCurrentDirection = static_cast<Direction>(0);
+    ProposedDirection = static_cast<Direction>(0);
+    proposed = true;
+    player1 = PacMan(50.f, 50.f, Vector2(310, 490));
 
+    Ghosts.clear();
     Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
     Ghosts.push_back(std::make_unique<PinkGhost>(TurningPoints, walls, Doors, Ghosts[0]->GetPosition_ptr()));
     Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
@@ -92,6 +98,7 @@ void Application::InitialiseEntities()
 }
 void Application::CheckGameEnd()
 {
+    //alright, i need end game screen which 
 }
 
 bool Application::IsGameOver()
@@ -197,9 +204,21 @@ void Application::MovablesExitMaize()
 {
 }
 
-bool Application::MovingToTheNextLevel()
+void Application::MovingToTheNextLevel()
 {
-    return false;
+    if (Fruits.size() < 28) {
+        Level++;
+        //call end game screen;
+        InitialiseEntities();
+        Render_.RenderGameEndScreen(Level,"");
+    }
+    
+}
+
+void CloseGame()
+{
+    //save score and level to a file
+    //and if score is greater than highest score, update highest score
 }
 
 void Application::MapEntitiesToModelView()
@@ -209,7 +228,7 @@ void Application::MapEntitiesToModelView()
     MapStaticEntitiesModelView();
     MapGhostModelView();
 }
-
+// mapping needs to go to it's own class;
 void Application::MapTextModelView()
 {
     textModelView.Lifes = to_string(player1.GetLifes());
