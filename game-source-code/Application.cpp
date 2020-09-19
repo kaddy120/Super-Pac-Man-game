@@ -2,7 +2,7 @@
 #include "GameEndScreen.h"
 
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
-    player1(50.f, 50.f, Vector2(310, 490)),
+    player1(44.f, 44.f, Vector2(310, 570)),
     window(window_),
     Render_(window_)
 {
@@ -53,10 +53,18 @@ void Application::Update()
 {
     MovePacMan();
     MoveGhost();
+    if (IsGameOver())
+    {
+        player1.SubtractLife();
+        if (player1.GetLifes() == 0)
+        {
+            Level = 0;
+            player1.ResetPoints();
+        }
+    }
     EatFruits();
     OpenDoors();
     MovingToTheNextLevel();
-    //isGameOver();
 }
 
 void Application::Render()
@@ -65,6 +73,10 @@ void Application::Render()
     Render_.RenderStaticSprites(StaticEntityModelView);
     Render_.RenderPacMan(pacManModelVIew, deltaTime);
     Render_.RenderGhost(ghostModelView, deltaTime);
+    if (IsGameOver_)
+    {
+        Render_.RenderGameEndScreen(Level, "", false);
+    }
     //Render_.RenderText(textModelView);
     window->display();
     StaticEntityModelView.clear();
@@ -79,11 +91,12 @@ void Application::InitialiseEntities()
     Doors = GameMap.GetDoors();
     Keys = GameMap.GetKeys();
     Fruits = GameMap.GetFruits();
+    IsGameOver_ = false;
 
     PacManCurrentDirection = static_cast<Direction>(0);
     ProposedDirection = static_cast<Direction>(0);
     proposed = true;
-    player1 = PacMan(50.f, 50.f, Vector2(310, 490));
+    player1 = PacMan(44.f, 44.f, Vector2(310, 570));
 
     Ghosts.clear();
     Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
@@ -105,9 +118,14 @@ bool Application::IsGameOver()
 {
     for (auto i = 0; i < Ghosts.size(); i++)
     {
-        if(Collision::CheckCollision(*Ghosts[i],player1)) return true;
+        if (Collision::CheckCollision(*Ghosts[i], player1))
+        {
+            IsGameOver_ = true;
+            player1;
+            Ghosts[i];
+        }
     }
-    return false;
+    return IsGameOver_;
 }
 
 void Application::EatFruits()
@@ -186,7 +204,7 @@ void Application::MovePacMan()
 
 bool Application::isProsedDirectionMovable()
 {
-    Sprite Temp(50,50,player1.GetPosition());
+    Sprite Temp(44,44,player1.GetPosition());
     Movement move_{ 8.f};
     move_.Move(Temp.GetPosition_ptr(), ProposedDirection);
     if(Collision::CheckCollision(Temp, walls)) return false;

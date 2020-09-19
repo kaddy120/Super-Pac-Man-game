@@ -37,8 +37,7 @@ GameMap::GameMap()
 
 void GameMap::Map()
 {
-
-	Vector2 position(0,0);
+	Vector2 position(0,80);
 	Vector2 VerticalIncremet(0.f,60.f);
 	Vector2 CircleVerticalIncrement(0.f, 24.f);
 	Vector2 HorizontalIncrement(60,0);
@@ -66,11 +65,7 @@ void GameMap::Map()
 		for (auto col=0; col <Maize[row].size(); col++ )
 		{
 			auto condition = Maize[row][col];
-			if (condition == "o")
-			{
-
-			}
-			else if (condition == "h")
+			if (condition == "h")
 			{
 				Walls.push_back(Sprite(width_,height_, position));
 				position.add(HorizontalIncrement);

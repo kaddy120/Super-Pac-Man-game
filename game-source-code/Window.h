@@ -10,10 +10,7 @@ public:
 		"Duel Invaders", sf::Style::Titlebar | sf::Style::Close)) {
 
 		window_->setVerticalSyncEnabled(true);
-
-		/*if (!font.loadFromFile("resources/sansation.ttf"));
-		{
-		}*/
+		window_->setFramerateLimit(60);
 	}
 
 	std::shared_ptr<sf::RenderWindow> getWindow() {	
