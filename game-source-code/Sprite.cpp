@@ -22,8 +22,9 @@ std::shared_ptr<Vector2> Sprite::GetPosition_ptr() const{
 Vector2 Sprite::GetPosition() const {
 	return *position;
 }
-Vector2 Sprite::GetCenter() const {
-	return Center;
+Vector2 Sprite::GetCenter() {
+	Center = *position;
+	return Center.add(Vector2((Width / 2), (Height / 2)));
 }
 
 void Sprite::SetDimensions(const float& width, const float& height){

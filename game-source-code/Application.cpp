@@ -224,7 +224,7 @@ void Application::MovablesExitMaize()
 
 void Application::MovingToTheNextLevel()
 {
-    if (Fruits.size() < 28) {
+    if (Fruits.size() == 0) {
         Level++;
         //call end game screen;
         InitialiseEntities();

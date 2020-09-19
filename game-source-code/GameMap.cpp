@@ -89,8 +89,9 @@ void GameMap::Map()
 			}
 			else if(condition =="f")
 			{
-				tempPosition.X = position.X;
+				tempPosition = position;
 				tempPosition.add(CircleHorizontalIncrement);
+				tempPosition.add(CircleVerticalIncrement);
 				Fruits.push_back(Fruit(15.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
