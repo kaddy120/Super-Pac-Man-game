@@ -13,6 +13,7 @@ public:
 		const Vector2& initPosition = Vector2(320, 300));
 
 private:
+
 	void SetTarget() override;
 };
 
