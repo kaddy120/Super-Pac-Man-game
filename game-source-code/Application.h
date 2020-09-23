@@ -61,7 +61,6 @@ private:
 
     //==All this functions below can be implemented in their own class
 	void MapTextModelView();
-	void MapGhostModelView();
 	void MapStaticEntitiesModelView();
 	bool isProsedDirectionMovable();
 	void CloseGame();
