@@ -2,10 +2,13 @@
 #include <iostream>
 
 Door::Door() {
+	Name("Door");
 }
 
 Door::Door(const float& width, const float& height, const Vector2& postion) : Sprite(width, height, postion)
-{}
+{
+	Name("Door");
+}
 
 void Door::AssignKey(const Key& key_)
 {
