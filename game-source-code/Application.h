@@ -40,7 +40,6 @@ private:
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
 	bool proposed = true;
-	//this should be initialised to a level from a file
 	unsigned int Level = 0;
 	bool IsGameOver_;
 
