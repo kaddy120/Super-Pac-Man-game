@@ -13,8 +13,6 @@ Application::Application(std::shared_ptr<sf::RenderWindow> window_):
 
 void Application::Start()
 {
-
-
     SplashScreen splashScreen(window);
 
     sf::Clock clock;
@@ -77,6 +75,7 @@ void Application::Render()
     Render_.RenderStaticSprites(StaticEntityModelView);
     Render_.RenderPacMan(pacManModelVIew, deltaTime);
     Render_.RenderGhost(ghostModelView, deltaTime);
+    Render_.RenderText(textModelView);
 
     if (IsGameOver_)
     {
