@@ -16,17 +16,13 @@ public:
 	void SetState(const State& state);
 	unsigned int GetLifes() const;
 	Vector2 Move(const Direction& direction);
-
+	void SubtractLife();
+	void ResetPoints() { CollectedPoints = 0; }
 
 private:	
 	unsigned int CollectedPoints=0;
 	unsigned int Lifes = 3;
 	State state=State::Alive;
 	Movement Movement_;
-
-	//void MoveUp();
-	//void MoveDown();
-	//void MoveLeft();
-	//void MoveRight();
 };
 

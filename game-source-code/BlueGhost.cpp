@@ -19,24 +19,23 @@ BlueGhost::BlueGhost(
 }
 void BlueGhost::SetTarget()
 {
-
     auto Xcoord=PacManPosition->X;
     auto Ycoord=PacManPosition->Y;
     auto XcoordGhost= this->GetPosition().X;
     auto YcoordGhost=this->GetPosition().Y;
 
-    auto distance=sqrt(pow(Xcoord - XcoordGhost, 2) +
-                pow(Ycoord - YcoordGhost, 2) * 1.0);
-    distance=abs(distance);
-    std::cout << "Distance" <<distance<< std::endl;
-    if(distance<400)
+    auto distance=pow(Xcoord - XcoordGhost, 2) + pow(Ycoord - YcoordGhost, 2);
+    if (distance < pow(200, 2))
     {
-      Navigator.SetTarget(*PacManPosition);
+        Navigator.SetTarget(*PacManPosition);
     }
-
-
-
-
-      }
+    else
+    {
+        auto x = rand() % 900;
+        auto y = rand() % 900;
+        Navigator.SetTarget(Vector2(x, y));
+    }
+        
+}
 
 

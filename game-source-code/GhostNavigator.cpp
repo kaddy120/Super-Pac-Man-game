@@ -20,12 +20,12 @@ void GhostNavigator::FindDirectionToTarget()
 		{
 			if (GhostPosition_ptr->X < Target.X)
 			{
-				if (isSelectedDirectionMovable(Right))
+				if (isSelectedDirectionMovable(Right) && CurrentDirection != Left)
 				{
 					CurrentDirection = Right;
 					return;
 				}
-				else if(isSelectedDirectionMovable(Left))
+				else if(isSelectedDirectionMovable(Left) && CurrentDirection != Right)
 				{
 					CurrentDirection = Left;
 					return;
@@ -33,12 +33,12 @@ void GhostNavigator::FindDirectionToTarget()
 			}
 			else
 			{
-				if (isSelectedDirectionMovable(Left))
+				if (isSelectedDirectionMovable(Left) && CurrentDirection != Right)
 				{
 					CurrentDirection = Left;
 					return;
 				}
-				else if (isSelectedDirectionMovable(Right))
+				else if (isSelectedDirectionMovable(Right) && CurrentDirection != Left)
 				{
 					CurrentDirection = Right;
 					return;
@@ -70,7 +70,7 @@ void GhostNavigator::FindDirectionToTarget()
 	{
 		if (GhostPosition_ptr->X < Target.X)
 		{
-			if (isSelectedDirectionMovable(Right))
+			if (isSelectedDirectionMovable(Right) && CurrentDirection != Left)
 			{
 				CurrentDirection = Right;
 				TryLeftRight = false;
@@ -80,7 +80,7 @@ void GhostNavigator::FindDirectionToTarget()
 		}
 		else
 		{
-			if (isSelectedDirectionMovable(Left))
+			if (isSelectedDirectionMovable(Left) && CurrentDirection != Right)
 			{
 				CurrentDirection = Left;
 				TryLeftRight = false;

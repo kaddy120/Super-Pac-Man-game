@@ -35,9 +35,3 @@ void PinkGhost::SetTarget()
 	else
 		Navigator.SetTarget(*PacManPosition);
 }
-
-//void PinkGhost::SetRedGhostPosition(const std::shared_ptr<Vector2>& position)
-//{
-//	RedGhostPositionIsSet = true;
-//	RedGhostPosition = position;
-//}

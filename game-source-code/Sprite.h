@@ -13,7 +13,7 @@ public:
 	Sprite(const float& width, const float& height, const Vector2& postion);
 	std::shared_ptr<Vector2> GetPosition_ptr() const;
 	Vector2 GetPosition() const;
-	Vector2 GetCenter() const;
+	Vector2 GetCenter();
 	//return {Heigh, Width}
 	std::tuple<float, float> getDimentions() const;
 	void SetDimensions(const float& width, const float& height);
