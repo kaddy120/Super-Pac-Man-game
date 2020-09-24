@@ -11,6 +11,7 @@
 #include "SplashScreen.h"
 #include "Render.h"
 #include "BlueGhost.h"
+#include "FileReader.h"
 
 using namespace std;
 using std::vector;

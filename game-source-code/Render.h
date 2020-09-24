@@ -26,7 +26,7 @@ public:
     void RenderEndGameScreen();
     void ClearWindow();
 private:
-    
+
 	std::shared_ptr<sf::RenderWindow> window;
     //SplashScreen SplashScreen_;
     sf::Texture PacManTexture;

@@ -1,4 +1,18 @@
 #include "Application.h"
+#include <SFML/Graphics.hpp>
+#include "Window.h"
+#include "Application.h"
+#include "Sprite.h"
+#include "GameMap.h"
+#include <vector>
+#include <tuple>
+#include "PacMan.h"
+#include "Collision.h"
+#include "RedGhost.h"
+#include "SplashScreen.h"
+#include "PinkGhost.h"
+#include "YellowGhost.h"
+#include <fstream>
 
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
     player1(50.f, 50.f, Vector2(310, 500)),
@@ -9,8 +23,11 @@ Application::Application(std::shared_ptr<sf::RenderWindow> window_):
     InitialiseEntities();
 }
 
+
 void Application::Start()
 {
+
+
     SplashScreen splashScreen(window);
 
     sf::Clock clock;
@@ -64,7 +81,7 @@ void Application::Render()
     Render_.RenderStaticSprites(StaticEntityModelView);
     Render_.RenderPacMan(pacManModelVIew, deltaTime);
     Render_.RenderGhost(ghostModelView, deltaTime);
-    //Render_.RenderText(textModelView);
+    Render_.RenderText(textModelView);
     window->display();
     StaticEntityModelView.clear();
     ghostModelView.clear();
@@ -115,6 +132,8 @@ void Application::EatFruits()
         }
     }
 }
+
+
 
 void Application::OpenDoors()
 {
@@ -212,10 +231,26 @@ void Application::MapEntitiesToModelView()
 
 void Application::MapTextModelView()
 {
-    textModelView.Lifes = to_string(player1.GetLifes());
-    textModelView.HighestScore = "None";
+    FileReader filereader_;
+    textModelView.highscore_=filereader_.getHighestScore();//Reqading the prevously saved highest score
+
+
+    textModelView.Lives = to_string(player1.GetLifes());
+    textModelView.HighestScore = to_string(textModelView.highscore_);
     textModelView.Level = "1";
     textModelView.CurrentScore = to_string(player1.GetPoints());
+    textModelView.currentscore=player1.GetPoints();
+
+
+    if(textModelView.currentscore>textModelView.highscore_)//comparing score and highest score
+    {
+        textModelView.HighestScore=to_string(player1.GetPoints());
+        filereader_.setHighestScore(textModelView.currentscore);//Reading into a file the saved highest score
+
+    }
+
+
+
 }
 void Application::MapPacManModelView() {
     pacManModelVIew.Direction = PacManCurrentDirection;
