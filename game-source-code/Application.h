@@ -33,6 +33,7 @@ private:
 	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
 	vector<SuperPallet> SuperPallets;
+	vector<SuperPallet> PowerPallets;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
 	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
@@ -57,6 +58,7 @@ private:
 	void CheckGameEnd();
 	void EatFruits();
 	bool AteSuperPallet();
+	bool AtePowerPallet();
 	void OpenDoors();
 	//void InputHandler(const sf::Event& event);
 	bool IsGameOver();
@@ -68,9 +70,5 @@ private:
 	void MapStaticEntitiesModelView();
 	bool isProsedDirectionMovable();
 	void CloseGame();
-
-	/// --- this is temporary
-
-
 };
 

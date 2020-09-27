@@ -23,6 +23,7 @@ public:
 	vector<Key> GetKeys() const;
 	vector<Fruit> GetFruits() const;
 	vector<SuperPallet> GetSuperPallets() const;
+	vector<SuperPallet> GetPowerPallets() const;
 
 private:
 	vector<std::vector<std::string> > Maize;
@@ -31,7 +32,9 @@ private:
 	vector<Fruit> Fruits;
 	vector<Key> Keys;
 	vector<CircleSprite> TurningPoints;
+	//i think i should rename super pallet to just pallet
 	vector<SuperPallet> SuperPallets;
+	vector<SuperPallet> PowerPallets;
 	void Map();
 	void AssignKeyToDoor();
 
