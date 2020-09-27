@@ -46,6 +46,7 @@ private:
 	bool proposed = true;
 	unsigned int Level = 0;
 	bool IsGameOver_;
+	Clock Clock_;
 
 private:
 	void Update();
