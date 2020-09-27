@@ -13,6 +13,7 @@
 #include "BlueGhost.h"
 #include "MapEntiesToDTO.h"
 #include "FileReader.h"
+#include "Clock.h"
 
 using namespace std;
 using std::vector;
@@ -31,6 +32,7 @@ private:
 	vector<Sprite> walls;
 	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
+	vector<SuperPallet> SuperPallets;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
 	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
@@ -53,6 +55,7 @@ private:
 	void MoveGhost();
 	void CheckGameEnd();
 	void EatFruits();
+	bool AteSuperPallet();
 	void OpenDoors();
 	//void InputHandler(const sf::Event& event);
 	bool IsGameOver();

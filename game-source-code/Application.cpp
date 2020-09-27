@@ -1,7 +1,6 @@
 #include "Application.h"
 #include "GameEndScreen.h"
 
-
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
     player1(44.f, 44.f, Vector2(310, 570)),
     window(window_),
@@ -9,7 +8,6 @@ Application::Application(std::shared_ptr<sf::RenderWindow> window_):
 {
     InitialiseEntities();
 }
-
 
 void Application::Start()
 {
@@ -69,6 +67,10 @@ void Application::Update()
         }
     }
     EatFruits();
+    if (AteSuperPallet())
+    {
+        player1.SetState(State::SuperCharged);
+    }
     OpenDoors();
     MovingToTheNextLevel();
 }
@@ -101,6 +103,7 @@ void Application::InitialiseEntities()
     Doors = GameMap.GetDoors();
     Keys = GameMap.GetKeys();
     Fruits = GameMap.GetFruits();
+    SuperPallets = GameMap.GetSuperPallets();
     IsGameOver_ = false;
 
     PacManCurrentDirection = static_cast<Direction>(0);
@@ -139,6 +142,22 @@ bool Application::IsGameOver()
     return IsGameOver_;
 }
 
+//maybe i should rename this to something more general
+
+bool Application::AteSuperPallet()
+{
+    for (auto it = SuperPallets.begin(); it != SuperPallets.end(); it++)
+    {
+        if (Collision::CheckCollision(*it, player1))
+        {
+            SuperPallets.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+
 void Application::EatFruits()
 {
     for (auto it = Fruits.begin(); it != Fruits.end(); it++)
@@ -151,8 +170,6 @@ void Application::EatFruits()
         }
     }
 }
-
-
 
 void Application::OpenDoors()
 {
@@ -243,7 +260,6 @@ void Application::MovingToTheNextLevel()
         InitialiseEntities();
         Render_.RenderGameEndScreen(Level,"");
     }
-
 }
 
 void CloseGame()
@@ -263,25 +279,14 @@ void Application::MapEntitiesToModelView()
 void Application::MapTextModelView()
 {
     FileReader filereader_;
-    textModelView.highscore_=filereader_.getHighestScore();//Reqading the prevously saved highest score
+    auto hightestScore = filereader_.getHighestScore();
+    MapEntiesToDTO::MapTextModelView(textModelView, player1, hightestScore, (int)Level);
 
-
-    textModelView.Lives = to_string(player1.GetLifes());
-    textModelView.HighestScore = to_string(textModelView.highscore_);
-    textModelView.Level = "1";
-    textModelView.CurrentScore = to_string(player1.GetPoints());
-    textModelView.currentscore=player1.GetPoints();
-
-
-    if(textModelView.currentscore>textModelView.highscore_)//comparing score and highest score
+    if(textModelView.currentscore> hightestScore)
     {
         textModelView.HighestScore=to_string(player1.GetPoints());
-        filereader_.setHighestScore(textModelView.currentscore);//Reading into a file the saved highest score
-
+        filereader_.setHighestScore(textModelView.currentscore);
     }
-
-
-
 }
 
 
@@ -298,4 +303,8 @@ void Application::MapStaticEntitiesModelView()
 
     for (auto key : Keys)
         MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
+    
+    for (auto superPallet : SuperPallets)
+        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
+    
 }

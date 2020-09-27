@@ -12,8 +12,6 @@ class FileReader
         FileReader();
         int getHighestScore();
         void setHighestScore(int gamescore);
-        int getLevel();
-
 
         ~FileReader();
 private:

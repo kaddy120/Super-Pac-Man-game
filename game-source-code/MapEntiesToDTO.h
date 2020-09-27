@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include <vector>
 #include <memory>
+#include <string>
 #include "Definitions.h"
 
 using std::vector;
@@ -14,7 +15,7 @@ using std::vector;
 class MapEntiesToDTO
 {
 public:
-	static void MapTextModelView(TextModelView& modelView, const PacMan& pacMan, const vector<std::string>& fromFile);
+	static void MapTextModelView(TextModelView& modelView, const PacMan& pacMan, const int& highestScore, const unsigned int& level);
 	static void MapPacManModelView(PacManModelView& modelView, const PacMan& pacMan, const Direction& currentDirection);
 	static void MapGhostModelView(vector<GhostModelView>& modelView, const vector<std::unique_ptr<AbstractGhost>>& Ghosts);
 	static void MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const vector<Sprite>& rectSprite );

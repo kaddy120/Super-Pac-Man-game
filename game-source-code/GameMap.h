@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include "CircleSprite.h"
+#include "SuperPallet.h"
 
 //#include <memory>
 using std::vector;
@@ -21,6 +22,7 @@ public:
 	vector<std::shared_ptr<Door>> GetDoors() const;
 	vector<Key> GetKeys() const;
 	vector<Fruit> GetFruits() const;
+	vector<SuperPallet> GetSuperPallets() const;
 
 private:
 	vector<std::vector<std::string> > Maize;
@@ -29,6 +31,7 @@ private:
 	vector<Fruit> Fruits;
 	vector<Key> Keys;
 	vector<CircleSprite> TurningPoints;
+	vector<SuperPallet> SuperPallets;
 	void Map();
 	void AssignKeyToDoor();
 
