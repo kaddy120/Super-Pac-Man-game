@@ -6,7 +6,7 @@ SuperPallet::SuperPallet(
 	const unsigned int& points): CircleSprite(radius, postion), Points_(points)
 {}
 
-unsigned int SuperPallet::Points() const {
+unsigned int SuperPallet::GetPoints() const {
 	return Points_;
 }
 

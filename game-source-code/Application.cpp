@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "GameEndScreen.h"
 
+
 Application::Application(std::shared_ptr<sf::RenderWindow> window_):
     player1(44.f, 44.f, Vector2(310, 570)),
     window(window_),
@@ -8,6 +9,7 @@ Application::Application(std::shared_ptr<sf::RenderWindow> window_):
 {
     InitialiseEntities();
 }
+
 
 void Application::Start()
 {
@@ -53,6 +55,10 @@ void Application::Update()
 {
     MovePacMan();
     MoveGhost();
+    if (IsGameOver_)
+    {
+        InitialiseEntities();
+    }
     if (IsGameOver())
     {
         player1.SubtractLife();
@@ -73,11 +79,15 @@ void Application::Render()
     Render_.RenderStaticSprites(StaticEntityModelView);
     Render_.RenderPacMan(pacManModelVIew, deltaTime);
     Render_.RenderGhost(ghostModelView, deltaTime);
+    Render_.RenderText(textModelView);
+
     if (IsGameOver_)
     {
         Render_.RenderGameEndScreen(Level, "", false);
+        true;
     }
     //Render_.RenderText(textModelView);
+
     window->display();
     StaticEntityModelView.clear();
     ghostModelView.clear();
@@ -109,9 +119,10 @@ void Application::InitialiseEntities()
         Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
     }
 }
+
 void Application::CheckGameEnd()
 {
-    //alright, i need end game screen which 
+    //alright, i need end game screen which
 }
 
 bool Application::IsGameOver()
@@ -140,6 +151,8 @@ void Application::EatFruits()
         }
     }
 }
+
+
 
 void Application::OpenDoors()
 {
@@ -230,7 +243,7 @@ void Application::MovingToTheNextLevel()
         InitialiseEntities();
         Render_.RenderGameEndScreen(Level,"");
     }
-    
+
 }
 
 void CloseGame()
@@ -249,10 +262,26 @@ void Application::MapEntitiesToModelView()
 // mapping needs to go to it's own class;
 void Application::MapTextModelView()
 {
-    textModelView.Lifes = to_string(player1.GetLifes());
-    textModelView.HighestScore = "None";
+    FileReader filereader_;
+    textModelView.highscore_=filereader_.getHighestScore();//Reqading the prevously saved highest score
+
+
+    textModelView.Lives = to_string(player1.GetLifes());
+    textModelView.HighestScore = to_string(textModelView.highscore_);
     textModelView.Level = "1";
     textModelView.CurrentScore = to_string(player1.GetPoints());
+    textModelView.currentscore=player1.GetPoints();
+
+
+    if(textModelView.currentscore>textModelView.highscore_)//comparing score and highest score
+    {
+        textModelView.HighestScore=to_string(player1.GetPoints());
+        filereader_.setHighestScore(textModelView.currentscore);//Reading into a file the saved highest score
+
+    }
+
+
+
 }
 
 

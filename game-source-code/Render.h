@@ -27,7 +27,7 @@ public:
     void RenderGameEndScreen(const unsigned int& Level, const string& textMessage, bool haveWon = true);
     void ClearWindow();
 private:
-    
+
 	std::shared_ptr<sf::RenderWindow> window;
     //SplashScreen SplashScreen_;
     GameEndScreen GameEndScreen;

@@ -11,9 +11,6 @@ Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
     if (!keyTexture.loadFromFile("resources/Keys.png")) throw FaildeToLoadResourceException{};
     if (!font.loadFromFile("resources/sansation.ttf")) throw FaildeToLoadResourceException{};
     Initialise();
-
-  /*  { window, sf::Text{} };
-    NextLevel.Render(1, "");*/
 }
 
 void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView)
@@ -40,6 +37,22 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
 }
 void Render::RenderText(const TextModelView& textModelView)
 {
+    auto score_str=textModelView.CurrentScore;
+    auto highest_str=textModelView.HighestScore;
+
+    HighestScoreText.setFont(font);
+    HighestScoreText.setCharacterSize(25);
+    HighestScoreText.setPosition(0.f, 820.f);
+    HighestScoreText.setFillColor(sf::Color::Red);
+    HighestScoreText.setString("Highest Score: "+ highest_str);
+
+    ScoreText.setFont(font);
+    ScoreText.setCharacterSize(25);
+    ScoreText.setPosition(0.f, 780.f);
+    ScoreText.setFillColor(sf::Color::Red);
+    ScoreText.setString("Current Score : "+ score_str);
+    window->draw(HighestScoreText);
+    window->draw(ScoreText);
 
 }
 
