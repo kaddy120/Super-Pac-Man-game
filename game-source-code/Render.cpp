@@ -1,7 +1,7 @@
 #include "Render.h"
 
 Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
-    window(window_), 
+    window(window_),
     GameEndScreen(window_, GeneralText)
 {
 	//i should load resouces
@@ -53,6 +53,18 @@ void Render::RenderText(const TextModelView& textModelView)
     ScoreText.setString("Current Score : "+ score_str);
     window->draw(HighestScoreText);
     window->draw(ScoreText);
+
+
+    GeneralText.setFont(font);
+    GeneralText.setCharacterSize(25);
+    GeneralText.setPosition(450.f, 780.f);
+    GeneralText.setFillColor(sf::Color::Red);
+    GeneralText.setString("Lives Remaining :"+ score_str);
+    //window->draw(HighestScoreText);
+    window->draw(GeneralText);
+
+
+
 
 }
 
@@ -153,6 +165,7 @@ void Render::Initialise()
     LevelText;
     HighestScoreText;
     GeneralText;
+
 }
 void Render::ClearWindow()
 {
