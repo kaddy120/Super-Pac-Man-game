@@ -57,6 +57,13 @@ void Render::RenderText(const TextModelView& textModelView)
     window->draw(HighestScoreText);
     window->draw(ScoreText);
 
+    ScoreText.setFont(font);
+    ScoreText.setCharacterSize(25);
+    ScoreText.setPosition(450.f, 780.f);
+    ScoreText.setFillColor(sf::Color::Red);
+    ScoreText.setString("Lives Remaining :"+ score_str);
+    window->draw(HighestScoreText);
+    window->draw(ScoreText);
 
 
 
