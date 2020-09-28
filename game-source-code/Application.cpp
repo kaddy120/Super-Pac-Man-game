@@ -262,10 +262,9 @@ void Application::MapTextModelView()
 
     textModelView.Lives = to_string(player1.GetLifes());
     textModelView.HighestScore = to_string(textModelView.highscore_);
-    textModelView.Level = "1";
+
     textModelView.CurrentScore = to_string(player1.GetPoints());
     textModelView.currentscore=player1.GetPoints();
-
 
     if(textModelView.currentscore>textModelView.highscore_)//comparing score and highest score
     {
@@ -274,6 +273,12 @@ void Application::MapTextModelView()
 
     }
 
+//======================================Lives remaining=======================
+
+
+
+
+    textModelView.Level = "1";
 
 
 }
