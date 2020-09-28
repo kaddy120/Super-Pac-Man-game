@@ -341,6 +341,8 @@ void Application::MapStaticEntitiesModelView()
 
     for (auto powerPallet : PowerPallets)
         MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
+
+    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView,GhostsHouseDoor);
 }
 
 void Application::InitialiseEntities()
@@ -349,6 +351,7 @@ void Application::InitialiseEntities()
     walls = GameMap.GetWalls();
     TurningPoints = GameMap.GetTurningPoinints();
     Doors = GameMap.GetDoors();
+    GhostsHouseDoor = GameMap.GhostsHouseDoor();
     Keys = GameMap.GetKeys();
     Fruits = GameMap.GetFruits();
     SuperPallets = GameMap.GetSuperPallets();
