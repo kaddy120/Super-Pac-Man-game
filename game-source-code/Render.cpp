@@ -2,7 +2,7 @@
 
 Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
     window(window_),
-    GameEndScreen(window_, GeneralText)
+   GameEndScreen(window_, GeneralText)
 {
 	//i should load resouces
     if (!PacManTexture.loadFromFile("resources/Pacman.png")) throw FaildeToLoadResourceException{};
