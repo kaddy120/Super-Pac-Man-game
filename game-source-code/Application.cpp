@@ -51,14 +51,21 @@ void Application::Start()
 
 void Application::Update()
 {
-    MovePacMan();
-    MoveGhost();
+    if (proposed)
+     {
+         if (isProsedDirectionMovable(player1, ProposedDirection, walls, Doors))
+         {
+             PacManCurrentDirection = ProposedDirection;
+             proposed = false;
+         }
+     }
+    MovePacMan(player1, PacManCurrentDirection, 5.f);
+    MoveGhost(Ghosts, 5.f);
     if (IsGameOver_)
     {
         InitialiseEntities();
     }
-//rename this function to PacManAndGhostsCollides()
-    if (IsGameOver())
+    if (PacManAndGhostsCollide(player1, Ghosts))
     {
         //GetState() is misspelled
         if (player1.GetSate() != State::charged)
@@ -70,23 +77,16 @@ void Application::Update()
                 player1.ResetPoints();
             }
         }
-        else
-        {
-            for (auto i = 0; i < Ghosts.size(); i++) {
-                Ghosts[i]->UpdateMode(Mode::Eaten);
-            }
-        }
     }
-    EatFruits();
-    if (AteSuperPallet()){
+    EatFruits(player1, Fruits);
+    if (AtePallet(player1,SuperPallets)){
         player1.SetState(State::SuperCharged);
         Clock_.Reset();
     }
     if (player1.GetSate() == State::SuperCharged && Clock_.TimeLapse() > 7) {
         player1.SetState(State::Alive);
     }
-
-    if (AtePowerPallet())
+    if (AtePallet(player1, PowerPallets))
     {
         player1.SetState(State::charged);
         for (auto i = 0; i < Ghosts.size(); i++){
@@ -100,7 +100,7 @@ void Application::Update()
             Ghosts[i]->UpdateMode(Mode::Chase);
         }
     }
-    OpenDoors();
+    OpenDoors(player1, Keys, Doors);
     //this will need to go into its on function to improve code self documentation
     if (player1.GetSate() == State::SuperCharged)
     {
@@ -133,7 +133,6 @@ void Application::Render()
         true;
     }
     //Render_.RenderText(textModelView);
-
     window->display();
     StaticEntityModelView.clear();
     ghostModelView.clear();
@@ -144,43 +143,14 @@ void Application::CheckGameEnd()
     //alright, i need end game screen which
 }
 
-bool Application::IsGameOver()
+bool Application::AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallets)
 {
-    if (player1.GetSate() == State::SuperCharged) return false;
-    for (auto i = 0; i < Ghosts.size(); i++)
+    for (auto it = pallets.begin(); it != pallets.end(); it++)
     {
-        if (Collision::CheckCollision(*Ghosts[i], player1))
+        if (Collision::CheckCollision(*it, pacMan))
         {
-            player1;
-            Ghosts[i];
-            return true;
-        }
-    }
-    return false;
-}
-
-//maybe i should rename this to something more general
-//superPallet and packMan Can be handled by the same function..
-bool Application::AteSuperPallet()
-{
-    for (auto it = SuperPallets.begin(); it != SuperPallets.end(); it++)
-    {
-        if (Collision::CheckCollision(*it, player1))
-        {
-            SuperPallets.erase(it);
-            return true;
-        }
-    }
-    return false;
-}
-//this is temporary
-bool Application::AtePowerPallet()
-{
-    for (auto it = PowerPallets.begin(); it != PowerPallets.end(); it++)
-    {
-        if (Collision::CheckCollision(*it, player1))
-        {
-            PowerPallets.erase(it);
+            pacMan.IncreamentPoints(it->GetPoints());
+            pallets.erase(it);
             return true;
         }
     }
@@ -188,7 +158,7 @@ bool Application::AtePowerPallet()
 }
 
 
-void Application::EatFruits()
+void Application::EatFruits(PacMan& pacMan, std::vector<Fruit>& Fruits)
 {
     for (auto it = Fruits.begin(); it != Fruits.end(); it++)
     {
@@ -201,11 +171,11 @@ void Application::EatFruits()
     }
 }
 
-void Application::OpenDoors()
+void Application::OpenDoors(const PacMan& pacMan, std::vector<Key>& Keys, vector<std::shared_ptr<Door>>& Doors)
 {
     for (auto it = Keys.begin(); it != Keys.end(); it++)
     {
-        if (Collision::CheckCollision(*it, player1))
+        if (Collision::CheckCollision(*it, pacMan))
         {
             for (auto Door : Doors)
             {
@@ -219,7 +189,7 @@ void Application::OpenDoors()
 }
 
 // if i remove this fucntion i will reduce the line of code by 3 lines
-void Application::MoveGhost()
+void Application::MoveGhost(std::vector<std::unique_ptr<AbstractGhost>>& Ghosts, const float& deltaTime)
 {
     for (auto i = 0; i < Ghosts.size(); i++)
     {
@@ -227,32 +197,39 @@ void Application::MoveGhost()
     }
 }
 
-void Application::MovePacMan()
+bool Application::PacManAndGhostsCollide(const PacMan& pacMan, vector<std::unique_ptr<AbstractGhost>>& Ghosts)
 {
-    auto temp = player1.GetPosition();
-    auto Unmovable = false;
-    auto Unmovable_ = false;
-    if (proposed)
+    if (pacMan.GetSate() == State::SuperCharged) return false;
+    for (auto i = 0; i < Ghosts.size(); i++)
     {
-        if (isProsedDirectionMovable())
+        if (Collision::CheckCollision(*Ghosts[i], pacMan))
         {
-            PacManCurrentDirection = ProposedDirection;
-            proposed = false;
+            if (pacMan.GetSate() == State::charged) Ghosts[i]->UpdateMode(Mode::Eaten);
+            return true;
         }
     }
-    player1.Move(PacManCurrentDirection);
+    return false;
+}
+
+void Application::MovePacMan(PacMan& pacMan, const Direction& direction, const float& deltaTime)
+{
+    auto temp = pacMan.GetPosition();
+    auto Unmovable = false;
+    auto Unmovable_ = false;
+
+    pacMan.Move(PacManCurrentDirection);
     for (auto wall : walls)
     {
-        Unmovable = Collision::CheckCollision(player1, wall);
+        Unmovable = Collision::CheckCollision(pacMan, wall);
         if (Unmovable)
             break;
     }
-    if(player1.GetSate()!=State::SuperCharged)
+    if(pacMan.GetSate()!=State::SuperCharged)
     for (auto Door : Doors)
     {
         if (Door->IsDoorLocked())
         {
-            if (Collision::CheckCollision(player1, *Door))
+            if (Collision::CheckCollision(pacMan, *Door))
             {
                 Unmovable = true;
                 break;
@@ -260,14 +237,19 @@ void Application::MovePacMan()
         }
     }
     if (Unmovable_ || Unmovable)
-        player1.SetPosition(temp);
+        pacMan.SetPosition(temp);
 }
 
-bool Application::isProsedDirectionMovable()
+bool Application::isProsedDirectionMovable(
+    const PacMan& pacMan,
+    const Direction& direction,
+    const vector<Sprite>& walls,
+    const vector<std::shared_ptr<Door>>& Doors)
 {
-    Sprite Temp(44,44,player1.GetPosition());
+    auto [width, height] = pacMan.getDimentions();
+    Sprite Temp(width,height, pacMan.GetPosition());
     Movement move_{ 8.f};
-    move_.Move(Temp.GetPosition_ptr(), ProposedDirection);
+    move_.Move(Temp.GetPosition_ptr(), direction);
     if(Collision::CheckCollision(Temp, walls)) return false;
     
     if(player1.GetSate()!= State::SuperCharged)
@@ -308,6 +290,7 @@ void Application::MapEntitiesToModelView()
     MapStaticEntitiesModelView();
     MapEntiesToDTO::MapGhostModelView(ghostModelView, Ghosts);
 }
+
 // mapping needs to go to it's own class;
 void Application::MapTextModelView()
 {
