@@ -51,7 +51,7 @@ void GameLogic::Update()
 {
     if (proposed)
     {
-        if (Logic.isProsedDirectionMovable(pacMan, ProposedDirection, walls, Doors))
+        if (Logic.isProsedDirectionMovable(pacMan, ProposedDirection))
         {
             PacManCurrentDirection = ProposedDirection;
             proposed = false;
