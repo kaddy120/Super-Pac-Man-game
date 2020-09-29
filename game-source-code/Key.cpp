@@ -3,10 +3,12 @@
 
 Key::Key() {
 	KeyId = GenerateUniqueID();
+	Name("Key");
 }
 
 Key::Key(const float& radius, const Vector2& position) : CircleSprite(radius, position) {
 	KeyId = GenerateUniqueID();
+	Name("Key");
 }
 
 bool Key::operator ==(const Key& otherkey) const {

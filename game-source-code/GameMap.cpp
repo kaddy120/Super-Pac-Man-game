@@ -67,12 +67,16 @@ void GameMap::Map()
 			auto condition = Maize[row][col];
 			if (condition == "h")
 			{
-				Walls.push_back(Sprite(width_,height_, position));
+				auto wall = Sprite(width_, height_, position);
+				wall.Name("Wall");
+				Walls.push_back(wall);
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "v")
 			{
-				Walls.push_back(Sprite(width, height, position));
+				auto wall = Sprite(width, height, position);
+				wall.Name("Wall");
+				Walls.push_back(wall);
 			}
 			else if (condition == "D")
 			{

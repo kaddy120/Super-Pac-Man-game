@@ -241,10 +241,10 @@ void CloseGame()
 
 void Application::MapEntitiesToModelView()
 {
-    MapPacManModelView();
+    MapEntiesToDTO::MapPacManModelView(pacManModelVIew, player1, PacManCurrentDirection);
     MapTextModelView();
     MapStaticEntitiesModelView();
-    MapGhostModelView();
+    MapEntiesToDTO::MapGhostModelView(ghostModelView, Ghosts);
 }
 // mapping needs to go to it's own class;
 void Application::MapTextModelView()
@@ -254,63 +254,19 @@ void Application::MapTextModelView()
     textModelView.Level = "1";
     textModelView.CurrentScore = to_string(player1.GetPoints());
 }
-void Application::MapPacManModelView() {
-    pacManModelVIew.Direction = PacManCurrentDirection;
-    pacManModelVIew.Positon = player1.GetPosition();
-    auto [width, height] = player1.getDimentions();
-    pacManModelVIew.Dimention = Vector2(width, height);
-}
 
-void Application::MapGhostModelView()
-{
-    for (auto i = 0; i < Ghosts.size(); i++)
-    {
-        GhostModelView tempModel;
-        tempModel.Positon = Ghosts[i]->GetPosition();
-        tempModel.Dimention = Ghosts[i]->GetPosition();
-        tempModel.Mode = Ghosts[i]->GetMode();
-        tempModel.Title = Ghosts[i]->Name();
-        ghostModelView.push_back(tempModel);
-    }
-}
+
 void Application::MapStaticEntitiesModelView()
 {
-    SpriteModelView model;
     for (auto door : Doors)
-    {
-        if (door->IsDoorLocked())
-        {
-            model.Title = "Door";
-            auto [width, height] = door->getDimentions();
-            model.Dimention = Vector2(width, height);
-            model.Positon = door->GetPosition();
-            StaticEntityModelView.push_back(model);
-        }
-    }
+        if (door->IsDoorLocked()) 
+            MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, *door);
 
-    for (auto wall : walls)
-    {
-        model.Title = "Wall";
-        auto [width, height] = wall.getDimentions();
-        model.Dimention = Vector2(width, height);
-        model.Positon = wall.GetPosition();
-        StaticEntityModelView.push_back(model);
-    }
+    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, walls);
 
-    for (auto fruit : Fruits)
-    {
-        model.Title = "Fruit";
-        auto radius = fruit.GetRadius();
-        model.Dimention = Vector2(radius*2, radius*2);
-        model.Positon = fruit.GetPosition();
-        StaticEntityModelView.push_back(model);
-    }
+    for(auto fruit: Fruits)
+    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView,fruit);
+
     for (auto key : Keys)
-    {
-        model.Title = "Key";
-        auto radius = key.GetRadius();
-        model.Dimention = Vector2(radius * 2, radius * 2);
-        model.Positon = key.GetPosition();
-        StaticEntityModelView.push_back(model);
-    }
+        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
 }
