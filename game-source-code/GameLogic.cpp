@@ -2,7 +2,7 @@
 
 GameLogic::GameLogic(std::shared_ptr<sf::RenderWindow> window): 
     pacMan(44.f, 44.f, Vector2(310, 570)),
-    Render_(window)
+    Render_(window), window(window)
 {
     InitialiseEntities();
 }
@@ -115,6 +115,25 @@ void GameLogic::Update()
         }
     }
     MovingToTheNextLevel();
+}
+
+void GameLogic::RenderEntities()
+{
+    MapEntitiesToModelView();
+    Render_.RenderStaticSprites(StaticEntityModelView);
+    Render_.RenderGhost(ghostModelView, deltaTime);
+    Render_.RenderPacMan(pacManModelVIew, deltaTime);
+    Render_.RenderText(textModelView);
+
+    if (IsGameOver_)
+    {
+        Render_.RenderGameEndScreen(Level, "", false);
+        true;
+    }
+    //Render_.RenderText(textModelView);
+    window->display();
+    StaticEntityModelView.clear();
+    ghostModelView.clear();
 }
 
 void GameLogic::MapEntitiesToModelView()
