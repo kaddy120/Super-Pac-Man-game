@@ -1,9 +1,17 @@
 #include "MapEntiesToDTO.h"
 
-void MapEntiesToDTO::MapTextModelView(TextModelView& modelView, const PacMan& pacMan, const vector<std::string>& fromFile)
+void MapEntiesToDTO::MapTextModelView(
+    TextModelView& modelView,
+    const PacMan& pacMan,
+    const int& highestScore,
+    const unsigned int& level)
 {
-
+    modelView.Lives = std::to_string(pacMan.GetLifes());
+    modelView.HighestScore = std::to_string(highestScore);
+    modelView.Level = std::to_string(level);
+    modelView.CurrentScore = std::to_string(pacMan.GetPoints());
 }
+
 void MapEntiesToDTO::MapPacManModelView(PacManModelView& modelView, const PacMan& pacMan, const Direction& currentDirection)
 {
     modelView.Direction = currentDirection;

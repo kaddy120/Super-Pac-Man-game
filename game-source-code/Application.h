@@ -12,6 +12,8 @@
 #include "Render.h"
 #include "BlueGhost.h"
 #include "MapEntiesToDTO.h"
+#include "FileReader.h"
+#include "Clock.h"
 
 using namespace std;
 using std::vector;
@@ -30,6 +32,7 @@ private:
 	vector<Sprite> walls;
 	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
+	vector<SuperPallet> SuperPallets;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
 	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
@@ -41,7 +44,6 @@ private:
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
 	bool proposed = true;
-	//this should be initialised to a level from a file
 	unsigned int Level = 0;
 	bool IsGameOver_;
 
@@ -53,6 +55,7 @@ private:
 	void MoveGhost();
 	void CheckGameEnd();
 	void EatFruits();
+	bool AteSuperPallet();
 	void OpenDoors();
 	//void InputHandler(const sf::Event& event);
 	bool IsGameOver();
@@ -61,7 +64,6 @@ private:
 
     //==All this functions below can be implemented in their own class
 	void MapTextModelView();
-	void MapGhostModelView();
 	void MapStaticEntitiesModelView();
 	bool isProsedDirectionMovable();
 	void CloseGame();

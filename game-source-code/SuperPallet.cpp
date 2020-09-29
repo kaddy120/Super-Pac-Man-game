@@ -4,9 +4,11 @@ SuperPallet::SuperPallet(
 	const float& radius, 
 	const Vector2& postion,
 	const unsigned int& points): CircleSprite(radius, postion), Points_(points)
-{}
+{
+	Name("SuperPallet");
+}
 
-unsigned int SuperPallet::Points() const {
+unsigned int SuperPallet::GetPoints() const {
 	return Points_;
 }
 

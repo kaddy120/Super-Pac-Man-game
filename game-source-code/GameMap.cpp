@@ -121,6 +121,7 @@ void GameMap::Map()
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
 				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
+				SuperPallets.push_back(SuperPallet(16.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "p")
@@ -147,6 +148,11 @@ vector<Key> GameMap::GetKeys() const {
 vector<Fruit> GameMap::GetFruits() const {
 	return Fruits;
 }
+
+vector<SuperPallet> GameMap::GetSuperPallets() const {
+	return SuperPallets; 
+}
+
 
 void GameMap::AssignKeyToDoor()
 {
