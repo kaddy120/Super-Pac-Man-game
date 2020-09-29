@@ -65,11 +65,13 @@ void AbstractGhost::SetPackManPosition(const std::shared_ptr<Vector2>& position)
 void AbstractGhost::ScaredMovement()
 {
 	Movement_.Move(GetPosition_ptr(),Navigator.GetCurrentDirrection());
-	
+	count_++;
 	auto isInside_turningTile = Navigator.isInsideTurningTiles();
-	if (isInside_turningTile)
+	//i have to use delta time to make it cpu indepent
+	if (isInside_turningTile && count_>4)
 	{
 		Navigator.RandomDirection();
+		count_ = 0;
 	}
 }
 

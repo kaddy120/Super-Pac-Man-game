@@ -14,40 +14,37 @@
 #include "MapEntiesToDTO.h"
 #include "FileReader.h"
 #include "Clock.h"
+#include "Render.h"
 
-using namespace std;
 using std::vector;
 
-class Application
+class GameLogic
 {
 public:
-	Application(std::shared_ptr<sf::RenderWindow> window);
-	void Start();
-	void MovePacMan();
-	void MoveGhost();
-	void CheckGameEnd();
-	bool AteSuperPallet();
-	bool AtePowerPallet();
-	void EatFruits();
-	void OpenDoors();
+	GameLogic(std::shared_ptr<sf::RenderWindow> window);
+	void Run();
+	void Quit();
+private:
+	void UpdateEntities();
+	void RenderEntities();
+	void MapEntitiesToModelView();
 	bool IsGameOver();
-    void MovingToTheNextLevel();
-	void MovablesExitMaize();
+	void Initialise();
 
 private:
-	//things that should go ta GameLogic;
 	Render Render_;
-	PacMan player1;
+	PacMan PacMan_;
 	Direction PacManCurrentDirection;
 	Direction ProposedDirection;
+	bool proposed = true;
 	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
 	std::shared_ptr<sf::RenderWindow> window;
+	//should go.
 	float deltaTime = 0.f;
-	bool proposed = true;
 	unsigned int Level = 0;
 	bool IsGameOver_;
 	Clock Clock_;
-	/////////////////////////////////////
+
 	vector<Sprite> walls;
 	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
@@ -61,20 +58,5 @@ private:
 	vector<GhostModelView> ghostModelView;
 	vector<SpriteModelView> StaticEntityModelView;
 	PacManModelView pacManModelVIew;
-	void MapEntitiesToModelView();
-private:
-	//game
-	void Update();
-	void Render();
-	void InitialiseEntities();
-	////////
-	//
-	//void InputHandler(const sf::Event& event);
-
-    //==All this functions below can be implemented in their own class
-	void MapTextModelView();
-	void MapStaticEntitiesModelView();
-	bool isProsedDirectionMovable();
-	void CloseGame();
 };
 
