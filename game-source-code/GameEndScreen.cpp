@@ -23,9 +23,7 @@ void GameEndScreen::Render(const unsigned int& level, const std::string& message
         }
         // Clear the window
         Window_->clear(sf::Color(0, 0, 0));
-
         Window_->draw(Text);
-
         // Display things on screen
         Window_->display();
     }

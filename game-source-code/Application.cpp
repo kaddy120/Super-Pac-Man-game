@@ -105,9 +105,7 @@ void Application::MovePacMan(PacMan& pacMan, const Direction& direction, const f
 
 bool Application::isProsedDirectionMovable(
     const PacMan& pacMan,
-    const Direction& direction,
-    const vector<Sprite>& walls,
-    const vector<std::shared_ptr<Door>>& Doors)
+    const Direction& direction)
 {
     auto [width, height] = pacMan.getDimentions();
     Sprite Temp(width,height, pacMan.GetPosition());
