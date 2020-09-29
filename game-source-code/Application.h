@@ -23,6 +23,17 @@ class Application
 public:
 	Application(std::shared_ptr<sf::RenderWindow> window);
 	void Start();
+	void MovePacMan(PacMan& pacMan, const Direction& direction, const float& deltaTime);
+	void MoveGhost(std::vector<std::unique_ptr<AbstractGhost>>& Ghosts, const float& deltaTime);
+	bool PacManAndGhostsCollide(const PacMan& pacMan, vector<std::unique_ptr<AbstractGhost>>& Ghosts);
+	void EatFruits(PacMan& pacMan, std::vector<Fruit>& fruits);
+	bool AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallet);
+	void OpenDoors(const PacMan& pacMan, std::vector<Key>& keys, vector<std::shared_ptr<Door>>& Doors);
+	bool isProsedDirectionMovable(
+		const PacMan& pacMan,
+		const Direction& direction,
+		const vector<Sprite>& walls,
+		const vector<std::shared_ptr<Door>>& Doors);
 
 private:
 	Render Render_;
@@ -30,8 +41,8 @@ private:
 	Direction PacManCurrentDirection;
 	Direction ProposedDirection;
 	vector<Sprite> walls;
-	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
+	vector<CircleSprite> TurningPoints;
 	Door GhostsHouseDoor;
 	vector<SuperPallet> SuperPallets;
 	vector<SuperPallet> PowerPallets;
@@ -54,22 +65,14 @@ private:
 	void Update();
 	void Render();
 	void InitialiseEntities();
-	void MovePacMan();
-	void MoveGhost();
-	void CheckGameEnd();
-	void EatFruits();
-	bool AteSuperPallet();
-	bool AtePowerPallet();
-	void OpenDoors();
 	//void InputHandler(const sf::Event& event);
 	bool IsGameOver();
     void MovingToTheNextLevel();
 	void MovablesExitMaize();
-
+	void CheckGameEnd();
     //==All this functions below can be implemented in their own class
 	void MapTextModelView();
 	void MapStaticEntitiesModelView();
-	bool isProsedDirectionMovable();
 	void CloseGame();
 };
 
