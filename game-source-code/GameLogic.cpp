@@ -41,7 +41,14 @@ void  GameLogic::Run()
                 break;
             }
         }
-       
+        if (proposed)
+        {
+            if (Logic.isProsedDirectionMovable(pacMan, ProposedDirection))
+            {
+                PacManCurrentDirection = ProposedDirection;
+                proposed = false;
+            }
+        }
         Update();
         RenderEntities();
     }
@@ -49,14 +56,7 @@ void  GameLogic::Run()
 
 void GameLogic::Update()
 {
-    if (proposed)
-    {
-        if (Logic.isProsedDirectionMovable(pacMan, ProposedDirection))
-        {
-            PacManCurrentDirection = ProposedDirection;
-            proposed = false;
-        }
-    }
+    /////
     Logic.MovePacMan(pacMan, PacManCurrentDirection, 5.f);
     Logic.MoveGhost(Ghosts, 5.f);
     if (IsGameOver_)
@@ -99,21 +99,7 @@ void GameLogic::Update()
         }
     }
     Logic.OpenDoors(pacMan, Keys, Doors);
-    //this will need to go into its on function to improve code self documentation
-    if (pacMan.GetSate() == State::SuperCharged)
-    {
-        for (auto door : Doors)
-        {
-            if (door->IsDoorLocked())
-                if (Collision::CheckCollision(*door, pacMan))
-                {
-                    for (auto key : Keys)
-                    {
-                        door->Unlock(key);
-                    }
-                }
-        }
-    }
+    Logic.PacManOpenDoorsInSupperMode(pacMan, Keys);
     MovingToTheNextLevel();
 }
 

@@ -30,6 +30,7 @@ public:
 	bool AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallet);
 	void OpenDoors(const PacMan& pacMan, std::vector<Key>& keys, vector<std::shared_ptr<Door>>& Doors);
 	bool isProsedDirectionMovable(const PacMan& pacMan,const Direction& direction);
+	void PacManOpenDoorsInSupperMode(const PacMan& pacMan, vector<Key>& keys);
 
 private:
 	vector<Sprite> walls;

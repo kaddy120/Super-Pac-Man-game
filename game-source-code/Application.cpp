@@ -124,7 +124,23 @@ bool Application::isProsedDirectionMovable(
     return true;
 }
 
-
+void Application::PacManOpenDoorsInSupperMode(const PacMan& pacMan, vector<Key>& keys)
+{
+    if (pacMan.GetSate() == State::SuperCharged)
+    {
+        for (auto door : Doors)
+        {
+            if (door->IsDoorLocked())
+                if (Collision::CheckCollision(*door, pacMan))
+                {
+                    for (auto key : keys)
+                    {
+                        door->Unlock(key);
+                    }
+                }
+        }
+    }
+}
 void CloseGame()
 {
     //save score and level to a file
