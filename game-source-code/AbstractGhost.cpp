@@ -86,7 +86,7 @@ void AbstractGhost::ChaseTargetMovement()
 	}
 	count_++;
 }
-//this can move out
+
 void AbstractGhost::SetChaseMode()
 {
 	auto Now = std::chrono::steady_clock::now();

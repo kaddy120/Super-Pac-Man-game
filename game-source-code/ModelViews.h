@@ -9,11 +9,9 @@ class TextModelView
 {
 public:
     string Level;
-    string Lives;
+    string Lifes;
     string HighestScore;
     string CurrentScore;
-    int highscore_;
-    int currentscore;
 };
 
 class SpriteModelView

@@ -1,6 +1,6 @@
 #include "GameEndScreen.h"
 
-GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& window, const sf::Text& text):
+GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow> window, const sf::Text& text):
     Window_(window),
 	Text(text)
 {}

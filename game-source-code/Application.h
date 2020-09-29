@@ -11,7 +11,6 @@
 #include "SplashScreen.h"
 #include "Render.h"
 #include "BlueGhost.h"
-#include "FileReader.h"
 
 using namespace std;
 using std::vector;
@@ -41,6 +40,7 @@ private:
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
 	bool proposed = true;
+	//this should be initialised to a level from a file
 	unsigned int Level = 0;
 	bool IsGameOver_;
 

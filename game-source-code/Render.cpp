@@ -1,8 +1,8 @@
 #include "Render.h"
 
 Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
-    window(window_),
-   GameEndScreen(window_, GeneralText)
+    window(window_), 
+    GameEndScreen(window_, GeneralText)
 {
 	//i should load resouces
     if (!PacManTexture.loadFromFile("resources/Pacman.png")) throw FaildeToLoadResourceException{};
@@ -11,6 +11,9 @@ Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
     if (!keyTexture.loadFromFile("resources/Keys.png")) throw FaildeToLoadResourceException{};
     if (!font.loadFromFile("resources/sansation.ttf")) throw FaildeToLoadResourceException{};
     Initialise();
+
+  /*  { window, sf::Text{} };
+    NextLevel.Render(1, "");*/
 }
 
 void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView)
@@ -37,34 +40,6 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
 }
 void Render::RenderText(const TextModelView& textModelView)
 {
-    auto score_str=textModelView.CurrentScore;
-    auto highest_str=textModelView.HighestScore;
-
-    HighestScoreText.setFont(font);
-    HighestScoreText.setCharacterSize(25);
-    HighestScoreText.setPosition(0.f, 820.f);
-    HighestScoreText.setFillColor(sf::Color::Red);
-    HighestScoreText.setString("Highest Score: "+ highest_str);
-
-    ScoreText.setFont(font);
-    ScoreText.setCharacterSize(25);
-    ScoreText.setPosition(0.f, 780.f);
-    ScoreText.setFillColor(sf::Color::Red);
-    ScoreText.setString("Current Score : "+ score_str);
-    window->draw(HighestScoreText);
-    window->draw(ScoreText);
-
-
-    GeneralText.setFont(font);
-    GeneralText.setCharacterSize(25);
-    GeneralText.setPosition(450.f, 780.f);
-    GeneralText.setFillColor(sf::Color::Red);
-    GeneralText.setString("Lives Remaining :"+ score_str);
-    //window->draw(HighestScoreText);
-    window->draw(GeneralText);
-
-
-
 
 }
 
@@ -165,7 +140,6 @@ void Render::Initialise()
     LevelText;
     HighestScoreText;
     GeneralText;
-
 }
 void Render::ClearWindow()
 {
