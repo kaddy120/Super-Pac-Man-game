@@ -126,6 +126,11 @@ void GameMap::Map()
 			}
 			else if (condition == "p")
 			{
+				tempPosition.X = position.X;
+				tempPosition.add(CircleHorizontalIncrement);
+				auto pallet = SuperPallet(15.f, tempPosition);
+				pallet.Name("PowerPallet");
+				PowerPallets.push_back(pallet);
 				position.add(HorizontalIncrement);
 			}
 		}
@@ -151,6 +156,10 @@ vector<Fruit> GameMap::GetFruits() const {
 
 vector<SuperPallet> GameMap::GetSuperPallets() const {
 	return SuperPallets; 
+}
+
+vector<SuperPallet> GameMap::GetPowerPallets() const {
+	return PowerPallets;
 }
 
 

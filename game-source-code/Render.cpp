@@ -38,6 +38,11 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
             //i need to update this.
             RenderRectangleShape(modelView, Wall);
         }
+        else if (modelView.Title == "PowerPallet")
+        {
+            //i need to update this.
+            RenderRectangleShape(modelView, Wall);
+        }
     }
 }
 void Render::RenderText(const TextModelView& textModelView)

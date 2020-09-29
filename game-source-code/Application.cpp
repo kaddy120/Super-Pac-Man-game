@@ -57,12 +57,24 @@ void Application::Update()
     {
         InitialiseEntities();
     }
+//rename this function to PacManAndGhostsCollides()
     if (IsGameOver())
     {
-        player1.SubtractLife();
-        if (player1.GetLifes() == 0){
-            Level = 0;
-            player1.ResetPoints();
+        //GetState() is misspelled
+        if (player1.GetSate() != State::charged)
+        {
+            player1.SubtractLife();
+            IsGameOver_ = true;
+            if (player1.GetLifes() == 0){
+                Level = 0;
+                player1.ResetPoints();
+            }
+        }
+        else
+        {
+            for (auto i = 0; i < Ghosts.size(); i++) {
+                Ghosts[i]->UpdateMode(Mode::Eaten);
+            }
         }
     }
     EatFruits();
@@ -73,7 +85,23 @@ void Application::Update()
     if (player1.GetSate() == State::SuperCharged && Clock_.TimeLapse() > 7) {
         player1.SetState(State::Alive);
     }
+
+    if (AtePowerPallet())
+    {
+        player1.SetState(State::charged);
+        for (auto i = 0; i < Ghosts.size(); i++){
+            Ghosts[i]->UpdateMode(Mode::Frightened);
+        }
+        Clock_.Reset();
+    }
+    if (player1.GetSate() == State::charged && Clock_.TimeLapse() > 20) {
+        player1.SetState(State::Alive);
+        for (auto i = 0; i < Ghosts.size(); i++) {
+            Ghosts[i]->UpdateMode(Mode::Chase);
+        }
+    }
     OpenDoors();
+    //this will need to go into its on function to improve code self documentation
     if (player1.GetSate() == State::SuperCharged)
     {
         for (auto door : Doors)
@@ -111,34 +139,6 @@ void Application::Render()
     ghostModelView.clear();
 }
 
-void Application::InitialiseEntities()
-{
-    GameMap GameMap{};
-    walls = GameMap.GetWalls();
-    TurningPoints = GameMap.GetTurningPoinints();
-    Doors = GameMap.GetDoors();
-    Keys = GameMap.GetKeys();
-    Fruits = GameMap.GetFruits();
-    SuperPallets = GameMap.GetSuperPallets();
-    IsGameOver_ = false;
-
-    PacManCurrentDirection = static_cast<Direction>(0);
-    ProposedDirection = static_cast<Direction>(0);
-    proposed = true;
-    player1 = PacMan(44.f, 44.f, Vector2(310, 570));
-
-    Ghosts.clear();
-    Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
-    Ghosts.push_back(std::make_unique<PinkGhost>(TurningPoints, walls, Doors, Ghosts[0]->GetPosition_ptr()));
-    Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
-    Ghosts.push_back(std::make_unique<BlueGhost>(TurningPoints, walls, Doors));
-
-    for (auto i = 0; i < Ghosts.size(); i++)
-    {
-        Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
-    }
-}
-
 void Application::CheckGameEnd()
 {
     //alright, i need end game screen which
@@ -151,16 +151,16 @@ bool Application::IsGameOver()
     {
         if (Collision::CheckCollision(*Ghosts[i], player1))
         {
-            IsGameOver_ = true;
             player1;
             Ghosts[i];
+            return true;
         }
     }
-    return IsGameOver_;
+    return false;
 }
 
 //maybe i should rename this to something more general
-
+//superPallet and packMan Can be handled by the same function..
 bool Application::AteSuperPallet()
 {
     for (auto it = SuperPallets.begin(); it != SuperPallets.end(); it++)
@@ -168,6 +168,19 @@ bool Application::AteSuperPallet()
         if (Collision::CheckCollision(*it, player1))
         {
             SuperPallets.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+//this is temporary
+bool Application::AtePowerPallet()
+{
+    for (auto it = PowerPallets.begin(); it != PowerPallets.end(); it++)
+    {
+        if (Collision::CheckCollision(*it, player1))
+        {
+            PowerPallets.erase(it);
             return true;
         }
     }
@@ -309,7 +322,6 @@ void Application::MapTextModelView()
     }
 }
 
-
 void Application::MapStaticEntitiesModelView()
 {
     for (auto door : Doors)
@@ -326,5 +338,36 @@ void Application::MapStaticEntitiesModelView()
     
     for (auto superPallet : SuperPallets)
         MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
-    
+
+    for (auto powerPallet : PowerPallets)
+        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
+}
+
+void Application::InitialiseEntities()
+{
+    GameMap GameMap{};
+    walls = GameMap.GetWalls();
+    TurningPoints = GameMap.GetTurningPoinints();
+    Doors = GameMap.GetDoors();
+    Keys = GameMap.GetKeys();
+    Fruits = GameMap.GetFruits();
+    SuperPallets = GameMap.GetSuperPallets();
+    PowerPallets = GameMap.GetPowerPallets();
+    IsGameOver_ = false;
+
+    PacManCurrentDirection = static_cast<Direction>(0);
+    ProposedDirection = static_cast<Direction>(0);
+    proposed = true;
+    player1 = PacMan(44.f, 44.f, Vector2(310, 570));
+
+    Ghosts.clear();
+    Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));
+    Ghosts.push_back(std::make_unique<PinkGhost>(TurningPoints, walls, Doors, Ghosts[0]->GetPosition_ptr()));
+    Ghosts.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors));
+    Ghosts.push_back(std::make_unique<BlueGhost>(TurningPoints, walls, Doors));
+
+    for (auto i = 0; i < Ghosts.size(); i++)
+    {
+        Ghosts[i]->SetPackManPosition(player1.GetPosition_ptr());
+    }
 }
