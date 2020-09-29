@@ -10,7 +10,7 @@ GameMap::GameMap()
 	{ "v","n","v","p","v","n","D","f","o","f","o","f", "o","f","o","f","D","n","v","p","v","n","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","h", "o","h","o","h","o","n","o","d","o","n","o" },
 	{ "v","t","o","k","o","t","o","t","o","n","o","t", "o","n","o","t","o","t","o","k","o","t","v" },
-	{ "o","n","o","d","o","h","o","n","o","h","o","d", "o","h","o","n","o","h","o","d","o","n","o" },
+	{ "o","n","o","d","o","h","o","n","o","h","o","GD", "o","h","o","n","o","h","o","d","o","n","o" },
 	{ "v","n","v","f","o","f","v","n","v","t","o","n", "o","t","v","n","v","f","o","f","v","n","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","n", "o","n","o","n","o","n","o","d","o","n","o" },
 	{ "v","k","o","t","v","f","v","n","v","t","o","t", "o","t","v","n","v","f","v","t","o","k","v" },
@@ -87,6 +87,11 @@ void GameMap::Map()
 				Doors.push_back(std::make_shared<Door>(width_, height_, position));
 				position.add(HorizontalIncrement);
 			}
+			else if (condition == "GD")
+			{
+			   GhostsHouseDoor_ = Door(width_, height_, position);
+			   position.add(HorizontalIncrement);
+			}
 			else if (condition == "n")
 			{
 				position.add(HorizontalIncrement);
@@ -160,6 +165,9 @@ vector<SuperPallet> GameMap::GetSuperPallets() const {
 
 vector<SuperPallet> GameMap::GetPowerPallets() const {
 	return PowerPallets;
+}
+Door GameMap::GhostsHouseDoor() const {
+	return GhostsHouseDoor_;
 }
 
 

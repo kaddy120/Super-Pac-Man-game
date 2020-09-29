@@ -32,6 +32,7 @@ private:
 	vector<Sprite> walls;
 	vector<CircleSprite> TurningPoints;
 	vector<std::shared_ptr<Door>> Doors;
+	Door GhostsHouseDoor;
 	vector<SuperPallet> SuperPallets;
 	vector<SuperPallet> PowerPallets;
 	vector<Key> Keys;

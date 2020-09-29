@@ -24,11 +24,12 @@ public:
 	vector<Fruit> GetFruits() const;
 	vector<SuperPallet> GetSuperPallets() const;
 	vector<SuperPallet> GetPowerPallets() const;
-
+	Door GhostsHouseDoor() const;
 private:
 	vector<std::vector<std::string> > Maize;
 	vector<Sprite> Walls;
 	vector<std::shared_ptr<Door>> Doors;
+	Door GhostsHouseDoor_;
 	vector<Fruit> Fruits;
 	vector<Key> Keys;
 	vector<CircleSprite> TurningPoints;
