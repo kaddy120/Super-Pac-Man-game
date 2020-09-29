@@ -25,6 +25,12 @@ void PacMan::SetState(const State& state_)
 		Lifes--;
 	}
 }
+
+State PacMan::GetSate() const
+{
+	return state;
+}
+
 Vector2 PacMan::Move(const Direction& direction)
 {
     return Movement_.Move(GetPosition_ptr(),direction);

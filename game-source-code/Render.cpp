@@ -33,6 +33,11 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
         {
             RenderRectangleShape(modelView, Wall);
         }
+        else if (modelView.Title == "SuperPallet")
+        {
+            //i need to update this.
+            RenderRectangleShape(modelView, Wall);
+        }
     }
 }
 void Render::RenderText(const TextModelView& textModelView)
@@ -142,7 +147,6 @@ void Render::Initialise()
     Key.setTexture(&keyTexture);
     Door.setFillColor(sf::Color(153, 94, 0));
 
-//============test to assign this in a constructure==========
     Animation temp{ &GhostsTexture, sf::Vector2u(8,5), 0.6f };
     GhostAnimation = temp;
     Animation temp2{ &PacManTexture, sf::Vector2u(3,1), 0.2f };

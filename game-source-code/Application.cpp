@@ -60,18 +60,34 @@ void Application::Update()
     if (IsGameOver())
     {
         player1.SubtractLife();
-        if (player1.GetLifes() == 0)
-        {
+        if (player1.GetLifes() == 0){
             Level = 0;
             player1.ResetPoints();
         }
     }
     EatFruits();
-    if (AteSuperPallet())
-    {
+    if (AteSuperPallet()){
         player1.SetState(State::SuperCharged);
+        Clock_.Reset();
+    }
+    if (player1.GetSate() == State::SuperCharged && Clock_.TimeLapse() > 7) {
+        player1.SetState(State::Alive);
     }
     OpenDoors();
+    if (player1.GetSate() == State::SuperCharged)
+    {
+        for (auto door : Doors)
+        {
+            if (door->IsDoorLocked())
+                if (Collision::CheckCollision(*door, player1))
+                {
+                    for (auto key : Keys)
+                    {
+                        door->Unlock(key);
+                    }
+                }
+        }
+    }
     MovingToTheNextLevel();
 }
 
@@ -79,8 +95,8 @@ void Application::Render()
 {
     MapEntitiesToModelView();
     Render_.RenderStaticSprites(StaticEntityModelView);
-    Render_.RenderPacMan(pacManModelVIew, deltaTime);
     Render_.RenderGhost(ghostModelView, deltaTime);
+    Render_.RenderPacMan(pacManModelVIew, deltaTime);
     Render_.RenderText(textModelView);
 
     if (IsGameOver_)
@@ -130,6 +146,7 @@ void Application::CheckGameEnd()
 
 bool Application::IsGameOver()
 {
+    if (player1.GetSate() == State::SuperCharged) return false;
     for (auto i = 0; i < Ghosts.size(); i++)
     {
         if (Collision::CheckCollision(*Ghosts[i], player1))
@@ -217,6 +234,7 @@ void Application::MovePacMan()
         if (Unmovable)
             break;
     }
+    if(player1.GetSate()!=State::SuperCharged)
     for (auto Door : Doors)
     {
         if (Door->IsDoorLocked())
@@ -238,6 +256,8 @@ bool Application::isProsedDirectionMovable()
     Movement move_{ 8.f};
     move_.Move(Temp.GetPosition_ptr(), ProposedDirection);
     if(Collision::CheckCollision(Temp, walls)) return false;
+    
+    if(player1.GetSate()!= State::SuperCharged)
     for (auto Door : Doors)
     {
         if (Door->IsDoorLocked())

@@ -14,6 +14,7 @@ public:
 	unsigned int IncreamentPoints(const unsigned int& points);
 	unsigned int GetPoints() const { return CollectedPoints; }
 	void SetState(const State& state);
+	State GetSate() const;
 	unsigned int GetLifes() const;
 	Vector2 Move(const Direction& direction);
 	void SubtractLife();
