@@ -12,13 +12,14 @@
 #include "PinkGhost.h"
 #include "YellowGhost.h"
 #include <fstream>
+#include "GameLogic.h"
 
 int main()
 {
       srand(time(0));
       Window Game_Screan;
-      Application PacManGame(Game_Screan.getWindow());
-      PacManGame.Start();
+      GameLogic gameLogic(Game_Screan.getWindow());
+      gameLogic.Run();
 //    std::shared_ptr<sf::RenderWindow> window = Game_Screan.getWindow();
 //    //should go inside window class
 //    window->setVerticalSyncEnabled(true);
