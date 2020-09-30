@@ -30,7 +30,7 @@ private:
 
 	std::shared_ptr<sf::RenderWindow> window;
     //SplashScreen SplashScreen_;
-    GameEndScreen GameEndScreen;
+   // GameEndScreen GameEndScreen;
     sf::Texture PacManTexture;
     sf::Texture GhostsTexture;
     sf::Texture FruitsTextutre;
