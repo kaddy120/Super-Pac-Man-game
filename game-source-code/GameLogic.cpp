@@ -114,6 +114,7 @@ void GameLogic::Update()
                 }
         }
     }
+    Logic.MovablesExitMaze(pacMan, 660);
     MovingToTheNextLevel();
 }
 

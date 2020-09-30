@@ -30,6 +30,8 @@ public:
 	bool AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallet);
 	void OpenDoors(const PacMan& pacMan, std::vector<Key>& keys, vector<std::shared_ptr<Door>>& Doors);
 	bool isProsedDirectionMovable(const PacMan& pacMan,const Direction& direction);
+	void MovablesExitMaze(CircleSprite& MovableEntity,const unsigned int& mazeWidth);
+	void MovablesExitMaze(Sprite& MovableEntity,const unsigned int& mazeWidth);
 
 private:
 	vector<Sprite> walls;
