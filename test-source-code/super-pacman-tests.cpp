@@ -4,7 +4,8 @@
 #include "../game-source-code/Sprite.h"
 #include "../game-source-code/Key.h"
 #include "../game-source-code/Door.h"
-
+#include "../game-source-code/fruit.h"
+#include "../game-source-code/FileReader.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -33,125 +34,190 @@ TEST_CASE("check that vector with differet coordinates are not equal")
 }
 
 //------------------Testing PacMan --------------------------------------
-
-TEST_CASE("Check that PacMan positio is initialised correctly")
-{
-    auto InitPosition = Vector2(300, 400);
-    PacMan PacMan(35, 35, InitPosition);
-    CHECK(InitPosition == PacMan.GetPosition());
-    CHECK(InitPosition == *PacMan.GetPosition_ptr());
-}
-
-TEST_CASE("PacMan is moving to the right correctly")
-{
-  PacMan PacMan(35, 35, Vector2(300, 300));
-  auto PositionBeforeMove = PacMan.GetPosition();
-  auto Speed = 2.f;
-  PacMan.SetSpeed(Speed);
-  PacMan.Movement(Move::Right);
-  CHECK(PositionBeforeMove.add(Vector2(Speed,0)) == PacMan.GetPosition());
-}
-
-TEST_CASE("PacMan is moving to the Right correctly")
-{
-    PacMan PacMan(35, 35, Vector2(300, 300));
-    auto PositionBeforeMove = PacMan.GetPosition();
-    auto Speed = 2.f;
-    PacMan.SetSpeed(Speed);
-    PacMan.Movement(Move::Right);
-    CHECK(PositionBeforeMove.add(Vector2(Speed, 0)) == PacMan.GetPosition());
-}
-TEST_CASE("PacMan is moving to the Left correctly")
-{
-    PacMan PacMan(35, 35, Vector2(300, 300));
-    auto PositionBeforeMove = PacMan.GetPosition();
-    auto Speed = 2.f;
-    PacMan.SetSpeed(Speed);
-    PacMan.Movement(Move::Left);
-    CHECK(PositionBeforeMove.subtract(Vector2(Speed, 0)) == PacMan.GetPosition());
-}
-TEST_CASE("PacMan is moving Down correctly")
-{
-    PacMan PacMan(35, 35, Vector2(300, 300));
-    auto PositionBeforeMove = PacMan.GetPosition();
-    auto Speed = 2.f;
-    PacMan.SetSpeed(Speed);
-    PacMan.Movement(Move::Down);
-    CHECK(PositionBeforeMove.add(Vector2(0,Speed)) == PacMan.GetPosition());
-}
-
-TEST_CASE("PacMan is moving Up correctly")
-{
-    PacMan PacMan(35, 35, Vector2(300, 300));
-    auto PositionBeforeMove = PacMan.GetPosition();
-    auto Speed = 2.f;
-    PacMan.SetSpeed(Speed);
-    PacMan.Movement(Move::Up);
-    CHECK(PositionBeforeMove.subtract(Vector2(0, Speed)) == PacMan.GetPosition());
-}
-
-TEST_CASE("position of the PacMan can be tracked using shared pointer as it changes")
-{
-    PacMan PacMan(35, 35, Vector2(300, 450));
-    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
-    PacMan.SetPosition(Vector2(40, 60));
-    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
-    PacMan.Movement(Move::Down);
-    PacMan.Movement(Move::Left);
-    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
-}
-
-//------------Test Collision ---------
-TEST_CASE("Two rectangles closer to each other collide")
-{
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    Sprite rectangle2(40, 40, Vector2(10, 10));
-    CHECK(Collision::CheckCollision(rectangle1, rectangle2));
-}
-
-
-
-TEST_CASE("Testing if two circles collide ")
-{
-    CircleSprite rectangle1(40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(10, 10));
-    CHECK(Collision::CheckCollision(rectangle1, rectangle2));
-}
-
-
-
-TEST_CASE("Testing if a circle and a square collide ")
-{
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(10, 10));
-    CHECK(Collision::CheckCollision(rectangle2, rectangle1));
-}
-
-
-TEST_CASE("Testing if a circle and a square cannnot collide if they are far apart ")
-{
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(50, 50));
-    CHECK_FALSE(Collision::CheckCollision(rectangle2, rectangle1));
-}
-TEST_CASE("Testing if a two circles cannnot collide if they are far apart")
-{
-    CircleSprite rectangle1(40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(100, 100));
-    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
-}
-TEST_CASE("Two rectangles apart cannot to collide")
-{
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    Sprite rectangle2(40, 40, Vector2(100, 100));
-    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
-}
+//
+//TEST_CASE("Check that PacMan positio is initialised correctly")
+//{
+//    auto InitPosition = Vector2(300, 400);
+//    PacMan PacMan(35, 35, InitPosition);
+//    CHECK(InitPosition == PacMan.GetPosition());
+//    CHECK(InitPosition == *PacMan.GetPosition_ptr());
+//}
+//
+//TEST_CASE("PacMan is moving to the right correctly")
+//{
+//  PacMan PacMan(35, 35, Vector2(300, 300));
+//  auto PositionBeforeMove = PacMan.GetPosition();
+//  auto Speed = 2.f;
+//  PacMan.SetSpeed(Speed);
+//  PacMan.Movement(Move::Right);
+//  CHECK(PositionBeforeMove.add(Vector2(Speed,0)) == PacMan.GetPosition());
+//}
+//
+//TEST_CASE("PacMan is moving to the Right correctly")
+//{
+//    PacMan PacMan(35, 35, Vector2(300, 300));
+//    auto PositionBeforeMove = PacMan.GetPosition();
+//    auto Speed = 2.f;
+//    PacMan.SetSpeed(Speed);
+//    PacMan.Movement(Move::Right);
+//    CHECK(PositionBeforeMove.add(Vector2(Speed, 0)) == PacMan.GetPosition());
+//}
+//TEST_CASE("PacMan is moving to the Left correctly")
+//{
+//    PacMan PacMan(35, 35, Vector2(300, 300));
+//    auto PositionBeforeMove = PacMan.GetPosition();
+//    auto Speed = 2.f;
+//    PacMan.SetSpeed(Speed);
+//    PacMan.Movement(Move::Left);
+//    CHECK(PositionBeforeMove.subtract(Vector2(Speed, 0)) == PacMan.GetPosition());
+//}
+//TEST_CASE("PacMan is moving Down correctly")
+//{
+//    PacMan PacMan(35, 35, Vector2(300, 300));
+//    auto PositionBeforeMove = PacMan.GetPosition();
+//    auto Speed = 2.f;
+//    PacMan.SetSpeed(Speed);
+//    PacMan.Movement(Move::Down);
+//    CHECK(PositionBeforeMove.add(Vector2(0,Speed)) == PacMan.GetPosition());
+//}
+//
+//TEST_CASE("PacMan is moving Up correctly")
+//{
+//    PacMan PacMan(35, 35, Vector2(300, 300));
+//    auto PositionBeforeMove = PacMan.GetPosition();
+//    auto Speed = 2.f;
+//    PacMan.SetSpeed(Speed);
+//    PacMan.Movement(Move::Up);
+//    CHECK(PositionBeforeMove.subtract(Vector2(0, Speed)) == PacMan.GetPosition());
+//}
+//
+//TEST_CASE("position of the PacMan can be tracked using shared pointer as it changes")
+//{
+//    PacMan PacMan(35, 35, Vector2(300, 450));
+//    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
+//    PacMan.SetPosition(Vector2(40, 60));
+//    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
+//    PacMan.Movement(Move::Down);
+//    PacMan.Movement(Move::Left);
+//    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
+//}
+//
+////------------Test Collision ---------
+//TEST_CASE("Two rectangles closer to each other collide")
+//{
+//    Sprite rectangle1(40, 40, Vector2(0, 0));
+//    Sprite rectangle2(40, 40, Vector2(10, 10));
+//    CHECK(Collision::CheckCollision(rectangle1, rectangle2));
+//}
+//
+//
+//
+//TEST_CASE("Testing if two circles collide ")
+//{
+//    CircleSprite rectangle1(40, Vector2(0, 0));
+//    CircleSprite rectangle2(40, Vector2(10, 10));
+//    CHECK(Collision::CheckCollision(rectangle1, rectangle2));
+//}
+//
+//
+//
+//TEST_CASE("Testing if a circle and a square collide ")
+//{
+//    Sprite rectangle1(40, 40, Vector2(0, 0));
+//    CircleSprite rectangle2(40, Vector2(10, 10));
+//    CHECK(Collision::CheckCollision(rectangle2, rectangle1));
+//}
+//
+//
+//TEST_CASE("Testing if a circle and a square cannnot collide if they are far apart ")
+//{
+//    Sprite rectangle1(40, 40, Vector2(0, 0));
+//    CircleSprite rectangle2(40, Vector2(50, 50));
+//    CHECK_FALSE(Collision::CheckCollision(rectangle2, rectangle1));
+//}
+//TEST_CASE("Testing if a two circles cannnot collide if they are far apart")
+//{
+//    CircleSprite rectangle1(40, Vector2(0, 0));
+//    CircleSprite rectangle2(40, Vector2(100, 100));
+//    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
+//}
+//TEST_CASE("Two rectangles apart cannot to collide")
+//{
+//    Sprite rectangle1(40, 40, Vector2(0, 0));
+//    Sprite rectangle2(40, 40, Vector2(100, 100));
+//    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
+//}
 
 
 //-----------Test Key-----------------
 
+TEST_CASE("Two keys have a unique ID")
+{
+Vector2 vector2(2.f,3.f);
+Key key1(2.f,vector2);
+Key key2;
+CHECK_FALSE(key1==key2);
 
+}
 
 
 //------------Test Door ------------
+
+TEST_CASE("Two keys are different")
+{
+  Door door_;
+  auto door1=door_.GetKey();
+  auto door2=door_.GetKey();
+  CHECK(door1 == door2);
+}
+TEST_CASE("Two doors can be in the same position")
+ {
+    Door door_;
+    auto door1=door_.GetPosition_ptr();
+    auto door2=door_.GetPosition_ptr();
+    CHECK(door1 == door2);
+}
+TEST_CASE("Two doors cannot have same key")
+ {
+//Door door_;
+//  auto door1= door_.;
+//  auto door2=door_.AssignKey();
+//    CHECK(door1 == door2);
+}
+//------------Test fruit ------------
+TEST_CASE("Fruits points are correct and can be modified")
+{
+//Vector2 vector2(2.f,3.f);
+//Fruit fruit_(10.f,vector2);
+//int fruit_point=10;
+//auto modifiedfruitpoint=fruit_(10.f,vector2).FruitPoints(10);
+//CHECK_FALSE(fruit_point==modifiedfruitpoint);
+
+
+}
+////------------Test Score File Reader ------------
+
+TEST_CASE("FileReader can set and retrieve the Highest score successfully from a textfile")
+{
+    FileReader score_reader_file{};
+    auto highScore = 250;
+    score_reader_file.setHighestScore(highScore);
+
+    CHECK(highScore == score_reader_file.getHighestScore());
+}
+TEST_CASE("A score can never be less than 0 set and retrived from a textfile")
+{
+     FileReader score_reader_file{};
+     auto highScore = -1;
+    score_reader_file.setHighestScore(highScore);
+
+    CHECK_FALSE(highScore == score_reader_file.getHighestScore());
+}
+TEST_CASE("An exception is thrown when file is not found"){
+
+
+
+}
+
+////------------Test Game Score ------------
 

@@ -2,8 +2,6 @@
 
 SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
 {
-    // Create the window of the application
-    // Load the text font
     sf::Font font;
     if(!font.loadFromFile("resources/sansation.ttf"));
     {

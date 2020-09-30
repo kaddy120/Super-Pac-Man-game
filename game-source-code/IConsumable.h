@@ -2,6 +2,6 @@
 
 class IConsumable {
 public:
-	virtual void SetPoints() = 0;
-	virtual void GetPoints() = 0;
+	virtual unsigned int GetPoints() const = 0;
+	virtual void SetPoints(const unsigned int& points) = 0;
 };

@@ -15,6 +15,7 @@ AbstractGhost::AbstractGhost(
 
 void AbstractGhost::Move()
 {
+	if(Mode_ != Mode::Eaten && Mode_!= Mode::Frightened)
 	SetChaseMode();
 	switch (Mode_)
 	{

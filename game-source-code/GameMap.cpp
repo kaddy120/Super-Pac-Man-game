@@ -10,7 +10,7 @@ GameMap::GameMap()
 	{ "v","n","v","p","v","n","D","f","o","f","o","f", "o","f","o","f","D","n","v","p","v","n","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","h", "o","h","o","h","o","n","o","d","o","n","o" },
 	{ "v","t","o","k","o","t","o","t","o","n","o","t", "o","n","o","t","o","t","o","k","o","t","v" },
-	{ "o","n","o","d","o","h","o","n","o","h","o","d", "o","h","o","n","o","h","o","d","o","n","o" },
+	{ "o","n","o","d","o","h","o","n","o","h","o","GD", "o","h","o","n","o","h","o","d","o","n","o" },
 	{ "v","n","v","f","o","f","v","n","v","t","o","n", "o","t","v","n","v","f","o","f","v","n","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","n", "o","n","o","n","o","n","o","d","o","n","o" },
 	{ "v","k","o","t","v","f","v","n","v","t","o","t", "o","t","v","n","v","f","v","t","o","k","v" },
@@ -67,12 +67,16 @@ void GameMap::Map()
 			auto condition = Maize[row][col];
 			if (condition == "h")
 			{
-				Walls.push_back(Sprite(width_,height_, position));
+				auto wall = Sprite(width_, height_, position);
+				wall.Name("Wall");
+				Walls.push_back(wall);
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "v")
 			{
-				Walls.push_back(Sprite(width, height, position));
+				auto wall = Sprite(width, height, position);
+				wall.Name("Wall");
+				Walls.push_back(wall);
 			}
 			else if (condition == "D")
 			{
@@ -82,6 +86,11 @@ void GameMap::Map()
 			{
 				Doors.push_back(std::make_shared<Door>(width_, height_, position));
 				position.add(HorizontalIncrement);
+			}
+			else if (condition == "GD")
+			{
+			   GhostsHouseDoor_ = Door(width_, height_, position);
+			   position.add(HorizontalIncrement);
 			}
 			else if (condition == "n")
 			{
@@ -117,10 +126,16 @@ void GameMap::Map()
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
 				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
+				SuperPallets.push_back(SuperPallet(16.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "p")
 			{
+				tempPosition.X = position.X;
+				tempPosition.add(CircleHorizontalIncrement);
+				auto pallet = SuperPallet(15.f, tempPosition);
+				pallet.Name("PowerPallet");
+				PowerPallets.push_back(pallet);
 				position.add(HorizontalIncrement);
 			}
 		}
@@ -143,6 +158,18 @@ vector<Key> GameMap::GetKeys() const {
 vector<Fruit> GameMap::GetFruits() const {
 	return Fruits;
 }
+
+vector<SuperPallet> GameMap::GetSuperPallets() const {
+	return SuperPallets; 
+}
+
+vector<SuperPallet> GameMap::GetPowerPallets() const {
+	return PowerPallets;
+}
+Door GameMap::GhostsHouseDoor() const {
+	return GhostsHouseDoor_;
+}
+
 
 void GameMap::AssignKeyToDoor()
 {

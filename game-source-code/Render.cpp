@@ -1,7 +1,7 @@
 #include "Render.h"
 
 Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
-    window(window_),
+    window(window_), 
     GameEndScreen(window_, GeneralText)
 {
 	//i should load resouces
@@ -33,6 +33,16 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
         {
             RenderRectangleShape(modelView, Wall);
         }
+        else if (modelView.Title == "SuperPallet")
+        {
+            //i need to update this.
+            RenderRectangleShape(modelView, Wall);
+        }
+        else if (modelView.Title == "PowerPallet")
+        {
+            //i need to update this.
+            RenderRectangleShape(modelView, Wall);
+        }
     }
 }
 void Render::RenderText(const TextModelView& textModelView)
@@ -53,18 +63,6 @@ void Render::RenderText(const TextModelView& textModelView)
     ScoreText.setString("Current Score : "+ score_str);
     window->draw(HighestScoreText);
     window->draw(ScoreText);
-
-
-    GeneralText.setFont(font);
-    GeneralText.setCharacterSize(25);
-    GeneralText.setPosition(450.f, 780.f);
-    GeneralText.setFillColor(sf::Color::Red);
-    GeneralText.setString("Lives Remaining :"+ score_str);
-    //window->draw(HighestScoreText);
-    window->draw(GeneralText);
-
-
-
 
 }
 
@@ -154,7 +152,6 @@ void Render::Initialise()
     Key.setTexture(&keyTexture);
     Door.setFillColor(sf::Color(153, 94, 0));
 
-//============test to assign this in a constructure==========
     Animation temp{ &GhostsTexture, sf::Vector2u(8,5), 0.6f };
     GhostAnimation = temp;
     Animation temp2{ &PacManTexture, sf::Vector2u(3,1), 0.2f };
@@ -165,7 +162,6 @@ void Render::Initialise()
     LevelText;
     HighestScoreText;
     GeneralText;
-
 }
 void Render::ClearWindow()
 {

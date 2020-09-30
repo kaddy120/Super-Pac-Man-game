@@ -1,19 +1,20 @@
-#ifndef FileReader_H
-#define FileReader_H
+#pragma once
 #include <string>
 #include <fstream>
 
 using std::string;
 using std::ios;
 using std::fstream;
+
+// exception class
+class FileCannotBeOpened{};
+
 class FileReader
 {
     public:
         FileReader();
         int getHighestScore();
         void setHighestScore(int gamescore);
-        int getLevel();
-
 
         ~FileReader();
 private:
@@ -23,4 +24,3 @@ private:
 
 };
 
-#endif // FileReader_H
