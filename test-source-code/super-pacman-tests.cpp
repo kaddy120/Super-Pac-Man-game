@@ -165,10 +165,7 @@ CHECK_FALSE(key1==key2);
 
 TEST_CASE("Two keys are different")
 {
-  Door door_;
-  auto door1=door_.GetKey();
-  auto door2=door_.GetKey();
-  CHECK(door1 == door2);
+ 
 }
 TEST_CASE("Two doors can be in the same position")
  {

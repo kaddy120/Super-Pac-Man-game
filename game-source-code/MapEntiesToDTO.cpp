@@ -18,6 +18,7 @@ void MapEntiesToDTO::MapPacManModelView(PacManModelView& modelView, const PacMan
     modelView.Positon = pacMan.GetPosition();
     auto [width, height] = pacMan.getDimentions();
     modelView.Dimention = Vector2(width, height);
+    modelView.State = pacMan.GetSate();
 }
 void MapEntiesToDTO::MapGhostModelView(vector<GhostModelView>& modelView, const vector<std::unique_ptr<AbstractGhost>>& Ghosts)
 {
