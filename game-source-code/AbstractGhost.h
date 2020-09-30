@@ -4,6 +4,7 @@
 #include "GhostNavigator.h"
 #include <chrono>
 #include "Definitions.h"
+#include "Clock.h"
 
 class AbstractGhost: public CircleSprite
 {
@@ -25,6 +26,7 @@ protected:
 	int count_ = 4;
 	std::chrono::steady_clock::time_point StartTime;
 	Mode Mode_ = Mode::Scatter;
+	Clock Clock_;
 	std::shared_ptr<Vector2> PacManPosition;
 	// temp
 	Vector2 DoorPosition = Vector2(320, 380); //rename this, it's not doorPosition but initPosion/InsideGhostHouse.

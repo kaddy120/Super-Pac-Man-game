@@ -67,9 +67,11 @@ void AbstractGhost::ScaredMovement()
 	Movement_.Move(GetPosition_ptr(),Navigator.GetCurrentDirrection());
 	
 	auto isInside_turningTile = Navigator.isInsideTurningTiles();
-	if (isInside_turningTile)
+	if (isInside_turningTile && Clock_.TimeLapse()>0.4)
 	{
+		///is either i'll use count or time
 		Navigator.RandomDirection();
+		Clock_.Reset();
 	}
 }
 
