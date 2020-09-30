@@ -5,7 +5,7 @@
 #include "../game-source-code/Key.h"
 #include "../game-source-code/Door.h"
 #include "../game-source-code/fruit.h"
-
+#include "../game-source-code/FileReader.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -195,3 +195,29 @@ TEST_CASE("Fruits points are correct and can be modified")
 
 
 }
+////------------Test Score File Reader ------------
+
+TEST_CASE("FileReader can set and retrieve the Highest score successfully from a textfile")
+{
+    FileReader score_reader_file{};
+    auto highScore = 250;
+    score_reader_file.setHighestScore(highScore);
+
+    CHECK(highScore == score_reader_file.getHighestScore());
+}
+TEST_CASE("A score can never be less than 0 set and retrived from a textfile")
+{
+     FileReader score_reader_file{};
+     auto highScore = -1;
+    score_reader_file.setHighestScore(highScore);
+
+    CHECK_FALSE(highScore == score_reader_file.getHighestScore());
+}
+TEST_CASE("An exception is thrown when file is not found"){
+
+
+
+}
+
+////------------Test Game Score ------------
+

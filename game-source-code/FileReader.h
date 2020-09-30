@@ -6,6 +6,9 @@ using std::string;
 using std::ios;
 using std::fstream;
 
+// exception class
+class FileCannotBeOpened{};
+
 class FileReader
 {
     public:
