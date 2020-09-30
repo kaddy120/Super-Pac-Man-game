@@ -20,23 +20,7 @@ bool Application::AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallets)
     return false;
 }
 
-void Application::MovablesExitMaze(CircleSprite& MovableEntity, const unsigned int& mazeWidth)
-{
-    auto position = MovableEntity.GetPosition();
-    if (position.X < 0)
-    {
-        position.X = mazeWidth;
-        MovableEntity.SetPosition(position);
-    }
-    else if (position.X > mazeWidth)
-    {
-        position.X = 0;
-        MovableEntity.SetPosition(position);
-    }
-}
-
-//Circular Entity and Rectangular entity should Inherite form IEntity
-void Application::MovablesExitMaze(Sprite& MovableEntity, const unsigned int& mazeWidth)
+void Application::MovablesExitMaze(IEntity& MovableEntity, const unsigned int& mazeWidth)
 {
     auto position = MovableEntity.GetPosition();
     if (position.X < 0)
