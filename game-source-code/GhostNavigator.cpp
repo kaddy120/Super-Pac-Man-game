@@ -162,8 +162,15 @@ void GhostNavigator::RandomDirection()
 			temp = static_cast<Direction>((rand() % 4) + 1);
 
 		} while (static_cast<int>(temp) == toInt);
+		StuckCount++;
+		if (StuckCount > 10)
+		{
+			CurrentDirection = static_cast<Direction>(toInt);
+			StuckCount = 0;
+			return;
+		}
 	} while (!isSelectedDirectionMovable(temp));
-
+	StuckCount = 0;
 	CurrentDirection = temp;
 }
 

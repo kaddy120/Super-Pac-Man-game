@@ -189,7 +189,8 @@ void Render::Initialise()
     GhostSprite.setTexture(&GhostsTexture);
     Fruit.setSize(sf::Vector2f(50, 50));
     Fruit.setTexture(&FruitsTextutre);
-    Key.setSize(sf::Vector2f(50,30));
+    Key.setSize(sf::Vector2f(50,50));
+    Key.setScale(3,4);
     Key.setTexture(&keyTexture);
     Door.setFillColor(sf::Color(153, 94, 0));
 
