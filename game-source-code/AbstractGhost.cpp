@@ -5,11 +5,11 @@ AbstractGhost::AbstractGhost(
 	const std::vector<Sprite>& walls,
 	const std::vector<std::shared_ptr<Door>>& doors,
 	const float& radius,
-	const Vector2& initPosition) :CircleSprite(radius, initPosition), Navigator(
+	const Vector2& initPosition) :CircleSprite(radius, initPosition),Navigator(
 		turningTiles,
 		walls,
 		doors,
-		GetPosition_ptr()) {
+		GetPosition_ptr()), Movement_(1.9) {
 	StartTime = std::chrono::steady_clock::now();
 }
 

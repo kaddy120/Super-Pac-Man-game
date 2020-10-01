@@ -17,6 +17,10 @@ public:
 		const Vector2& initPosition);
 
 	virtual void Move();
+	void SetTarget(const Vector2& target)
+	{
+		Navigator.SetTarget(target);
+	}
 	virtual void SetPackManPosition(const std::shared_ptr<Vector2>& position);
 	virtual void UpdateMode(const Mode& mode);
 	void SetSpeed(const float& speed);

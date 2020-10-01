@@ -239,7 +239,7 @@ TEST_CASE("PacMan Score is reset to 0 when PacMan loses all lives")
     CHECK(PacMan.GetPoints() == 0);
 }
 
-TEST_CASE("If PacMan dies 3 times, pacMan state changes from State::Alife to State::Dead")
+TEST_CASE("If PacMan dies 3 times, pacMan state changes from State::Alive to State::Dead")
 {
     auto width = 35, height = 35;
     PacMan PacMan(width, height, Vector2(0, 0));
@@ -263,7 +263,14 @@ TEST_CASE("Two rectangles closer to each other collide")
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
-TEST_CASE("Two rectangles touching by edges collide")
+TEST_CASE("Two rectangles apart cannot to collide")
+{
+    Sprite rectangle1(40, 20, Vector2(0, 0));
+    Sprite rectangle2(40, 40, Vector2(100, 100));
+    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
+}
+
+TEST_CASE("Two rectangles with touching edges collide")
 {
     auto width = 40;
     auto height = 40;
@@ -278,7 +285,14 @@ TEST_CASE("Testing if two circles collide ")
     CircleSprite rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
-
+//
+TEST_CASE("Two circles apart do not collide")
+{
+    auto radius = 40;
+    CircleSprite rectangle1(radius, Vector2(0, 0));
+    CircleSprite rectangle2(radius, Vector2(100, 100));
+    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
+}
 TEST_CASE("Testing if a circle and a square collide ")
 {
     Sprite rectangle1(40, 40, Vector2(0, 0));
@@ -297,7 +311,7 @@ TEST_CASE("circle and a square do not collide if they are far apart ")
     CHECK_FALSE(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
-TEST_CASE("circle and a square that are 1px apart do")
+TEST_CASE("circle and a square that are 1px apart do not collide")
 {
     auto width = 40;
     auto height = 40;
@@ -309,7 +323,7 @@ TEST_CASE("circle and a square that are 1px apart do")
     CHECK_FALSE(Collision::CheckCollision(Circle2, rectangle1));
 }
 
-TEST_CASE("circle and a square that are 1px apart do")
+TEST_CASE("circle and a square that are only touching by edges collide")
 {
     auto width = 40;
     auto height = 40;
@@ -317,13 +331,6 @@ TEST_CASE("circle and a square that are 1px apart do")
     auto radius = 20.f;
     CircleSprite rectangle2(radius, Vector2(60, 0));
     CHECK(Collision::CheckCollision(rectangle2, rectangle1));
-}
-TEST_CASE("circles do not collide if they are far apart")
-{
-    auto radius = 40;
-    CircleSprite rectangle1(radius, Vector2(0, 0));
-    CircleSprite rectangle2(radius, Vector2(100, 100));
-    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
 TEST_CASE("circles of different radius closer to each other collides")
@@ -335,12 +342,6 @@ TEST_CASE("circles of different radius closer to each other collides")
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
-TEST_CASE("Two rectangles apart cannot to collide")
-{
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    Sprite rectangle2(40, 40, Vector2(100, 100));
-    CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
-}
 
 
 //-----------Test Key-----------------
@@ -391,7 +392,7 @@ TEST_CASE("Door Object can only be unlocked with the key assigned to it")
     CHECK_FALSE(Door1.IsDoorLocked());
 }
 
-TEST_CASE("Doors wil not unlock with with an incorrect key")
+TEST_CASE("Doors wil not unlock with an incorrect key")
 {
     Key key1{};
     Key IncorrectKey{};
@@ -459,5 +460,5 @@ TEST_CASE("PacMan is mapped to PacManViewModel(DTO) correctly")
 
 TEST_CASE("TextViewModel is correctly filled")
 {
-    MapEntitiesToDTO::MapTextViewModel();
+   // MapEntitiesToDTO::MapTextViewModel();
 }

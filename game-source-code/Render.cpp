@@ -62,6 +62,8 @@ void Render::RenderText(const TextModelView& textModelView)
 void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTIme)
 {
     auto DrawGhost = [this](GhostModelView model) {
+        if (model.Mode == Mode::Eaten)
+            GhostAnimation.Update(4, 0);
         GhostSprite.setTextureRect(GhostAnimation.GetIntRect());
         auto position = model.Positon;
         GhostSprite.setPosition(sf::Vector2f(position.X, position.Y));
