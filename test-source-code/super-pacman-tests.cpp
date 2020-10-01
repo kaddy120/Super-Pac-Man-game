@@ -230,7 +230,7 @@ TEST_CASE("A door object instant is locked by default")
     Door Door1(width, height, position);
     CHECK(Door1.IsDoorLocked());
 }
-TEST_CASE("Door Object can only be unlocked with a key assigned to it")
+TEST_CASE("Door Object can only be unlocked with the key assigned to it")
 {
     Key key1{};
     auto width = 1, height = 3;
@@ -241,20 +241,22 @@ TEST_CASE("Door Object can only be unlocked with a key assigned to it")
     CHECK_FALSE(Door1.IsDoorLocked());
 }
 
-TEST_CASE("Two doors can be in the same position")
- {
-    Door door_;
-    auto door1=door_.GetPosition_ptr();
-    auto door2=door_.GetPosition_ptr();
-    CHECK(door1 == door2);
+TEST_CASE("Doors wil not unlock with with an incorrect key")
+{
+    Key key1{};
+    Key IncorrectKey{};
+    Key IncorrectKey2{};
+    auto width = 1, height = 3;
+    auto position = Vector2(0, 0);
+    Door Door1(width, height, position);
+    Door1.AssignKey(key1);
+    Door1.Unlock(IncorrectKey);
+    CHECK(Door1.IsDoorLocked());
+    
+    Door1.Unlock(IncorrectKey2);
+    CHECK(Door1.IsDoorLocked());
 }
-TEST_CASE("Two doors cannot have same key")
- {
-//Door door_;
-//  auto door1= door_.;
-//  auto door2=door_.AssignKey();
-//    CHECK(door1 == door2);
-}
+
 //------------Test fruit ------------
 TEST_CASE("Fruits points are correct and can be modified")
 {
