@@ -1,10 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "Movement.h"
-
-enum class State {Alive, charged, SuperCharged, Dead };
-
-//enum class Move { Up, Down, Right, Left, NotMoving};
+#include "Definitions.h"
 
 class PacMan: public Sprite
 {

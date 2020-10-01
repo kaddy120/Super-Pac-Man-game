@@ -69,7 +69,7 @@ void AbstractGhost::ScaredMovement()
 	auto isInside_turningTile = Navigator.isInsideTurningTiles();
 	if (isInside_turningTile && Clock_.TimeLapse()>0.4)
 	{
-		///is either i'll use count or time
+		Movement_.Move(GetPosition_ptr(), Navigator.GetCurrentDirrection());
 		Navigator.RandomDirection();
 		Clock_.Reset();
 	}
@@ -77,18 +77,18 @@ void AbstractGhost::ScaredMovement()
 
 void AbstractGhost::ChaseTargetMovement()
 {
-	//if(isSelectedDirectionMovable(CurrentDirection))
 	Movement_.Move(GetPosition_ptr(), Navigator.GetCurrentDirrection());
 	auto isInside_turningTile = Navigator.isInsideTurningTiles();
-	if (isInside_turningTile && count_ >= 30)
+	if (isInside_turningTile && TClock_.TimeLapse()>0.4)
 	{
 		Movement_.Move(GetPosition_ptr(), Navigator.GetCurrentDirrection());
-		//Movement_.Move(GetPosition_ptr(), Navigator.GetCurrentDirrection());
 		Navigator.FindDirectionToTarget();
-		count_ = 0;
+		//count_ = 0;
+		TClock_.Reset();
 	}
-	count_++;
+	//count_++;
 }
+
 //this can move out
 void AbstractGhost::SetChaseMode()
 {

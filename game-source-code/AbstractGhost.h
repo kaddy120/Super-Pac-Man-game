@@ -27,6 +27,7 @@ protected:
 	std::chrono::steady_clock::time_point StartTime;
 	Mode Mode_ = Mode::Scatter;
 	Clock Clock_;
+	Clock TClock_;
 	std::shared_ptr<Vector2> PacManPosition;
 	// temp
 	Vector2 DoorPosition = Vector2(320, 380); //rename this, it's not doorPosition but initPosion/InsideGhostHouse.

@@ -114,7 +114,10 @@ void GameLogic::Update()
                 }
         }
     }
-    MovingToTheNextLevel();
+    Logic.MovablesExitMaze(pacMan, 660);
+    for (auto i = 0; i < Ghosts.size(); i++)
+        Logic.MovablesExitMaze(*Ghosts[i], 660);
+
 }
 
 void GameLogic::RenderEntities()

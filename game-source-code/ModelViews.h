@@ -34,4 +34,5 @@ class PacManModelView : public SpriteModelView
 {
 public:
     Direction Direction;
+    State State;
 };
