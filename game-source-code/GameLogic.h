@@ -64,6 +64,7 @@ private:
 	float deltaTime = 0.f;
 	bool proposed = true;
 	unsigned int Level = 0;
+	bool NextLevel = false;
 	bool IsGameOver_;
 	Clock Clock_;
 };

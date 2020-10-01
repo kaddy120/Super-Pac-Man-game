@@ -8,7 +8,7 @@ class GameEndScreen
 {
 public:
 	//for now i'll declare a font in here, but later i'll use one font from render
-	GameEndScreen(const std::shared_ptr<sf::RenderWindow>& window);
+	GameEndScreen(const std::shared_ptr<sf::RenderWindow>& window,const bool& won);
 
 private:
 //	std::shared_ptr<sf::RenderWindow> Window_;

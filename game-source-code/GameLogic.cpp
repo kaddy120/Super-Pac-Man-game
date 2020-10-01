@@ -80,10 +80,12 @@ void GameLogic::Update()
     Logic.EatFruits(pacMan, Fruits);
     if (Logic.AtePallet(pacMan, SuperPallets)) {
         pacMan.SetState(State::SuperCharged);
+        pacMan.SetSpeed(2.6);
         Clock_.Reset();
     }
     if (pacMan.GetState() == State::SuperCharged && Clock_.TimeLapse() > 5) {
         pacMan.SetState(State::Alive);
+        pacMan.SetSpeed(2.3);
     }
     if (Logic.AtePallet(pacMan, PowerPallets))
     {
@@ -127,7 +129,12 @@ void GameLogic::Update()
     Logic.MovablesExitMaze(pacMan, MazeWidth);
     for (auto i = 0; i < Ghosts.size(); i++)
         Logic.MovablesExitMaze(*Ghosts[i], 660);
-
+    if (PowerPallets.size() == 0 && SuperPallets.size() == 0 && Fruits.size() == 0)
+    {
+        NextLevel = true;
+        Level++;
+        IsGameOver_ = true;
+    }
 }
 
 void GameLogic::RenderEntities()
@@ -140,9 +147,7 @@ void GameLogic::RenderEntities()
 
     if (IsGameOver_)
     {
-            GameEndScreen GameEndScr(window);
-        //Render_.RenderGameEndScreen(Level, "", false);
-        true;
+            GameEndScreen GameEndScr(window, NextLevel);
     }
     //Render_.RenderText(textModelView);
     window->display();
@@ -198,7 +203,7 @@ void GameLogic::MapStaticEntitiesViewModel()
 
 void GameLogic::InitialiseEntities()
 {
-    if (pacMan.GetLifes() == 3 || pacMan.GetLifes() == 0)
+    if (pacMan.GetLifes() == 3 || pacMan.GetLifes() == 0 || NextLevel)
     {
         GameMap GameMap{};
         walls = GameMap.GetWalls();
@@ -209,6 +214,7 @@ void GameLogic::InitialiseEntities()
         Fruits = GameMap.GetFruits();
         SuperPallets = GameMap.GetSuperPallets();
         PowerPallets = GameMap.GetPowerPallets();
+        NextLevel = false;
     }
     
     IsGameOver_ = false;

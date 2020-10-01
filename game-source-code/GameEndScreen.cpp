@@ -1,29 +1,34 @@
 #include "GameEndScreen.h"
 
-GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& Window_)
+GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& Window_, const bool& won)
 {
     sf::Font font;
     if(!font.loadFromFile("resources/sansation.ttf"));
-    {
-    }
+    {}
     sf::Text pauseMessage;
     pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(70);
     pauseMessage.setPosition(50.f, 200.f);
     pauseMessage.setFillColor(sf::Color::White);
-    pauseMessage.setString("Game over !\n\n\nPress Enter to Replay\n\n Press Esc to exit \n");
+    
     if( !(file_image.loadFromFile("resources/background.jpg")) )
     {
         return;
     }
     sf::Sprite gameover(file_image);
     gameover.scale(0.5f,1.0f);
-
-    Window_->draw(gameover);
+    if (won)
+    {
+        pauseMessage.setString("You won!\n\n\nPress Enter to\n\n move to the next Level\n\n Press Esc to exit \n");
+        Window_->draw(gameover);
+    }
+    else
+    {
+        pauseMessage.setString("Game over !\n\n\nPress Enter to Replay\n\n Press Esc to exit \n");
+       Window_->draw(gameover);
+    }
     Window_->draw(pauseMessage);
     Window_->display();
-
-
 
     while (Window_->isOpen())
     {
@@ -43,12 +48,5 @@ GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& Window_)
                 return;
             }
         }
-
-
-        // Clear the window
-        // Window_->clear(sf::Color(0, 0, 0));
-        //Window_->draw(pauseMessage);
-        // Display things on screen
-        //Window_->display();
     }
 }
