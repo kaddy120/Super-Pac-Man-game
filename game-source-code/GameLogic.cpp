@@ -82,7 +82,7 @@ void GameLogic::Update()
         pacMan.SetState(State::SuperCharged);
         Clock_.Reset();
     }
-    if (pacMan.GetState() == State::SuperCharged && Clock_.TimeLapse() > 7) {
+    if (pacMan.GetState() == State::SuperCharged && Clock_.TimeLapse() > 5) {
         pacMan.SetState(State::Alive);
     }
     if (Logic.AtePallet(pacMan, PowerPallets))
@@ -93,11 +93,19 @@ void GameLogic::Update()
         }
         Clock_.Reset();
     }
-    if (pacMan.GetState() == State::charged && Clock_.TimeLapse() > 20) {
+    if (pacMan.GetState() == State::charged && Clock_.TimeLapse() > 5) {
         pacMan.SetState(State::Alive);
         for (auto i = 0; i < Ghosts.size(); i++) {
+            if (Ghosts[i]->GetMode() != Mode::Eaten)
             Ghosts[i]->UpdateMode(Mode::Chase);
         }
+    }
+    for (auto i = 0; i < Ghosts.size(); i++) {
+        if (Ghosts[i]->GetMode() == Mode::Eaten)
+            if (Collision::CheckCollision(*Ghosts[i],GhostsHouseDoor))
+            {
+                Ghosts[i]->UpdateMode(Mode::Chase);
+            }
     }
     Logic.OpenDoors(pacMan, Keys, Doors);
     //this will need to go into its on function to improve code self documentation
@@ -115,7 +123,8 @@ void GameLogic::Update()
                 }
         }
     }
-    Logic.MovablesExitMaze(pacMan, 660);
+    auto MazeWidth = 660;
+    Logic.MovablesExitMaze(pacMan, MazeWidth);
     for (auto i = 0; i < Ghosts.size(); i++)
         Logic.MovablesExitMaze(*Ghosts[i], 660);
 
@@ -126,7 +135,7 @@ void GameLogic::RenderEntities()
     MapEntitiesToModelView();
     Render_.RenderStaticSprites(StaticEntityModelView);
     Render_.RenderGhost(ghostModelView, deltaTime);
-    Render_.RenderPacMan(pacManModelVIew, deltaTime);
+    Render_.RenderPacMan(PacManViewModel, deltaTime);
     Render_.RenderText(textModelView);
 
     if (IsGameOver_)
@@ -143,10 +152,10 @@ void GameLogic::RenderEntities()
 
 void GameLogic::MapEntitiesToModelView()
 {
-    MapEntiesToDTO::MapPacManModelView(pacManModelVIew, pacMan, PacManCurrentDirection);
+    MapEntitiesToDTO::MapPacManViewModel(PacManViewModel, pacMan, PacManCurrentDirection);
     MapTextViewModel();
     MapStaticEntitiesViewModel();
-    MapEntiesToDTO::MapGhostModelView(ghostModelView, Ghosts);
+    MapEntitiesToDTO::MapGhostModelView(ghostModelView, Ghosts);
 }
 
 // mapping needs to go to it's own class;
@@ -154,7 +163,7 @@ void GameLogic::MapTextViewModel()
 {
     FileReader filereader_;
     auto hightestScore = filereader_.getHighestScore();
-    MapEntiesToDTO::MapTextModelView(textModelView, pacMan, hightestScore, (int)Level);
+    MapEntitiesToDTO::MapTextViewModel(textModelView, pacMan, hightestScore, (int)Level);
 
     if (pacMan.GetPoints()> hightestScore)
     {
@@ -167,44 +176,53 @@ void GameLogic::MapStaticEntitiesViewModel()
 {
     for (auto door : Doors)
         if (door->IsDoorLocked())
-            MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, *door);
+            MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, *door);
 
-    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, walls);
+    MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, walls);
 
     for (auto fruit : Fruits)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, fruit);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, fruit);
 
     for (auto key : Keys)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
 
     for (auto superPallet : SuperPallets)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
 
     for (auto powerPallet : PowerPallets)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
 
-    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, GhostsHouseDoor);
+    MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, GhostsHouseDoor);
 }
 
 
 void GameLogic::InitialiseEntities()
 {
-    GameMap GameMap{};
-    walls = GameMap.GetWalls();
-    TurningPoints = GameMap.GetTurningPoinints();
-    Doors = GameMap.GetDoors();
-    GhostsHouseDoor = GameMap.GhostsHouseDoor();
-    Keys = GameMap.GetKeys();
-    Fruits = GameMap.GetFruits();
-    SuperPallets = GameMap.GetSuperPallets();
-    PowerPallets = GameMap.GetPowerPallets();
+    if (pacMan.GetLifes() == 3 || pacMan.GetLifes() == 0)
+    {
+        GameMap GameMap{};
+        walls = GameMap.GetWalls();
+        TurningPoints = GameMap.GetTurningPoinints();
+        Doors = GameMap.GetDoors();
+        GhostsHouseDoor = GameMap.GhostsHouseDoor();
+        Keys = GameMap.GetKeys();
+        Fruits = GameMap.GetFruits();
+        SuperPallets = GameMap.GetSuperPallets();
+        PowerPallets = GameMap.GetPowerPallets();
+    }
+    
     IsGameOver_ = false;
     Logic = Application(walls,Doors);
 
     PacManCurrentDirection = static_cast<Direction>(0);
     ProposedDirection = static_cast<Direction>(0);
     proposed = true;
-    pacMan = PacMan(44.f, 44.f, Vector2(310, 570));
+    auto pacManInitPosition = Vector2(310, 570);
+    if(pacMan.GetLifes() == 0)
+    pacMan = PacMan(44.f, 44.f, pacManInitPosition);
+    pacMan.SetSpeed(2.3);
+    pacMan.SetPosition(pacManInitPosition);
+
 
     Ghosts.clear();
     Ghosts.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors));

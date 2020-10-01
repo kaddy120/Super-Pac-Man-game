@@ -11,7 +11,7 @@
 #include "SplashScreen.h"
 #include "Render.h"
 #include "BlueGhost.h"
-#include "MapEntiesToDTO.h"
+#include "MapEntitiesToDTO.h"
 #include "FileReader.h"
 #include "Clock.h"
 #include "Render.h"
@@ -59,7 +59,7 @@ private:
 	TextModelView textModelView;
 	vector<GhostModelView> ghostModelView;
 	vector<SpriteModelView> StaticEntityModelView;
-	PacManModelView pacManModelVIew;
+	PacManViewModel PacManViewModel;
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
 	bool proposed = true;

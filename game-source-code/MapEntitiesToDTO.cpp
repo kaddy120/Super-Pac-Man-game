@@ -1,6 +1,6 @@
-#include "MapEntiesToDTO.h"
+#include "MapEntitiesToDTO.h"
 
-void MapEntiesToDTO::MapTextModelView(
+void MapEntitiesToDTO::MapTextViewModel(
     TextModelView& modelView,
     const PacMan& pacMan,
     const int& highestScore,
@@ -12,7 +12,7 @@ void MapEntiesToDTO::MapTextModelView(
     modelView.CurrentScore = std::to_string(pacMan.GetPoints());
 }
 
-void MapEntiesToDTO::MapPacManModelView(PacManModelView& modelView, const PacMan& pacMan, const Direction& currentDirection)
+void MapEntitiesToDTO::MapPacManViewModel(PacManViewModel& modelView, const PacMan& pacMan, const Direction& currentDirection)
 {
     modelView.Direction = currentDirection;
     modelView.Positon = pacMan.GetPosition();
@@ -20,7 +20,7 @@ void MapEntiesToDTO::MapPacManModelView(PacManModelView& modelView, const PacMan
     modelView.Dimention = Vector2(width, height);
     modelView.State = pacMan.GetState();
 }
-void MapEntiesToDTO::MapGhostModelView(vector<GhostModelView>& modelView, const vector<std::unique_ptr<AbstractGhost>>& Ghosts)
+void MapEntitiesToDTO::MapGhostModelView(vector<GhostModelView>& modelView, const vector<std::unique_ptr<AbstractGhost>>& Ghosts)
 {
     for (auto i = 0; i < Ghosts.size(); i++)
     {
@@ -32,7 +32,7 @@ void MapEntiesToDTO::MapGhostModelView(vector<GhostModelView>& modelView, const 
         modelView.push_back(tempModel);
     }
 }
-void MapEntiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const vector<Sprite>& rectSprites)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const vector<Sprite>& rectSprites)
 {
     auto model = SpriteModelView{};
     for (auto rectSprite : rectSprites)
@@ -40,7 +40,7 @@ void MapEntiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelVi
         MapStaticEntitiesModelView(modelView, rectSprite);
     }
 }
-void MapEntiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const CircleSprite& circleSprite)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const CircleSprite& circleSprite)
 {
     SpriteModelView Model;
 
@@ -50,7 +50,7 @@ void MapEntiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelVi
     Model.Positon = circleSprite.GetPosition();
     modelView.push_back(Model);
 }
-void MapEntiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const Sprite& rectSprite)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const Sprite& rectSprite)
 {
     SpriteModelView Model;
 

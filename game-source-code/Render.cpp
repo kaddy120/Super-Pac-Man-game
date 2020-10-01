@@ -71,6 +71,8 @@ void Render::RenderText(const TextModelView& textModelView)
 void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTIme)
 {
     auto DrawGhost = [this](GhostModelView model) {
+        if (model.Mode == Mode::Eaten)
+            GhostAnimation.Update(4, 0);
         GhostSprite.setTextureRect(GhostAnimation.GetIntRect());
         auto position = model.Positon;
         GhostSprite.setPosition(sf::Vector2f(position.X, position.Y));
@@ -117,40 +119,40 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
         }
     }
 }
-void Render::RenderPacMan(const PacManModelView& pacManModelVIew, const float& deltaTime)
+void Render::RenderPacMan(const PacManViewModel& pacManViewModel, const float& deltaTime)
 {
-    auto DrawPacMan = [this](const PacManModelView& pacManModelVIew) {
+    auto DrawPacMan = [this](const PacManViewModel& pacManViewModel) {
         PackManSprite.setTextureRect(PacManAnimation.GetIntRect());
-        auto position = pacManModelVIew.Positon;
+        auto position = pacManViewModel.Positon;
         PackManSprite.setPosition(sf::Vector2f(position.X, position.Y));
     };
-    auto D = pacManModelVIew.Dimention;
-    if (pacManModelVIew.State == State::SuperCharged)
+    auto D = pacManViewModel.Dimention;
+    if (pacManViewModel.State == State::SuperCharged)
     {
-        PackManSprite.setOrigin(12.5, 12.5);
+        PackManSprite.setOrigin(15, 15);
         PackManSprite.setScale(sf::Vector2f(2,2));
     }
-    switch (pacManModelVIew.Direction)
+    switch (pacManViewModel.Direction)
     {
     case Direction::Right:
         PacManAnimation.Update(0, deltaTime);
-        DrawPacMan(pacManModelVIew);
+        DrawPacMan(pacManViewModel);
         break;
     case Direction::Left:
         PacManAnimation.Update(3, deltaTime);
-        DrawPacMan(pacManModelVIew);
+        DrawPacMan(pacManViewModel);
         break;
     case Direction::Down:
         PacManAnimation.Update(1, deltaTime);
-        DrawPacMan(pacManModelVIew);
+        DrawPacMan(pacManViewModel);
         break;
     case Direction::Up:
         PacManAnimation.Update(2, deltaTime);
-        DrawPacMan(pacManModelVIew);
+        DrawPacMan(pacManViewModel);
         break;
     default:
         PacManAnimation.Update(1, deltaTime);
-        DrawPacMan(pacManModelVIew);
+        DrawPacMan(pacManViewModel);
         break;
         break;
     }
