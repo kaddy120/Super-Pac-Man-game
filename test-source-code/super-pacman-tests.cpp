@@ -34,9 +34,10 @@ TEST_CASE("check that vector with differet coordinates are not equal")
     CHECK_FALSE(Vector1 == Vector2);
 }
 // ----------------Testing Clock --------------------------------------
-TEST_CASE("Time lapse always be greater than 0")
+TEST_CASE("Time lapse should always be greater than 0")
 {
     Clock Clock_{};
+    Sleep(10);
     CHECK(Clock_.TimeLapse() > 0);
 }
 
@@ -178,29 +179,42 @@ TEST_CASE("position of the PacMan can be tracked using shared pointer as it chan
     CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
 }
 
-TEST_CASE("points ")
+TEST_CASE("PacMan start with Initial Points(Score) of zero")
 {
-    PacMan PacMan(35, 35, Vector2(300, 450));
-    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
-    PacMan.SetPosition(Vector2(40, 60));
-    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
-    PacMan.Move(Direction::Down);
-    PacMan.Move(Direction::Left);
-    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    CHECK(PacMan.GetPoints() == 0);
 }
 
-TEST_CASE("Lifes")
+
+TEST_CASE("Points(Score) are incremented correctly")
 {
-    PacMan PacMan(35, 35, Vector2(300, 450));
-    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
-    PacMan.SetPosition(Vector2(40, 60));
-    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
-    PacMan.Move(Direction::Down);
-    PacMan.Move(Direction::Left);
-    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    auto initScore = PacMan.GetPoints();
+    PacMan.IncreamentPoints(18);
+    CHECK(initScore + 18 == PacMan.GetPoints());
 }
 
-//
+TEST_CASE("PacMan Intial has 3 Lives")
+{
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    CHECK(PacMan.GetLifes() == 3);
+}
+
+TEST_CASE("PacMan loss a life when he dies")
+{
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    auto InitLives = PacMan.GetLifes();
+    ///this function should be rename to Die()
+    PacMan.SubtractLife();
+    CHECK(InitLives-1 == PacMan.GetLifes());
+}
+
+
+
 ////------------Test Collision ---------
 TEST_CASE("Two rectangles closer to each other collide")
 {
@@ -273,6 +287,7 @@ TEST_CASE("circles do not collide if they are far apart")
     CircleSprite rectangle2(radius, Vector2(100, 100));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
+
 TEST_CASE("circles of different radius closer to each other collides")
 {
     auto radius1 = 40;
