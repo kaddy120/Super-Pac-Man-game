@@ -49,6 +49,65 @@ TEST_CASE("Time lapse should increase over time")
 }
 //-----------------Testing Movement Class -----------------------------
 
+TEST_CASE("There's no movement if an intitial dirrection is not specified")
+{
+    Direction Direction_;
+    std::shared_ptr<Vector2> InitPosition = std::make_shared<Vector2>(0,0);
+    auto PositionBeforeMove = *InitPosition;
+    Movement Movement_{};
+    Movement_.SetSpeed(2);
+    Movement_.Move(InitPosition, Direction_);
+    CHECK(PositionBeforeMove == *InitPosition);
+}
+
+TEST_CASE("Moving a position Downwards correctly")
+{
+    auto Direction_ = Direction::Down;
+    std::shared_ptr<Vector2> InitPosition = std::make_shared<Vector2>(0,0);
+    auto PositionBeforeMove = *InitPosition;
+    Movement Movement_{};
+    auto speed = 2;
+    Movement_.SetSpeed(speed);
+    Movement_.Move(InitPosition, Direction_);
+    CHECK(PositionBeforeMove.add(Vector2(0, speed)) == *InitPosition);
+}
+
+TEST_CASE("Moving a position to the right correctly")
+{
+    auto Direction_ = Direction::Right;
+    std::shared_ptr<Vector2> InitPosition = std::make_shared<Vector2>(0, 0);
+    auto PositionBeforeMove = *InitPosition;
+    Movement Movement_{};
+    auto speed = 2;
+    Movement_.SetSpeed(speed);
+    Movement_.Move(InitPosition, Direction_);
+    CHECK(PositionBeforeMove.add(Vector2(speed, 0)) == *InitPosition);
+}
+
+TEST_CASE("Moving to a position to the left correctly")
+{
+    auto Direction_ = Direction::Left;
+    std::shared_ptr<Vector2> InitPosition = std::make_shared<Vector2>(0, 0);
+    auto PositionBeforeMove = *InitPosition;
+    Movement Movement_{};
+    auto speed = 2;
+    Movement_.SetSpeed(speed);
+    Movement_.Move(InitPosition, Direction_);
+    CHECK(PositionBeforeMove.subtract(Vector2(speed, 0)) == *InitPosition);
+}
+
+TEST_CASE("Moving to a aposition to the Upwards correctly")
+{
+    auto Direction_ = Direction::Up;
+    std::shared_ptr<Vector2> InitPosition = std::make_shared<Vector2>(0, 0);
+    auto PositionBeforeMove = *InitPosition;
+    Movement Movement_{};
+    auto speed = 2;
+    Movement_.SetSpeed(speed);
+    Movement_.Move(InitPosition, Direction_);
+    CHECK(PositionBeforeMove.subtract(Vector2(0, speed)) == *InitPosition);
+}
+
 //------------------Testing PacMan --------------------------------------
 TEST_CASE("Check that PacMan positio is initialised correctly")
 {
@@ -118,6 +177,29 @@ TEST_CASE("position of the PacMan can be tracked using shared pointer as it chan
     PacMan.Move(Direction::Left);
     CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
 }
+
+TEST_CASE("points ")
+{
+    PacMan PacMan(35, 35, Vector2(300, 450));
+    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
+    PacMan.SetPosition(Vector2(40, 60));
+    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
+    PacMan.Move(Direction::Down);
+    PacMan.Move(Direction::Left);
+    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
+}
+
+TEST_CASE("Lifes")
+{
+    PacMan PacMan(35, 35, Vector2(300, 450));
+    auto PacManPosition_ptr = PacMan.GetPosition_ptr();
+    PacMan.SetPosition(Vector2(40, 60));
+    CHECK(Vector2(40, 60) == *PacManPosition_ptr);
+    PacMan.Move(Direction::Down);
+    PacMan.Move(Direction::Left);
+    CHECK(PacMan.GetPosition() == *PacManPosition_ptr);
+}
+
 //
 ////------------Test Collision ---------
 TEST_CASE("Two rectangles closer to each other collide")
