@@ -1,9 +1,7 @@
 #pragma once
 #include "Sprite.h"
-
-enum class State {Alive, charged, SuperCharged, Dead };
-
-enum class Move { Up, Down, Right, Left, NotMoving};
+#include "Movement.h"
+#include "Definitions.h"
 
 class PacMan: public Sprite
 {
@@ -13,19 +11,16 @@ public:
 	unsigned int IncreamentPoints(const unsigned int& points);
 	unsigned int GetPoints() const { return CollectedPoints; }
 	void SetState(const State& state);
+	State GetState() const;
 	unsigned int GetLifes() const;
-	Vector2 Movement(const Move& direction);
-
+	Vector2 Move(const Direction& direction);
+	void Die();
+	void ResetPoints() { CollectedPoints = 0; }
 
 private:	
-	float Speed= 1.8f; 
 	unsigned int CollectedPoints=0;
 	unsigned int Lifes = 3;
 	State state=State::Alive;
-
-	void MoveUp();
-	void MoveDown();
-	void MoveLeft();
-	void MoveRight();
+	Movement Movement_;
 };
 

@@ -1,19 +1,19 @@
 #pragma once
-#include "Ghost.h"
+#include "AbstractGhost.h"
 
 
-class PinkGhost: public GhostAbstract
+class PinkGhost: public AbstractGhost
 {
 public:
 	PinkGhost(
 		const std::vector<CircleSprite>& turningTiles,
 		const std::vector<Sprite>& walls,
 		const std::vector<std::shared_ptr<Door>>& Doors,
-		const float& radius,
-		const Vector2& initPosition);
+		const std::shared_ptr<Vector2>& RedGhostposition,
+		const float& radius = 20.f,
+		const Vector2& initPosition = Vector2(320, 380));
 
-	virtual void Movement() override;
-	void SetRedGhostPosition(const std::shared_ptr<Vector2>& position);
+	/*void SetRedGhostPosition(const std::shared_ptr<Vector2>& position);*/
 
 private:
 	void SetTarget();

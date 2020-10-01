@@ -2,21 +2,33 @@
 
 SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
 {
-    // Create the window of the application
-    window->setVerticalSyncEnabled(true);
-    // Load the text font
     sf::Font font;
     if(!font.loadFromFile("resources/sansation.ttf"));
     {
-
     }
     sf::Text pauseMessage;
     pauseMessage.setFont(font);
     pauseMessage.setCharacterSize(30);
     pauseMessage.setPosition(120.f, 40.f);
-    pauseMessage.setFillColor(sf::Color::Red);
-    pauseMessage.setString("Welcome to Super Pacman!\n\nPress ENTER to start the game\n\n\nUse the arrows Keys to move PacMan around \n"
-                            "\n""\n\nESC to EXIT");
+    pauseMessage.setFillColor(sf::Color::White);
+    pauseMessage.setString("Welcome to Super-Pacman!\n\n\n\nPress ENTER to start the game\n\nUse the arrow Keys to move PacMan around \n"
+                            "\n""\nESC to EXIT");
+
+   if( !(file_image.loadFromFile("resources/pacman.jpg")) )
+    {
+
+        return;
+    }
+
+    sf::Sprite start_game(file_image);
+    start_game.scale(0.4f,1.0f);
+
+    window->draw(start_game);
+    window->draw(pauseMessage);
+
+    // Display  on screen
+    window->display();
+
 
     while (window->isOpen()) {
         // Handle events
@@ -32,12 +44,6 @@ SplashScreen::SplashScreen(std::shared_ptr<sf::RenderWindow>& window)
                 return;
             }
         }
-        // Clear the window
-        window->clear(sf::Color(0, 0, 0));
 
-        window->draw(pauseMessage);
-
-        // Display things on screen
-        window->display();
     }
 }

@@ -10,13 +10,12 @@ class Key: public CircleSprite
 public:
 	Key();
 	Key(const float& radius, const Vector2& postion);
-
 	void SetKeyDimensions(const float& radius, const Vector2& postion);
-	
 	bool operator ==(const Key& other) const;
 	std::string GetKeyId() const;
 
 private:
+	static unsigned int NumberOfKeys;
 	std::string KeyId;
 	std::string GenerateUniqueID();
 

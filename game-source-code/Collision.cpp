@@ -20,16 +20,16 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 	auto [width2,height2] = sprite2.getDimentions();
 	auto position1 = sprite1.GetPosition();
 	auto position2 = sprite2.GetPosition();
-	
-		if (position1.X < position2.X + width2 &&
-			position1.X + width1> position2.X &&
-			position1.Y < position2.Y + height2 &&
-			position1.Y + height1 > position2.Y)
+
+		if (position1.X <= position2.X + width2 &&
+			position1.X + width1 >= position2.X &&
+			position1.Y <= position2.Y + height2 &&
+			position1.Y + height1 >= position2.Y)
 		{
-			std::cout << "collision detected" << std::endl;
+			//std::cout << "collision detected" << std::endl;
 			return true;
 		}
-		else 
+		else
 		return false;
 }
 
@@ -56,10 +56,12 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 
  bool Collision::CheckCollision(const CircleSprite& circle, const Sprite& rect)
  {
-		 auto circleDistance_x = abs(circle.GetPosition().X - rect.GetPosition().X);
-		 auto circleDistance_y = abs(circle.GetPosition().Y - rect.GetPosition().Y);
-
 		 auto [width, height] = rect.getDimentions();
+		 /*auto circleDistance_x = abs(circle.GetPosition().X - rect.GetCenter().X);
+		 auto circleDistance_y = abs(circle.GetPosition().Y - rect.GetCenter().Y);*/
+
+		 auto circleDistance_x = abs(circle.GetPosition().X - (rect.GetPosition().X +width/2));
+		 auto circleDistance_y = abs(circle.GetPosition().Y - (rect.GetPosition().Y+height/2));
 
 		 if (circleDistance_x > (width / 2 + circle.GetRadius())) { return false; }
 		 if (circleDistance_y > (height / 2 + circle.GetRadius())) { return false; }
@@ -71,6 +73,7 @@ bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
 			 pow((circleDistance_y - height / 2),2);
 
 		 return (cornerDistance_sq <= pow( circle.GetRadius(),2));
+
  }
 
  bool Collision::CheckCollision(const Sprite& rectangle, const std::vector<CircleSprite>& circles)

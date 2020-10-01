@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include "CircleSprite.h"
+#include "SuperPallet.h"
 
 //#include <memory>
 using std::vector;
@@ -21,14 +22,20 @@ public:
 	vector<std::shared_ptr<Door>> GetDoors() const;
 	vector<Key> GetKeys() const;
 	vector<Fruit> GetFruits() const;
-
+	vector<SuperPallet> GetSuperPallets() const;
+	vector<SuperPallet> GetPowerPallets() const;
+	Door GhostsHouseDoor() const;
 private:
 	vector<std::vector<std::string> > Maize;
 	vector<Sprite> Walls;
 	vector<std::shared_ptr<Door>> Doors;
+	Door GhostsHouseDoor_;
 	vector<Fruit> Fruits;
 	vector<Key> Keys;
 	vector<CircleSprite> TurningPoints;
+	//i think i should rename super pallet to just pallet
+	vector<SuperPallet> SuperPallets;
+	vector<SuperPallet> PowerPallets;
 	void Map();
 	void AssignKeyToDoor();
 
