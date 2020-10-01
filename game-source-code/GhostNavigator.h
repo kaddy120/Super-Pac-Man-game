@@ -30,6 +30,7 @@ private:
 	std::vector<std::shared_ptr<Door>> Doors;
 	std::shared_ptr<Vector2> GhostPosition_ptr;
 	Vector2 Target;
+	int StuckCount = 0;
 	Direction CurrentDirection = Direction::Up;
 	bool isSelectedDirectionMovable(const Direction& direction);
 	bool CheckCollisionWithaDoor(const Sprite& rectangle) const;

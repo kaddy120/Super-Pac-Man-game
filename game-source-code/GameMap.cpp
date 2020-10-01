@@ -5,31 +5,30 @@ GameMap::GameMap()
 	//[25][23]
 	Maize = {
 	{ "o","h","o","h","o","h","o","h","o","h","o","h", "o","h","o","h","o","h","o","h","o","h","o" },
-	{ "v","k","o","t","o","t","o","n","o","n","o","t", "o","n","o","n","o","k","o","t","o","k","v" },
+	{ "v","k","o","t","o","t","o","n","o","n","o","k", "o","n","o","n","o","t","o","t","o","k","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","d", "o","h","o","h","o","n","o","d","o","n","o" },
-	{ "v","n","v","p","v","n","D","f","o","f","o","f", "o","f","o","f","D","n","v","p","v","n","v" },
+	{ "v","n","v","p","v","t","D","F","o","f","o","F", "o","f","o","F","D","k","v","p","v","n","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","h", "o","h","o","h","o","n","o","d","o","n","o" },
 	{ "v","t","o","k","o","t","o","t","o","n","o","t", "o","n","o","t","o","t","o","k","o","t","v" },
-	{ "o","n","o","d","o","h","o","n","o","h","o","GD", "o","h","o","n","o","h","o","d","o","n","o" },
-	{ "v","n","v","f","o","f","v","n","v","t","o","n", "o","t","v","n","v","f","o","f","v","n","v" },
+	{ "o","n","o","d","o","h","o","n","o","h","o","GD","o","h","o","n","o","h","o","d","o","n","o" },
+	{ "v","n","v","F","o","F","v","n","v","t","o","n", "o","t","v","n","v","F","o","F","v","n","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","n", "o","n","o","n","o","n","o","d","o","n","o" },
 	{ "v","k","o","t","v","f","v","n","v","t","o","t", "o","t","v","n","v","f","v","t","o","k","v" },
 	{ "o","h","o","n","o","n","o","n","o","h","o","h", "o","h","o","n","o","n","o","n","o","h","o" },
-	{ "D","f","o","t","o","f","D","t","o","n","o","t", "o","n","o","t","D","f","D","t","D","f","D" },
+	{ "O","t","D","t","o","F","v","t","o","n","o","t", "o","n","o","t","D","F","D","t","D","F","o" },
 	{ "o","h","o","n","o","h","o","n","o","h","o","n", "o","h","o","n","o","h","o","n","o","h","o" },
-	{ "v","t","o","t","o","t","o","t","v","n","v","n", "v","n","v","t","o","t","o","t","o","k","v" },
+	{ "v","k","o","t","o","t","o","t","v","n","v","n", "v","n","v","k","o","t","o","t","o","k","v" },
 	{ "o","n","o","d","o","n","o","d","o","h","o","n", "o","h","o","d","o","n","o","d","o","n","o" },
-	{ "v","n","v","f","v","n","v","P","o","f","o","t", "D","f","o","P","v","n","v","f","v","n","v" },
+	{ "v","n","v","F","v","n","v","P","o","f","o","t", "D","F","o","P","v","n","v","F","v","n","v" },
 	{ "o","n","o","n","o","n","o","n","o","h","o","n", "o","h","o","n","o","n","o","n","o","n","o" },
-	{ "v","n","v","f","v","n","v","f","v","t","o","k", "o","t","v","f","v","n","v","f","v","n","v" },
+	{ "v","n","v","F","v","n","v","f","v","t","o","k", "o","t","v","f","v","n","v","F","v","n","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","h", "o","n","o","n","o","n","o","d","o","n","o" },
-	{ "v","t","o","t","o","t","v","f","v","n","v","n", "v","n","v","f","v","t","o","t","o","t","v" },
+	{ "v","t","o","t","o","k","v","f","v","n","v","n", "v","n","v","F","v","t","o","t","o","t","v" },
 	{ "o","n","o","d","o","n","o","n","o","n","o","h", "o","n","o","d","o","n","o","d","o","n","o" },
-	{ "v","n","v","p","v","k","o","t","o","t","o","t", "o","t","o","t","o","k","v","p","v","n","v" },
+	{ "v","n","v","p","v","t","o","t","o","t","o","k", "o","t","o","t","o","k","v","p","v","n","v" },
 	{ "o","n","o","d","o","n","o","h","o","h","o","d", "o","h","o","h","o","n","o","d","o","n","o" },
-	{ "v","k","o","t","o","t","D","f","o","f","o","f", "o","f","o","f","D","t","o","t","o","k","v" },
-	{ "o","h","o","h","o","h","o","h","o","h","o","h", "o","h","o","h","o","h","o","h","o","h","o" }
-	};
+	{ "v","t","o","t","o","k","D","F","o","f","o","F", "o","f","o","F","v","t","o","t","o","t","v" },
+	{ "o","h","o","h","o","h","o","h","o","h","o","h", "o","h","o","h","o","h","o","h","o","h","o" }};
 
 	Map();
 	AssignKeyToDoor();
@@ -104,6 +103,15 @@ void GameMap::Map()
 				Fruits.push_back(Fruit(15.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
+			else if(condition =="F")
+			{
+				tempPosition = position;
+				tempPosition.add(CircleHorizontalIncrement);
+				tempPosition.add(CircleVerticalIncrement);
+				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
+				Fruits.push_back(Fruit(15.f, tempPosition));
+				position.add(HorizontalIncrement);
+			}
 			else if (condition == "k")
 			{
 				tempPosition.X = position.X;
@@ -115,7 +123,6 @@ void GameMap::Map()
 			}
 			else if (condition == "t")
 			{
-				//i can refactor most of this code into  a private functions
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
 				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
