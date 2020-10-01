@@ -156,10 +156,10 @@ void GameLogic::MapTextViewModel()
     auto hightestScore = filereader_.getHighestScore();
     MapEntiesToDTO::MapTextModelView(textModelView, pacMan, hightestScore, (int)Level);
 
-    if (textModelView.currentscore > hightestScore)
+    if (pacMan.GetPoints()> hightestScore)
     {
-        textModelView.HighestScore = to_string(pacMan.GetPoints());
-        filereader_.setHighestScore(textModelView.currentscore);
+
+        filereader_.setHighestScore(pacMan.GetPoints());
     }
 }
 
