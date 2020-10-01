@@ -1,6 +1,6 @@
 #include "GameLogic.h"
 
-GameLogic::GameLogic(std::shared_ptr<sf::RenderWindow> window): 
+GameLogic::GameLogic(std::shared_ptr<sf::RenderWindow> window):
     pacMan(44.f, 44.f, Vector2(310, 570)),
     Render_(window), window(window)
 {
@@ -10,6 +10,7 @@ GameLogic::GameLogic(std::shared_ptr<sf::RenderWindow> window):
 void  GameLogic::Run()
 {
     SplashScreen splashScreen(window);
+
     sf::Clock clock;
     while (window->isOpen())
     {
@@ -41,7 +42,7 @@ void  GameLogic::Run()
                 break;
             }
         }
-       
+
         Update();
         RenderEntities();
     }
@@ -130,7 +131,8 @@ void GameLogic::RenderEntities()
 
     if (IsGameOver_)
     {
-        Render_.RenderGameEndScreen(Level, "", false);
+            GameEndScreen GameEndScr(window);
+        //Render_.RenderGameEndScreen(Level, "", false);
         true;
     }
     //Render_.RenderText(textModelView);
@@ -223,6 +225,6 @@ void GameLogic::MovingToTheNextLevel()
         Level++;
         //call end game screen;
         InitialiseEntities();
-        Render_.RenderGameEndScreen(Level,"");
+        //Render_.RenderGameEndScreen(Level,"");
     }
 }

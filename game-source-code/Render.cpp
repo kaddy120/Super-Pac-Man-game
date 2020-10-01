@@ -51,13 +51,13 @@ void Render::RenderText(const TextModelView& textModelView)
 
     HighestScoreText.setFont(font);
     HighestScoreText.setCharacterSize(25);
-    HighestScoreText.setPosition(0.f, 820.f);
+    HighestScoreText.setPosition(0.f, 50.f);
     HighestScoreText.setFillColor(sf::Color::Red);
     HighestScoreText.setString("Highest Score: "+ highest_str);
 
     ScoreText.setFont(font);
     ScoreText.setCharacterSize(25);
-    ScoreText.setPosition(0.f, 780.f);
+    ScoreText.setPosition(0.f, 30.f);
     ScoreText.setFillColor(sf::Color::Red);
     ScoreText.setString("Current Score : "+ score_str);
     window->draw(HighestScoreText);
@@ -73,7 +73,7 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
         window->draw(GhostSprite);
     };
 
-    if (ghostModelView[0].Mode == Mode::Frightened 
+    if (ghostModelView[0].Mode == Mode::Frightened
         || ghostModelView[1].Mode == Mode::Frightened ||
         ghostModelView[2].Mode == Mode::Frightened){
 
@@ -81,7 +81,7 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
         for (auto model : ghostModelView){
             if (model.Mode == Mode::Eaten)
                 GhostAnimation.Update(4, deltaTIme);
-            else 
+            else
                 GhostAnimation.Update(5, 0);
             DrawGhost(model);
         }
@@ -96,7 +96,7 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
         }
         else if (model.Title =="PinkGhost")
         {
-            
+
                 GhostAnimation.Update(1, 0);
             DrawGhost(model);
         }
@@ -157,10 +157,10 @@ void Render::RenderPacMan(const PacManModelView& pacManModelVIew, const float& d
 void Render::RenderSplashScreen()
 {
 }
-void Render::RenderGameEndScreen(const unsigned int& level, const string& textMessage, bool haveWon)
-{
-   // GameEndScreen.Render(level, textMessage);
-}
+//void Render::RenderGameEndScreen(const unsigned int& level, const string& textMessage, bool haveWon)
+//{
+//   // GameEndScreen.Render(level, textMessage);
+//}
 
 void Render::RenderRectangleShape(const SpriteModelView& modelView, sf::RectangleShape& rect)
 {

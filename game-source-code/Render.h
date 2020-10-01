@@ -24,7 +24,7 @@ public:
     void RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTime);
     void RenderPacMan(const PacManModelView& pacManModelVIew, const float& deltaTime);
     void RenderSplashScreen();
-    void RenderGameEndScreen(const unsigned int& Level, const string& textMessage, bool haveWon = true);
+   // void RenderGameEndScreen(const unsigned int& Level, const string& textMessage, bool haveWon = true);
     void ClearWindow();
 private:
 
