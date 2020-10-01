@@ -51,7 +51,7 @@ void Render::RenderText(const TextModelView& textModelView)
     FileReader filereader_;
     auto score_str=textModelView.CurrentScore;
     auto highest_ptr=textModelView.HighestScore;
-
+    auto lives=textModelView.Lives;
 
     GeneralText.setPosition(0.f, 80.f);
     GeneralText.setString("Highest Score: " + highest_ptr);
@@ -61,6 +61,13 @@ void Render::RenderText(const TextModelView& textModelView)
     GeneralText.setPosition(0.f, 50.f);
     GeneralText.setString("Current Score : "+ score_str);
     window->draw(GeneralText);
+
+
+    GeneralText.setPosition(500.f, 50.f);
+    GeneralText.setString("Lives Reamaining: "+ lives);
+    window->draw(GeneralText);
+
+
 
 }
 
