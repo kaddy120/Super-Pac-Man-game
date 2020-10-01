@@ -67,9 +67,9 @@ void GameLogic::Update()
     if (Logic.PacManAndGhostsCollide(pacMan, Ghosts))
     {
         //GetState() is misspelled
-        if (pacMan.GetSate() != State::charged)
+        if (pacMan.GetState() != State::charged)
         {
-            pacMan.SubtractLife();
+            pacMan.Die();
             IsGameOver_ = true;
             if (pacMan.GetLifes() == 0) {
                 Level = 0;
@@ -82,7 +82,7 @@ void GameLogic::Update()
         pacMan.SetState(State::SuperCharged);
         Clock_.Reset();
     }
-    if (pacMan.GetSate() == State::SuperCharged && Clock_.TimeLapse() > 7) {
+    if (pacMan.GetState() == State::SuperCharged && Clock_.TimeLapse() > 7) {
         pacMan.SetState(State::Alive);
     }
     if (Logic.AtePallet(pacMan, PowerPallets))
@@ -93,7 +93,7 @@ void GameLogic::Update()
         }
         Clock_.Reset();
     }
-    if (pacMan.GetSate() == State::charged && Clock_.TimeLapse() > 20) {
+    if (pacMan.GetState() == State::charged && Clock_.TimeLapse() > 20) {
         pacMan.SetState(State::Alive);
         for (auto i = 0; i < Ghosts.size(); i++) {
             Ghosts[i]->UpdateMode(Mode::Chase);
@@ -101,7 +101,7 @@ void GameLogic::Update()
     }
     Logic.OpenDoors(pacMan, Keys, Doors);
     //this will need to go into its on function to improve code self documentation
-    if (pacMan.GetSate() == State::SuperCharged)
+    if (pacMan.GetState() == State::SuperCharged)
     {
         for (auto door : Doors)
         {

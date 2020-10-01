@@ -54,11 +54,17 @@ void Render::RenderText(const TextModelView& textModelView)
     GeneralText.setString("Highest Score: "+ highest_str);
     window->draw(GeneralText);
 
+<<<<<<< HEAD
 
     GeneralText.setPosition(0.f, 780.f);
     GeneralText.setString("Current Score : "+ score_str);
     window->draw(GeneralText);
 
+=======
+    GeneralText.setPosition(0.f, 780.f);
+    GeneralText.setString("Current Score : "+ score_str);
+    window->draw(GeneralText);
+>>>>>>> 5379fc398efb60dd327d3139e9ff34ead978a261
 }
 
 void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTIme)
