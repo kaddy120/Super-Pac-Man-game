@@ -195,30 +195,52 @@ TEST_CASE("Two rectangles apart cannot to collide")
 
 //-----------Test Key-----------------
 
-TEST_CASE("Every Key object has unique ID")
-{
-Vector2 position(0.f,0.f);
-auto radius = 15.f;
-Key key1(radius,position);
-Key key2(radius, position);
-CHECK_FALSE(key1.GetKeyId()==key2.GetKeyId());
-}
-
 TEST_CASE("Key's ID is equal to number of keys' Objects")
 {
-    Vector2 position(0.f, 0.f);
+    Key key1{};
+    Key key2{};
+    Key Key3{};
+    CHECK(key1.GetKeyId() == "1");
+    CHECK(key2.GetKeyId() == "2");
+    CHECK(Key3.GetKeyId() == "3");
+}
+
+TEST_CASE("Every Key object has unique ID")
+{
+    Vector2 position(0.f,0.f);
     auto radius = 15.f;
-    Key key1(radius, position);
+    Key key1(radius,position);
     Key key2(radius, position);
+    CHECK_FALSE(key1.GetKeyId()==key2.GetKeyId());
+}
+
+TEST_CASE("Keys object objects are not equal because or their unique IDs")
+{
+    Key key1{};
+    Key key2{};
     CHECK_FALSE(key1 == key2);
 }
 
 //------------Test Door ------------
 
-TEST_CASE("Two keys are different")
+TEST_CASE("A door object instant is locked by default")
 {
-
+    auto width = 1, height = 3;
+    auto position = Vector2(0, 0);
+    Door Door1(width, height, position);
+    CHECK(Door1.IsDoorLocked());
 }
+TEST_CASE("Door Object can only be unlocked with a key assigned to it")
+{
+    Key key1{};
+    auto width = 1, height = 3;
+    auto position = Vector2(0, 0);
+    Door Door1(width, height, position);
+    Door1.AssignKey(key1);
+    Door1.Unlock(key1);
+    CHECK_FALSE(Door1.IsDoorLocked());
+}
+
 TEST_CASE("Two doors can be in the same position")
  {
     Door door_;

@@ -35,6 +35,6 @@ std::string Key::GenerateUniqueID() {
 		KeyId += UniqueChar[index];
 	}*/
 	
-	KeyId = ++NumberOfKeys;
+	KeyId = std::to_string(++NumberOfKeys);
 	return KeyId;
 }
