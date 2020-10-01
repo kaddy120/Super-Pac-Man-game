@@ -7,6 +7,7 @@
 #include "ModelViews.h"
 #include "Animation.h"
 #include "GameEndScreen.h"
+#include "FileReader.h"
 
 using std::string;
 using std::vector;

@@ -48,15 +48,20 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
 }
 void Render::RenderText(const TextModelView& textModelView)
 {
+    FileReader filereader_;
     auto score_str=textModelView.CurrentScore;
-    auto highest_str=textModelView.HighestScore;
-    GeneralText.setPosition(0.f, 820.f);
-    GeneralText.setString("Highest Score: "+ highest_str);
+    auto highest_ptr=textModelView.HighestScore;
+
+
+    GeneralText.setPosition(0.f, 80.f);
+    GeneralText.setString("Highest Score: " + highest_ptr);
     window->draw(GeneralText);
 
-    GeneralText.setPosition(0.f, 780.f);
+
+    GeneralText.setPosition(0.f, 50.f);
     GeneralText.setString("Current Score : "+ score_str);
     window->draw(GeneralText);
+
 }
 
 void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTIme)
@@ -154,11 +159,6 @@ void Render::RenderPacMan(const PacManViewModel& pacManViewModel, const float& d
 void Render::RenderSplashScreen()
 {
 }
-//void Render::RenderGameEndScreen(const unsigned int& level, const string& textMessage, bool haveWon)
-//{
-//   // GameEndScreen.Render(level, textMessage);
-//}
-
 void Render::RenderRectangleShape(const SpriteModelView& modelView, sf::RectangleShape& rect)
 {
     auto size_ = modelView.Dimention;
