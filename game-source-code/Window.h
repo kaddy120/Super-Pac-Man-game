@@ -5,15 +5,15 @@
 class Window
 {
 public:
-	//i should make this window a singleton; 
-	Window(): window_(new sf::RenderWindow(sf::VideoMode(800, 1000, 32),
-		"Duel Invaders", sf::Style::Titlebar | sf::Style::Close)) {
+	//i should make this window a singleton;
+	Window(): window_(new sf::RenderWindow(sf::VideoMode(780, 1000, 32),
+		"Super Pacman", sf::Style::Titlebar | sf::Style::Close)) {
 
 		window_->setVerticalSyncEnabled(true);
 		window_->setFramerateLimit(60);
 	}
 
-	std::shared_ptr<sf::RenderWindow> getWindow() {	
+	std::shared_ptr<sf::RenderWindow> getWindow() {
 		return window_;
 	}
 private:

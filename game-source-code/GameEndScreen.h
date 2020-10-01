@@ -14,7 +14,7 @@ private:
 //	std::shared_ptr<sf::RenderWindow> Window_;
 //	const sf::Text Text;
 	sf::Text pauseMessage;
-	sf::Texture _image;
+	sf::Texture file_image;
 
 };
 
