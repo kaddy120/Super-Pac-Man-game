@@ -101,12 +101,6 @@ void GhostNavigator::SetTarget(const Vector2& target)
 	Target = target;
 }
 
-//Direction GhostNavigator::FindDirectionInScaredMode()
-//{
-//	//return random direction;
-//	return Right;
-//}
-
 bool GhostNavigator::isInsideTurningTiles()
 {
 	CircleSprite smallCircle(3.f, *GhostPosition_ptr);

@@ -35,13 +35,15 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
         }
         else if (modelView.Title == "SuperPallet")
         {
-            //i need to update this.
-            RenderRectangleShape(modelView, Wall);
+            Pallet.setFillColor(sf::Color(67, 224, 4));
+            Pallet.setPosition(sf::Vector2f(modelView.Positon.X, modelView.Positon.Y));
+            window->draw(Pallet);
         }
         else if (modelView.Title == "PowerPallet")
         {
-            //i need to update this.
-            RenderRectangleShape(modelView, Wall);
+            Pallet.setFillColor(sf::Color(190, 10, 245));
+            Pallet.setPosition(sf::Vector2f(modelView.Positon.X, modelView.Positon.Y));
+            window->draw(Pallet);
         }
     }
 }
@@ -49,20 +51,13 @@ void Render::RenderText(const TextModelView& textModelView)
 {
     auto score_str=textModelView.CurrentScore;
     auto highest_str=textModelView.HighestScore;
+    GeneralText.setPosition(0.f, 820.f);
+    GeneralText.setString("Highest Score: "+ highest_str);
+    window->draw(GeneralText);
 
-    HighestScoreText.setFont(font);
-    HighestScoreText.setCharacterSize(25);
-    HighestScoreText.setPosition(0.f, 820.f);
-    HighestScoreText.setFillColor(sf::Color::Red);
-    HighestScoreText.setString("Highest Score: "+ highest_str);
-
-    ScoreText.setFont(font);
-    ScoreText.setCharacterSize(25);
-    ScoreText.setPosition(0.f, 780.f);
-    ScoreText.setFillColor(sf::Color::Red);
-    ScoreText.setString("Current Score : "+ score_str);
-    window->draw(HighestScoreText);
-    window->draw(ScoreText);
+    GeneralText.setPosition(0.f, 780.f);
+    GeneralText.setString("Current Score : "+ score_str);
+    window->draw(GeneralText);
 }
 
 void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTIme)
@@ -193,17 +188,18 @@ void Render::Initialise()
     Key.setScale(3,4);
     Key.setTexture(&keyTexture);
     Door.setFillColor(sf::Color(153, 94, 0));
+    Pallet.setRadius(16.5f);
 
     Animation temp{ &GhostsTexture, sf::Vector2u(8,6), 0.6f };
     GhostAnimation = temp;
     Animation temp2{ &PacManTexture, sf::Vector2u(3,4), 0.18f };
     PacManAnimation = temp2;
 
-    font;
-    ScoreText;
+    GeneralText.setFont(font);
+    GeneralText.setCharacterSize(25);
+    GeneralText.setFillColor(sf::Color::Red);
     LevelText;
     HighestScoreText;
-    GeneralText;
 }
 void Render::ClearWindow()
 {

@@ -43,6 +43,7 @@ private:
     sf::RectangleShape Door;
     sf::RectangleShape Fruit;
     sf::RectangleShape Key;
+    sf::CircleShape Pallet;
 
     sf::Font font;
     sf::Text ScoreText;
