@@ -15,6 +15,7 @@ public:
 	std::string GetKeyId() const;
 
 private:
+	static unsigned int NumberOfKeys;
 	std::string KeyId;
 	std::string GenerateUniqueID();
 
