@@ -208,11 +208,45 @@ TEST_CASE("PacMan loss a life when he dies")
     auto width = 35, height = 35;
     PacMan PacMan(width, height, Vector2(0, 0));
     auto InitLives = PacMan.GetLifes();
-    ///this function should be rename to Die()
-    PacMan.SubtractLife();
+    PacMan.Die();
     CHECK(InitLives-1 == PacMan.GetLifes());
 }
 
+TEST_CASE("PacMan Lives should never be less than 0")
+{
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    PacMan.Die();
+    PacMan.Die();
+    PacMan.Die();
+    PacMan.Die();
+    CHECK(PacMan.GetLifes() >= 0);
+}
+
+TEST_CASE("PacMan Score is reset to 0 when PacMan loses all lives")
+{
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    PacMan.IncreamentPoints(10);
+/////
+    PacMan.Die();
+    PacMan.Die();
+    PacMan.Die();
+    CHECK(PacMan.GetPoints() == 0);
+}
+
+TEST_CASE("If PacMan dies 3 times, pacMan state changes from State::Alife to State::Dead")
+{
+    auto width = 35, height = 35;
+    PacMan PacMan(width, height, Vector2(0, 0));
+    PacMan.IncreamentPoints(10);
+    CHECK(PacMan.GetState() == State::Alive);
+    /////
+    PacMan.Die();
+    PacMan.Die();
+    PacMan.Die();
+    CHECK(PacMan.GetState()==State::Dead);
+}
 
 
 ////------------Test Collision ---------

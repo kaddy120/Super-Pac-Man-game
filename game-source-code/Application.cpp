@@ -77,12 +77,12 @@ void Application::MoveGhost(std::vector<std::unique_ptr<AbstractGhost>>& Ghosts,
 
 bool Application::PacManAndGhostsCollide(const PacMan& pacMan, vector<std::unique_ptr<AbstractGhost>>& Ghosts)
 {
-    if (pacMan.GetSate() == State::SuperCharged) return false;
+    if (pacMan.GetState() == State::SuperCharged) return false;
     for (auto i = 0; i < Ghosts.size(); i++)
     {
         if (Collision::CheckCollision(*Ghosts[i], pacMan))
         {
-            if (pacMan.GetSate() == State::charged) Ghosts[i]->UpdateMode(Mode::Eaten);
+            if (pacMan.GetState() == State::charged) Ghosts[i]->UpdateMode(Mode::Eaten);
             return true;
         }
     }
@@ -102,7 +102,7 @@ void Application::MovePacMan(PacMan& pacMan, const Direction& direction, const f
         if (Unmovable)
             break;
     }
-    if(pacMan.GetSate()!=State::SuperCharged)
+    if(pacMan.GetState()!=State::SuperCharged)
     for (auto Door : Doors)
     {
         if (Door->IsDoorLocked())
@@ -128,7 +128,7 @@ bool Application::isProsedDirectionMovable(
     move_.Move(Temp.GetPosition_ptr(), direction);
     if(Collision::CheckCollision(Temp, walls)) return false;
     
-    if(pacMan.GetSate()!= State::SuperCharged)
+    if(pacMan.GetState()!= State::SuperCharged)
     for (auto Door : Doors)
     {
         if (Door->IsDoorLocked())

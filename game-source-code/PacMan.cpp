@@ -6,10 +6,15 @@ Movement_()
 
 void PacMan::SetSpeed(const float& speed) {Movement_.SetSpeed(speed); }
 
-void PacMan::SubtractLife()
+void PacMan::Die()
 {
+	if(Lifes >=0)
 	Lifes--;
-	if (Lifes == 0) state = State::Dead;
+	if (Lifes == 0)
+	{
+		state = State::Dead;
+		CollectedPoints = 0;
+	}
 }
 
 unsigned int PacMan::IncreamentPoints(const unsigned int& points)
@@ -26,7 +31,7 @@ void PacMan::SetState(const State& state_)
 	}
 }
 
-State PacMan::GetSate() const
+State PacMan::GetState() const
 {
 	return state;
 }

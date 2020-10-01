@@ -11,10 +11,10 @@ public:
 	unsigned int IncreamentPoints(const unsigned int& points);
 	unsigned int GetPoints() const { return CollectedPoints; }
 	void SetState(const State& state);
-	State GetSate() const;
+	State GetState() const;
 	unsigned int GetLifes() const;
 	Vector2 Move(const Direction& direction);
-	void SubtractLife();
+	void Die();
 	void ResetPoints() { CollectedPoints = 0; }
 
 private:	
