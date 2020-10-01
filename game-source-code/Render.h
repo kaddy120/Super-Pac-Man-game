@@ -24,13 +24,13 @@ public:
     void RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTime);
     void RenderPacMan(const PacManModelView& pacManModelVIew, const float& deltaTime);
     void RenderSplashScreen();
-    void RenderGameEndScreen(const unsigned int& Level, const string& textMessage, bool haveWon = true);
+   // void RenderGameEndScreen(const unsigned int& Level, const string& textMessage, bool haveWon = true);
     void ClearWindow();
 private:
 
 	std::shared_ptr<sf::RenderWindow> window;
     //SplashScreen SplashScreen_;
-    GameEndScreen GameEndScreen;
+   // GameEndScreen GameEndScreen;
     sf::Texture PacManTexture;
     sf::Texture GhostsTexture;
     sf::Texture FruitsTextutre;

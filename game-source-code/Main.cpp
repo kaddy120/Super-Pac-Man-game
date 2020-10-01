@@ -13,6 +13,7 @@
 #include "YellowGhost.h"
 #include <fstream>
 #include "GameLogic.h"
+#include "GameEndScreen.h"
 
 int main()
 {
