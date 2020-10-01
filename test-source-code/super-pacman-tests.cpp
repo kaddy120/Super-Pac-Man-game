@@ -6,6 +6,7 @@
 #include "../game-source-code/Door.h"
 #include "../game-source-code/fruit.h"
 #include "../game-source-code/FileReader.h"
+#include "../game-source-code/Clock.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -32,9 +33,23 @@ TEST_CASE("check that vector with differet coordinates are not equal")
     Vector2 Vector2(4.f, 500.f);
     CHECK_FALSE(Vector1 == Vector2);
 }
+// ----------------Testing Clock --------------------------------------
+TEST_CASE("Time lapse always be greater than 0")
+{
+    Clock Clock_{};
+    CHECK(Clock_.TimeLapse() > 0);
+}
+
+TEST_CASE("Time lapse should increase over time")
+{
+    Clock Clock_{};
+    auto TimeLapse1 = Clock_.TimeLapse();
+    auto TimeLapse2 = Clock_.TimeLapse();
+    CHECK(TimeLapse2 > TimeLapse1);
+}
+//-----------------Testing Movement Class -----------------------------
 
 //------------------Testing PacMan --------------------------------------
-//
 TEST_CASE("Check that PacMan positio is initialised correctly")
 {
     auto InitPosition = Vector2(300, 400);
@@ -257,7 +272,7 @@ TEST_CASE("Doors wil not unlock with with an incorrect key")
     CHECK(Door1.IsDoorLocked());
 }
 
-//------------Test fruit ------------
+//------------Test fruit ---------------
 TEST_CASE("Fruits points are correct and can be modified")
 {
 //Vector2 vector2(2.f,3.f);
@@ -265,8 +280,6 @@ TEST_CASE("Fruits points are correct and can be modified")
 //int fruit_point=10;
 //auto modifiedfruitpoint=fruit_(10.f,vector2).FruitPoints(10);
 //CHECK_FALSE(fruit_point==modifiedfruitpoint);
-
-
 }
 ////------------Test Score File Reader ------------
 
@@ -275,16 +288,14 @@ TEST_CASE("FileReader can set and retrieve the Highest score successfully from a
     FileReader score_reader_file{};
     auto highScore = 250;
     score_reader_file.setHighestScore(highScore);
-
     CHECK(highScore == score_reader_file.getHighestScore());
 }
 TEST_CASE("A score can never be less than 0 set and retrived from a textfile")
 {
      FileReader score_reader_file{};
      auto highScore = -1;
-    score_reader_file.setHighestScore(highScore);
-
-    CHECK_FALSE(highScore == score_reader_file.getHighestScore());
+     score_reader_file.setHighestScore(highScore);
+     CHECK_FALSE(highScore == score_reader_file.getHighestScore());
 }
 TEST_CASE("An exception is thrown when file is not found"){
 
