@@ -54,25 +54,11 @@ void Render::RenderText(const TextModelView& textModelView)
     GeneralText.setString("Highest Score: "+ highest_str);
     window->draw(GeneralText);
 
-<<<<<<< HEAD
-    HighestScoreText.setFont(font);
-    HighestScoreText.setCharacterSize(25);
-    HighestScoreText.setPosition(0.f, 50.f);
-    HighestScoreText.setFillColor(sf::Color::Red);
-    HighestScoreText.setString("Highest Score: "+ highest_str);
 
-    ScoreText.setFont(font);
-    ScoreText.setCharacterSize(25);
-    ScoreText.setPosition(0.f, 30.f);
-    ScoreText.setFillColor(sf::Color::Red);
-    ScoreText.setString("Current Score : "+ score_str);
-    window->draw(HighestScoreText);
-    window->draw(ScoreText);
-=======
     GeneralText.setPosition(0.f, 780.f);
     GeneralText.setString("Current Score : "+ score_str);
     window->draw(GeneralText);
->>>>>>> bb9663258cec6b76439d076097eb90b71358a56c
+
 }
 
 void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTIme)
