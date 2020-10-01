@@ -10,7 +10,7 @@
 #include "SplashScreen.h"
 #include "Render.h"
 #include "BlueGhost.h"
-#include "MapEntiesToDTO.h"
+#include "MapEntitiesToDTO.h"
 #include "FileReader.h"
 #include "Clock.h"
 

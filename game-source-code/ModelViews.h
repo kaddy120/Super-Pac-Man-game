@@ -30,7 +30,7 @@ public:
     Mode Mode;
 };
 
-class PacManModelView : public SpriteModelView
+class PacManViewModel : public SpriteModelView
 {
 public:
     Direction Direction;

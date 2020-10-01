@@ -126,7 +126,7 @@ void GameLogic::RenderEntities()
     MapEntitiesToModelView();
     Render_.RenderStaticSprites(StaticEntityModelView);
     Render_.RenderGhost(ghostModelView, deltaTime);
-    Render_.RenderPacMan(pacManModelVIew, deltaTime);
+    Render_.RenderPacMan(PacManViewModel, deltaTime);
     Render_.RenderText(textModelView);
 
     if (IsGameOver_)
@@ -143,10 +143,10 @@ void GameLogic::RenderEntities()
 
 void GameLogic::MapEntitiesToModelView()
 {
-    MapEntiesToDTO::MapPacManModelView(pacManModelVIew, pacMan, PacManCurrentDirection);
+    MapEntitiesToDTO::MapPacManViewModel(PacManViewModel, pacMan, PacManCurrentDirection);
     MapTextViewModel();
     MapStaticEntitiesViewModel();
-    MapEntiesToDTO::MapGhostModelView(ghostModelView, Ghosts);
+    MapEntitiesToDTO::MapGhostModelView(ghostModelView, Ghosts);
 }
 
 // mapping needs to go to it's own class;
@@ -154,7 +154,7 @@ void GameLogic::MapTextViewModel()
 {
     FileReader filereader_;
     auto hightestScore = filereader_.getHighestScore();
-    MapEntiesToDTO::MapTextModelView(textModelView, pacMan, hightestScore, (int)Level);
+    MapEntitiesToDTO::MapTextViewModel(textModelView, pacMan, hightestScore, (int)Level);
 
     if (textModelView.currentscore > hightestScore)
     {
@@ -167,23 +167,23 @@ void GameLogic::MapStaticEntitiesViewModel()
 {
     for (auto door : Doors)
         if (door->IsDoorLocked())
-            MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, *door);
+            MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, *door);
 
-    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, walls);
+    MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, walls);
 
     for (auto fruit : Fruits)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, fruit);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, fruit);
 
     for (auto key : Keys)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
 
     for (auto superPallet : SuperPallets)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
 
     for (auto powerPallet : PowerPallets)
-        MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
 
-    MapEntiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, GhostsHouseDoor);
+    MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, GhostsHouseDoor);
 }
 
 

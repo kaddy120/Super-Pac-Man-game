@@ -7,6 +7,10 @@
 #include "../game-source-code/fruit.h"
 #include "../game-source-code/FileReader.h"
 #include "../game-source-code/Clock.h"
+#include "../game-source-code/GameMap.h"
+#include "../game-source-code/MapEntitiesToDTO.h"
+#include "../game-source-code/ModelViews.h"
+#include "../game-source-code/AbstractGhost.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -436,3 +440,24 @@ TEST_CASE("An exception is thrown when file is not found"){
 
 ////------------Test Game Score ------------
 
+//------------Test Mappping of Entities to DTO(Data Transfer Objects)------------------
+TEST_CASE("PacMan is mapped to PacManViewModel(DTO) correctly")
+{
+    PacManViewModel PacManViewModel_;
+    auto width = 20.f, height = 20.f;
+    auto PacManPosition = Vector2(20, 50);
+    PacMan PacMan_(width, height, PacManPosition);
+    auto PacManDirection = Direction::Right;
+    MapEntitiesToDTO::MapPacManViewModel(PacManViewModel_,PacMan_, PacManDirection);
+
+    CHECK(PacManViewModel_.Dimention == Vector2(width, height));
+    CHECK(PacManViewModel_.Direction == PacManDirection);
+    CHECK(PacManViewModel_.Positon == PacManPosition);
+    CHECK(PacManViewModel_.Title == PacMan_.Name());
+    CHECK(PacManViewModel_.State == PacMan_.GetState());
+}
+
+TEST_CASE("TextViewModel is correctly filled")
+{
+    MapEntitiesToDTO::MapTextViewModel();
+}
