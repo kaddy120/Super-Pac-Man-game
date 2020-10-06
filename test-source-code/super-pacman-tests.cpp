@@ -11,6 +11,7 @@
 #include "../game-source-code/MapEntitiesToDTO.h"
 #include "../game-source-code/ModelViews.h"
 #include "../game-source-code/AbstractGhost.h"
+#include "../game-source-code/Application.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -460,5 +461,63 @@ TEST_CASE("PacMan is mapped to PacManViewModel(DTO) correctly")
 
 TEST_CASE("TextViewModel is correctly filled")
 {
-   // MapEntitiesToDTO::MapTextViewModel();
+    PacManViewModel PacManViewModel_;
+    auto width = 20.f, height = 20.f;
+    auto PacManPosition = Vector2(20, 50);
+    PacMan PacMan_(width, height, PacManPosition);
+    auto TextViewModel = TextModelView{};
+    auto HighestScore = 30;
+    auto Level = 2;
+    MapEntitiesToDTO::MapTextViewModel(TextViewModel, PacMan_, HighestScore, Level);
+    CHECK(TextViewModel.CurrentScore == std::to_string(PacMan_.GetPoints()));
+    CHECK(TextViewModel.HighestScore == std::to_string(HighestScore));
+    CHECK(TextViewModel.Level == std::to_string(Level));
+    CHECK(TextViewModel.Lives == std::to_string(PacMan_.GetLifes()));
 }
+
+TEST_CASE("Static Entites are Mapped correctly")
+{
+    std::vector<StaticEntitesViewModel> ViewModel;
+    auto width = 60, height = 8;
+    auto position = Vector2{ 0,0 };
+
+    SUBCASE("Wall is correctly mapped to StaticEntitiesViewModel")
+    {
+        auto Wall = Sprite(width,height,position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Wall);
+        CHECK(ViewModel[0].Dimention == Vector2(width, height));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Wall.Name());
+    }
+    
+    SUBCASE("Wall is correctly mapped to StaticEntitiesViewModel")
+    {
+        auto Door_ = Door(width, height, position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Door_);
+        CHECK(ViewModel[0].Dimention == Vector2(width, height));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Door_.Name());
+    }
+    
+    SUBCASE("Fruit is mapped correctly to StaticEntitiesViewModel")
+    {
+        auto radius = 15;
+        auto Fruit_ = Fruit(radius, position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Fruit_);
+        CHECK(ViewModel[0].Dimention == Vector2(radius*2, radius*2));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Fruit_.Name());
+    }
+
+    SUBCASE("Pallet is mapped correctly to StaticEntitiesViewModel")
+    {
+        auto radius = 15;
+        auto Pallet_ = SuperPallet(radius, position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Pallet_);
+        CHECK(ViewModel[0].Dimention == Vector2(radius * 2, radius * 2));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Pallet_.Name());
+    }
+}
+
+

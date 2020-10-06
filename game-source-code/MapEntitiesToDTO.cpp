@@ -32,17 +32,17 @@ void MapEntitiesToDTO::MapGhostModelView(vector<GhostModelView>& modelView, cons
         modelView.push_back(tempModel);
     }
 }
-void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const vector<Sprite>& rectSprites)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<StaticEntitesViewModel>& modelView, const vector<Sprite>& rectSprites)
 {
-    auto model = SpriteModelView{};
+    auto model = StaticEntitesViewModel{};
     for (auto rectSprite : rectSprites)
     {
         MapStaticEntitiesModelView(modelView, rectSprite);
     }
 }
-void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const CircleSprite& circleSprite)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<StaticEntitesViewModel>& modelView, const CircleSprite& circleSprite)
 {
-    SpriteModelView Model;
+    StaticEntitesViewModel Model;
 
     Model.Title = circleSprite.Name();
     auto radius = circleSprite.GetRadius();
@@ -50,9 +50,9 @@ void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& model
     Model.Positon = circleSprite.GetPosition();
     modelView.push_back(Model);
 }
-void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const Sprite& rectSprite)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<StaticEntitesViewModel>& modelView, const Sprite& rectSprite)
 {
-    SpriteModelView Model;
+    StaticEntitesViewModel Model;
 
     Model.Title = rectSprite.Name();
     auto [width, height] = rectSprite.getDimentions();

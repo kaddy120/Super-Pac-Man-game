@@ -20,7 +20,7 @@ class Render
 {
 public:
 	Render(const std::shared_ptr<sf::RenderWindow>& window);
-    void RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView);
+    void RenderStaticSprites(const std::vector<StaticEntitesViewModel>& StaticEntitesViewModel);
     void RenderText(const TextModelView& textModelView);
     void RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTime);
     void RenderPacMan(const PacManViewModel& PacManViewModel, const float& deltaTime);
@@ -57,13 +57,13 @@ private:
 
 
 private:
-    void RenderRectangleShape(const SpriteModelView& modelView,sf::RectangleShape& rect);
-    void RenderWall(const SpriteModelView& spriteModelView);
-    void RenderKeys(const SpriteModelView& spriteModelView);
-    void RenderFruits(const SpriteModelView& spriteModelView);
+    void RenderRectangleShape(const StaticEntitesViewModel& modelView,sf::RectangleShape& rect);
+    void RenderWall(const StaticEntitesViewModel& StaticEntitesViewModel);
+    void RenderKeys(const StaticEntitesViewModel& StaticEntitesViewModel);
+    void RenderFruits(const StaticEntitesViewModel& StaticEntitesViewModel);
     void Initialise();
-    //void RenderGhosts(const std::vector<SpriteModelView>& spriteModelView);
-    //void RenderPacMan(const std::vector<SpriteModelView>& spriteModelView);
+    //void RenderGhosts(const std::vector<StaticEntitesViewModel>& StaticEntitesViewModel);
+    //void RenderPacMan(const std::vector<StaticEntitesViewModel>& StaticEntitesViewModel);
 
 };
 

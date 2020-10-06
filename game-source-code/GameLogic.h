@@ -58,7 +58,7 @@ private:
 	std::shared_ptr<sf::RenderWindow> window;
 	TextModelView textModelView;
 	vector<GhostModelView> ghostModelView;
-	vector<SpriteModelView> StaticEntityModelView;
+	vector<StaticEntitesViewModel> StaticEntityModelView;
 	PacManViewModel PacManViewModel;
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;
