@@ -10,8 +10,12 @@
 #include "../game-source-code/GameMap.h"
 #include "../game-source-code/MapEntitiesToDTO.h"
 #include "../game-source-code/ModelViews.h"
-#include "../game-source-code/AbstractGhost.h"
 #include "../game-source-code/Application.h"
+#include "../game-source-code/AbstractGhost.h"
+#include "../game-source-code/RedGhost.h"
+#include "../game-source-code/BlueGhost.h"
+#include "../game-source-code/PinkGhost.h"
+#include "../game-source-code/YellowGhost.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -520,4 +524,183 @@ TEST_CASE("Static Entites are Mapped correctly")
     }
 }
 
+TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
+{
+    
+    TEST_CASE("PacMan Can not pass through the Walls")
+    {
+        std::vector<std::shared_ptr<Door>> Doors;
+        SUBCASE("PacMan cannot move Up if there is a horizontal wall on top of pacMan")
+        {
+            auto WallWidth = 60.f, WallHeight = 8.f;
+            auto position = Vector2{ 0,0 };
+            auto HorizontalWall_ = Sprite{ WallWidth, WallHeight, position };
+            std::vector<Sprite> Walls{ HorizontalWall_ };
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(10, 9);
+            auto PacMan_ = PacMan{35, 35, PacManInitPosition}; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Up, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+
+        SUBCASE("PacMan cannot move to the left if there's a verical wall on the left side of pacMan")
+        {
+            auto WallWidth = 8.f, WallHeight = 60.f;
+            auto position = Vector2{ 0,0 };
+            auto VerticalWall_ = Sprite{ WallWidth, WallHeight, position };
+            std::vector<Sprite> Walls{ VerticalWall_};
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(8.5, 9);
+            auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Left, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+        
+        SUBCASE("PacMan cannot move to the Right if there's a verical wall on the Right side of pacMan")
+        {
+            auto WallWidth = 8.f, WallHeight = 60.f;
+            auto position = Vector2{ 8,0 };
+            auto VerticalWall_ = Sprite{ WallWidth, WallHeight, position };
+            std::vector<Sprite> Walls{ VerticalWall_};
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(7, 9);
+            auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Right, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+
+        SUBCASE("PacMan cannot move Up if there is a horizontal wall on top of pacMan")
+        {
+            auto WallWidth = 60.f, WallHeight = 8.f;
+            auto position = Vector2{ 0,100 };
+            auto HorizontalWall_ = Sprite{ WallWidth, WallHeight, position };
+            std::vector<Sprite> Walls{ HorizontalWall_ };
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(10, (100-35));
+            auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Down, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+    }
+
+    TEST_CASE("PacMan can move through an unlocked door")
+    {
+        std::vector<Sprite> Walls;
+        auto DoorWidth = 60.f, DoorHeight = 8.f;
+        std::vector<std::shared_ptr<Door>> Doors{ std::make_unique<Door>(DoorWidth, DoorHeight, Vector2(0,0)) };
+        auto Logic = Application(Walls, Doors);
+        auto PacManInitPosition = Vector2(0, 9.f);
+        auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+        Logic.MovePacMan(PacMan_, Direction::Up, 0);
+        CHECK(PacMan_.GetPosition() == PacManInitPosition);
+    }
+    TEST_CASE("PacMan cannot move through a locked door")
+    {
+        std::vector<Sprite> Walls;
+        auto DoorWidth = 60.f, DoorHeight = 8.f;
+        std::vector<std::shared_ptr<Door>> Doors{ std::make_unique<Door>(DoorWidth, DoorHeight, Vector2(0,0)) };
+        auto Key_ = Key{};
+        Doors[0]->AssignKey(Key_);
+        Doors[0]->Unlock(Key_);
+        auto Logic = Application(Walls, Doors);
+        auto PacManInitPosition = Vector2(0, 9.f);
+        auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+        auto speed = 2.f;
+        PacMan_.SetSpeed(speed);
+        Logic.MovePacMan(PacMan_, Direction::Up, 0);
+        CHECK_FALSE(PacMan_.GetPosition() == PacManInitPosition);
+        auto newPosition = PacManInitPosition.subtract(Vector2(0, speed));
+        CHECK(PacMan_.GetPosition() == newPosition);
+    }
+    TEST_CASE("Testing Collision of Ghosts and PacMan")
+    {
+        std::vector<std::unique_ptr<AbstractGhost>> GhostContainer;
+        std::vector<Sprite> walls;
+        std::vector<std::shared_ptr<Door>> Doors;
+        std::vector<CircleSprite> TurningPoints;
+        auto Logic = Application(walls, Doors);
+
+        auto position = Vector2(0,0);
+        auto PacMan_ = PacMan{ 35, 35, position };
+        auto GhostRadius = 20.f;
+        GhostContainer.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors, GhostRadius, position));
+
+        SUBCASE("")
+        {
+            auto collision = Logic.PacManAndGhostsCollide(PacMan_,GhostContainer);
+            CHECK(collision);
+        }
+
+        SUBCASE("pacman ate superpellet")
+        {
+            PacMan_.SetState(State::SuperCharged);
+            auto collision = Logic.PacManAndGhostsCollide(PacMan_, GhostContainer);
+            CHECK_FALSE(collision);
+        }
+
+        SUBCASE("pacman charged")
+        {
+            GhostContainer.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors, GhostRadius , Vector2(300, 300)));
+            PacMan_.SetState(State::charged);
+            GhostContainer[0]->UpdateMode(Mode::Frightened);
+            GhostContainer[1]->UpdateMode(Mode::Frightened);
+            auto collision = Logic.PacManAndGhostsCollide(PacMan_, GhostContainer);
+            CHECK(collision);
+            CHECK(GhostContainer[0]->GetMode() == Mode::Eaten);
+            CHECK(GhostContainer[1]->GetMode() == Mode::Frightened);
+        }
+    }
+    TEST_SUITE("")
+    {
+        
+        TEST_CASE("")
+        {
+            std::vector<Fruit> Fruits;
+            auto FruitRadius = 15.f;
+            auto Points = 20;
+            Fruits.push_back(Fruit(FruitRadius, Vector2(0, 0), Points));
+            Fruits.push_back(Fruit(FruitRadius, Vector2(0, 80), Points));
+            //Fruit has default point of 10;
+            auto Logic = Application{};
+            SUBCASE("")
+            {
+                auto PacMan_ = PacMan{ 35,35, Vector2(300, 300)};
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfFruits = Fruits.size();
+                Logic.EatFruits(PacMan_, Fruits);
+                CHECK(InitScore == PacMan_.GetPoints());
+                CHECK(InitNumberOfFruits == Fruits.size());
+            }
+            SUBCASE("")
+            {
+                auto PacMan_ = PacMan{ 35,35, Vector2(0, 0) };
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfFruits = Fruits.size();
+                Logic.EatFruits(PacMan_, Fruits);
+                CHECK(InitScore+Points == PacMan_.GetPoints());
+                CHECK(InitNumberOfFruits -1 == Fruits.size());
+            }
+        }
+        TEST_CASE("")
+        {
+
+            /* bool AtePallet(PacMan & pacMan, std::vector<SuperPallet> & pallet);*/
+        }
+
+        TEST_CASE("")
+        {
+            //void OpenDoors(const PacMan & pacMan, std::vector<Key> & keys, vector<std::shared_ptr<Door>> & Doors);
+
+        }
+        TEST_CASE("")
+        {
+            //void MovablesExitMaze(IEntity & MovableEntity, const unsigned int& mazeWidth);
+        }
+        TEST_CASE("")
+        {
+            //void MovablesExitMaze(IEntity & MovableEntity, const unsigned int& mazeWidth);
+        }
+    }
+    }
+    
 
