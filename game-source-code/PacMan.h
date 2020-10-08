@@ -1,21 +1,21 @@
 #pragma once
-#include "Sprite.h"
+#include "RectangularEntity.h"
 #include "Movement.h"
 #include "Definitions.h"
 /**
 * @class PacMan
 * @author Dembe Munyai and Kaddy Marindi
 * \version 3.0
-* @brief The class controls the Pacman and it inherits from the Sprite class.
+* @brief The class controls the Pacman and it inherits from the RectangularEntity class.
 The class manages incrementing and decrementing of points and the lives of the PacMan.
 */
 
 
-class PacMan: public Sprite
+class PacMan: public RectangularEntity
 {
 public:
        /** \brief Parameterized Constructor. Creates  Pacman object.
-         *  \param width of type float gives width of the Pac-man sprite
+         *  \param width of type float gives width of the Pac-man RectangularEntity
              \param height of type float gives height of the Pac-man entity.
           *  \param Position is of type vector.Sets the position of the Pac-man.
          */
@@ -53,7 +53,7 @@ public:
     * @brief A function responsible for keeping track of lives remaining.
       @return unsigned int.
     */
-	unsigned int GetLifes() const;
+	unsigned int GetLives() const;
 	Vector2 Move(const Direction& direction);
     /**
     * @brief The function is responsible for destroying the Pac-man when the lives remaining are 0

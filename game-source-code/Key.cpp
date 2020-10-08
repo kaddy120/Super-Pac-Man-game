@@ -6,7 +6,7 @@ Key::Key() {
 	Name("Key");
 }
 
-Key::Key(const float& radius, const Vector2& position) : CircleSprite(radius, position) {
+Key::Key(const float& radius, const Vector2& position) : CircularEntity(radius, position) {
 	KeyId = GenerateUniqueID();
 	Name("Key");
 }

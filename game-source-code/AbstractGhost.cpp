@@ -1,11 +1,11 @@
 #include "AbstractGhost.h"
 
 AbstractGhost::AbstractGhost(
-	const std::vector<CircleSprite>& turningTiles,
-	const std::vector<Sprite>& walls,
+	const std::vector<CircularEntity>& turningTiles,
+	const std::vector<RectangularEntity>& walls,
 	const std::vector<std::shared_ptr<Door>>& doors,
 	const float& radius,
-	const Vector2& initPosition) :CircleSprite(radius, initPosition),Navigator(
+	const Vector2& initPosition) :CircularEntity(radius, initPosition),Navigator(
 		turningTiles,
 		walls,
 		doors,

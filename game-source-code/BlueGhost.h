@@ -25,8 +25,8 @@ public:
     */
 
 	BlueGhost(
-		const std::vector<CircleSprite>& turningTiles,
-		const std::vector<Sprite>& walls,
+		const std::vector<CircularEntity>& turningTiles,
+		const std::vector<RectangularEntity>& walls,
 		const std::vector<std::shared_ptr<Door>>& Doors,
 		const float& radius = 20.f,
 		const Vector2& initPosition = Vector2(320, 380));

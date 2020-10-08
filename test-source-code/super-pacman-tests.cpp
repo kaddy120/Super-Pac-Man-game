@@ -1,7 +1,7 @@
 #include "../game-source-code/Collision.h"
-#include "../game-source-code/CircleSprite.h"
+#include "../game-source-code/CircularEntity.h"
 #include "../game-source-code/PacMan.h"
-#include "../game-source-code/Sprite.h"
+#include "../game-source-code/RectangularEntity.h"
 #include "../game-source-code/Key.h"
 #include "../game-source-code/Door.h"
 #include "../game-source-code/fruit.h"
@@ -209,16 +209,16 @@ TEST_CASE("PacMan Intial has 3 Lives")
 {
     auto width = 35, height = 35;
     PacMan PacMan(width, height, Vector2(0, 0));
-    CHECK(PacMan.GetLifes() == 3);
+    CHECK(PacMan.GetLives() == 3);
 }
 
 TEST_CASE("PacMan loss a life when he dies")
 {
     auto width = 35, height = 35;
     PacMan PacMan(width, height, Vector2(0, 0));
-    auto InitLives = PacMan.GetLifes();
+    auto InitLives = PacMan.GetLives();
     PacMan.Die();
-    CHECK(InitLives-1 == PacMan.GetLifes());
+    CHECK(InitLives-1 == PacMan.GetLives());
 }
 
 TEST_CASE("PacMan Lives should never be less than 0")
@@ -229,7 +229,7 @@ TEST_CASE("PacMan Lives should never be less than 0")
     PacMan.Die();
     PacMan.Die();
     PacMan.Die();
-    CHECK(PacMan.GetLifes() >= 0);
+    CHECK(PacMan.GetLives() >= 0);
 }
 
 TEST_CASE("PacMan Score is reset to 0 when PacMan loses all lives")
@@ -263,15 +263,15 @@ TEST_CASE("Two rectangles closer to each other collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
-    Sprite rectangle2(width, height, Vector2(10, 10));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle2(width, height, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
 TEST_CASE("Two rectangles apart cannot to collide")
 {
-    Sprite rectangle1(40, 20, Vector2(0, 0));
-    Sprite rectangle2(40, 40, Vector2(100, 100));
+    RectangularEntity rectangle1(40, 20, Vector2(0, 0));
+    RectangularEntity rectangle2(40, 40, Vector2(100, 100));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
@@ -279,29 +279,29 @@ TEST_CASE("Two rectangles with touching edges collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
-    Sprite rectangle2(width, height, Vector2(40, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle2(width, height, Vector2(40, 0));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
 TEST_CASE("Testing if two circles collide ")
 {
-    CircleSprite rectangle1(40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(10, 10));
+    CircularEntity rectangle1(40, Vector2(0, 0));
+    CircularEntity rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 //
 TEST_CASE("Two circles apart do not collide")
 {
     auto radius = 40;
-    CircleSprite rectangle1(radius, Vector2(0, 0));
-    CircleSprite rectangle2(radius, Vector2(100, 100));
+    CircularEntity rectangle1(radius, Vector2(0, 0));
+    CircularEntity rectangle2(radius, Vector2(100, 100));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 TEST_CASE("Testing if a circle and a square collide ")
 {
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(10, 10));
+    RectangularEntity rectangle1(40, 40, Vector2(0, 0));
+    CircularEntity rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
@@ -310,9 +310,9 @@ TEST_CASE("circle and a square do not collide if they are far apart ")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
     auto radius = 20.f;
-    CircleSprite rectangle2(radius, Vector2(70, 0));
+    CircularEntity rectangle2(radius, Vector2(70, 0));
     CHECK_FALSE(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
@@ -320,10 +320,10 @@ TEST_CASE("circle and a square that are 1px apart do not collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
     auto radius = 20.f;
-    CircleSprite Circle1(radius, Vector2(61, 0));
-    CircleSprite Circle2(radius, Vector2(0, 61));
+    CircularEntity Circle1(radius, Vector2(61, 0));
+    CircularEntity Circle2(radius, Vector2(0, 61));
     CHECK_FALSE(Collision::CheckCollision(Circle1, rectangle1));
     CHECK_FALSE(Collision::CheckCollision(Circle2, rectangle1));
 }
@@ -332,9 +332,9 @@ TEST_CASE("circle and a square that are only touching by edges collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
     auto radius = 20.f;
-    CircleSprite rectangle2(radius, Vector2(60, 0));
+    CircularEntity rectangle2(radius, Vector2(60, 0));
     CHECK(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
@@ -342,8 +342,8 @@ TEST_CASE("circles of different radius closer to each other collides")
 {
     auto radius1 = 40;
     auto radius2 = 12;
-    CircleSprite rectangle1(radius1, Vector2(0, 0));
-    CircleSprite rectangle2(radius2, Vector2(50, 40));
+    CircularEntity rectangle1(radius1, Vector2(0, 0));
+    CircularEntity rectangle2(radius2, Vector2(50, 40));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
@@ -419,7 +419,7 @@ TEST_CASE("Fruits points are correct and can be modified")
 //Vector2 vector2(2.f,3.f);
 //Fruit fruit_(10.f,vector2);
 //int fruit_point=10;
-//auto modifiedfruitpoint=fruit_(10.f,vector2).FruitPoints(10);
+//auto modifiedfruitpoint=fruit_(10.f,vector2).GetPoints(10);
 //CHECK_FALSE(fruit_point==modifiedfruitpoint);
 }
 ////------------Test Score File Reader ------------
@@ -476,7 +476,7 @@ TEST_CASE("TextViewModel is correctly filled")
     CHECK(TextViewModel.CurrentScore == std::to_string(PacMan_.GetPoints()));
     CHECK(TextViewModel.HighestScore == std::to_string(HighestScore));
     CHECK(TextViewModel.Level == std::to_string(Level));
-    CHECK(TextViewModel.Lives == std::to_string(PacMan_.GetLifes()));
+    CHECK(TextViewModel.Lives == std::to_string(PacMan_.GetLives()));
 }
 
 TEST_CASE("Static Entites are Mapped correctly")
@@ -487,7 +487,7 @@ TEST_CASE("Static Entites are Mapped correctly")
 
     SUBCASE("Wall is correctly mapped to StaticEntitiesViewModel")
     {
-        auto Wall = Sprite(width,height,position);
+        auto Wall = RectangularEntity(width,height,position);
         MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Wall);
         CHECK(ViewModel[0].Dimention == Vector2(width, height));
         CHECK(ViewModel[0].Positon == position);
@@ -516,7 +516,7 @@ TEST_CASE("Static Entites are Mapped correctly")
     SUBCASE("Pallet is mapped correctly to StaticEntitiesViewModel")
     {
         auto radius = 15;
-        auto Pallet_ = SuperPallet(radius, position);
+        auto Pallet_ = Pellet(radius, position);
         MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Pallet_);
         CHECK(ViewModel[0].Dimention == Vector2(radius * 2, radius * 2));
         CHECK(ViewModel[0].Positon == position);
@@ -534,8 +534,8 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         {
             auto WallWidth = 60.f, WallHeight = 8.f;
             auto position = Vector2{ 0,0 };
-            auto HorizontalWall_ = Sprite{ WallWidth, WallHeight, position };
-            std::vector<Sprite> Walls{ HorizontalWall_ };
+            auto HorizontalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ HorizontalWall_ };
             auto Logic = Application(Walls, Doors);
             auto PacManInitPosition = Vector2(10, 9);
             auto PacMan_ = PacMan{35, 35, PacManInitPosition}; //pacMan is positioned slightly underneath a HorizontalWall_
@@ -547,8 +547,8 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         {
             auto WallWidth = 8.f, WallHeight = 60.f;
             auto position = Vector2{ 0,0 };
-            auto VerticalWall_ = Sprite{ WallWidth, WallHeight, position };
-            std::vector<Sprite> Walls{ VerticalWall_};
+            auto VerticalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ VerticalWall_};
             auto Logic = Application(Walls, Doors);
             auto PacManInitPosition = Vector2(8.5, 9);
             auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
@@ -560,8 +560,8 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         {
             auto WallWidth = 8.f, WallHeight = 60.f;
             auto position = Vector2{ 8,0 };
-            auto VerticalWall_ = Sprite{ WallWidth, WallHeight, position };
-            std::vector<Sprite> Walls{ VerticalWall_};
+            auto VerticalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ VerticalWall_};
             auto Logic = Application(Walls, Doors);
             auto PacManInitPosition = Vector2(7, 9);
             auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
@@ -573,8 +573,8 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         {
             auto WallWidth = 60.f, WallHeight = 8.f;
             auto position = Vector2{ 0,100 };
-            auto HorizontalWall_ = Sprite{ WallWidth, WallHeight, position };
-            std::vector<Sprite> Walls{ HorizontalWall_ };
+            auto HorizontalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ HorizontalWall_ };
             auto Logic = Application(Walls, Doors);
             auto PacManInitPosition = Vector2(10, (100-35));
             auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
@@ -585,7 +585,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
 
     TEST_CASE("PacMan can move through an unlocked door")
     {
-        std::vector<Sprite> Walls;
+        std::vector<RectangularEntity> Walls;
         auto DoorWidth = 60.f, DoorHeight = 8.f;
         std::vector<std::shared_ptr<Door>> Doors{ std::make_unique<Door>(DoorWidth, DoorHeight, Vector2(0,0)) };
         auto Logic = Application(Walls, Doors);
@@ -596,7 +596,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
     }
     TEST_CASE("PacMan cannot move through a locked door")
     {
-        std::vector<Sprite> Walls;
+        std::vector<RectangularEntity> Walls;
         auto DoorWidth = 60.f, DoorHeight = 8.f;
         std::vector<std::shared_ptr<Door>> Doors{ std::make_unique<Door>(DoorWidth, DoorHeight, Vector2(0,0)) };
         auto Key_ = Key{};
@@ -615,9 +615,9 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
     TEST_CASE("Testing Collision of Ghosts and PacMan")
     {
         std::vector<std::unique_ptr<AbstractGhost>> GhostContainer;
-        std::vector<Sprite> walls;
+        std::vector<RectangularEntity> walls;
         std::vector<std::shared_ptr<Door>> Doors;
-        std::vector<CircleSprite> TurningPoints;
+        std::vector<CircularEntity> TurningPoints;
         auto Logic = Application(walls, Doors);
 
         auto position = Vector2(0,0);
@@ -684,12 +684,12 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         
         TEST_CASE("Pellet")
         {
-            std::vector<SuperPallet> Pellets;
+            std::vector<Pellet> Pellets;
             auto FruitRadius = 15.f;
             auto Points = 20;
             auto Pellet_1_position = Vector2(0, 0);
-            Pellets.push_back(SuperPallet(FruitRadius,Pellet_1_position , Points));
-            Pellets.push_back(SuperPallet(FruitRadius, Vector2(0, 80), Points));
+            Pellets.push_back(Pellet(FruitRadius,Pellet_1_position , Points));
+            Pellets.push_back(Pellet(FruitRadius, Vector2(0, 80), Points));
             auto PacMan_ = PacMan{ 35,35, Vector2(300, 300) };
             auto Logic = Application{};
             //Fruit has default point of 10;
@@ -751,8 +751,8 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         TEST_CASE("")
         {
             auto MazeWidth = 500;
-            std::vector<CircleSprite> TurningTiles;
-            std::vector<Sprite> Walls;
+            std::vector<CircularEntity> TurningTiles;
+            std::vector<RectangularEntity> Walls;
             std::vector<std::shared_ptr<Door>> Doors;
             RedGhost Ghost(TurningTiles, Walls, Doors, 20, Vector2(MazeWidth + 1, 8));
             auto Logic = Application{};

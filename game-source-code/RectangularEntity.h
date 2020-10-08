@@ -1,17 +1,17 @@
 #pragma once
-#ifndef sprite_h
-#define sprite_h
+#ifndef RectangularEntity_h
+#define RectangularEntity_h
 #include "Vector2.h"
 #include <tuple>
 #include "string"
 #include <memory>
 #include "IEntity.h"
 
-class Sprite: public IEntity
+class RectangularEntity: public IEntity
 {
 public:
-	Sprite();
-	Sprite(const float& width, const float& height, const Vector2& postion);
+	RectangularEntity();
+	RectangularEntity(const float& width, const float& height, const Vector2& postion);
 	std::shared_ptr<Vector2> GetPosition_ptr() const override;
 	void SetPosition(const Vector2& position) override; 
 	Vector2 GetPosition() const override;

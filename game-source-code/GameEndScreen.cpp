@@ -7,7 +7,8 @@ GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& Window_, c
     {}
     sf::Text pauseMessage;
     pauseMessage.setFont(font);
-    pauseMessage.setCharacterSize(70);
+    auto FontSize = 70u;
+    pauseMessage.setCharacterSize(FontSize);
     pauseMessage.setPosition(50.f, 200.f);
     pauseMessage.setFillColor(sf::Color::White);
 

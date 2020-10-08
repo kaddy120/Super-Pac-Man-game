@@ -1,29 +1,29 @@
 #pragma once
-#include "CircleSprite.h"
+#include "CircularEntity.h"
 #include "IConsumable.h"
 /**
-* @class SuperPallet
+* @class Pellet
 * @brief This class is responsible for all the SupperPellet and PowerPellet Entities in the game
 *each Pellet has minimum of 50 points in the first level of the game.
-The class inherits  from the Iconsumable and the CircleSprite class.
+The class inherits  from the Iconsumable and the CircularEntity class.
 * @author Dembe Munyai and Kaddy Marindi
 * \version 3.0
 */
 
 
-class SuperPallet: public CircleSprite, public IConsumable
+class Pellet: public IConsumable, public CircularEntity
 {
 public:
 
 
-     /** \brief Parameterized Constructor. Creates SuperPallet object.
-         *  \param radius of type float ,gives a radius dimension of the  of the SuperPallet entitiry.
-            \param Position is of type vector2.Sets the position of each SuperPallet on the maze
-             \param points of type const unsigned int, the points per each SuperPallet entitiry.
+     /** \brief Parameterized Constructor. Creates Pellet object.
+         *  \param radius of type float ,gives a radius dimension of the  of the Pellet entitiry.
+            \param Position is of type vector2.Sets the position of each Pellet on the maze
+             \param points of type const unsigned int, the points per each Pellet entitiry.
           *
          */
 
-	SuperPallet(const float& radius, const Vector2& postion, const unsigned int& points = 50);
+	Pellet(const float& radius, const Vector2& postion, const unsigned int& points = 50);
 
 
     /**

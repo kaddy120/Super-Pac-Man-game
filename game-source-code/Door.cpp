@@ -5,7 +5,7 @@ Door::Door() {
 	Name("Door");
 }
 
-Door::Door(const float& width, const float& height, const Vector2& postion) : Sprite(width, height, postion)
+Door::Door(const float& width, const float& height, const Vector2& postion) : RectangularEntity(width, height, postion)
 {
 	Name("Door");
 }

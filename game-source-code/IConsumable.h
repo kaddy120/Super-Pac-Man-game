@@ -1,4 +1,5 @@
 #pragma once
+#include "CircularEntity.h"
 /**
  @class IConsumable
  @author Dembe Munyai and Kaddy Marindi
@@ -9,7 +10,8 @@
 *
 */
 
-class IConsumable {
+class IConsumable
+{
 public:
 
      /** \brief This is a Virtual functions that

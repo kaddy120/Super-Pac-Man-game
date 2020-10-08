@@ -12,9 +12,9 @@ Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
     Initialise();
 }
 
-void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView)
+void Render::RenderStaticRectangularEntitys(const std::vector<StaticEntitesViewModel>& StaticEntitesViewModel)
 {
-    for (auto modelView : spriteModelView)
+    for (auto modelView : StaticEntitesViewModel)
     {
         if (modelView.Title == "Fruit")
         {
@@ -32,7 +32,7 @@ void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModel
         {
             RenderRectangleShape(modelView, Wall);
         }
-        else if (modelView.Title == "SuperPallet")
+        else if (modelView.Title == "Pellet")
         {
             Pallet.setFillColor(sf::Color(67, 224, 4));
             Pallet.setPosition(sf::Vector2f(modelView.Positon.X, modelView.Positon.Y));
@@ -76,10 +76,10 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
     auto DrawGhost = [this](GhostModelView model) {
         if (model.Mode == Mode::Eaten)
             GhostAnimation.Update(4, 0);
-        GhostSprite.setTextureRect(GhostAnimation.GetIntRect());
+        GhostRectangularEntity.setTextureRect(GhostAnimation.GetIntRect());
         auto position = model.Positon;
-        GhostSprite.setPosition(sf::Vector2f(position.X, position.Y));
-        window->draw(GhostSprite);
+        GhostRectangularEntity.setPosition(sf::Vector2f(position.X, position.Y));
+        window->draw(GhostRectangularEntity);
     };
 
     if (ghostModelView[0].Mode == Mode::Frightened
@@ -125,15 +125,15 @@ void Render::RenderGhost(const vector<GhostModelView>& ghostModelView, const flo
 void Render::RenderPacMan(const PacManViewModel& pacManViewModel, const float& deltaTime)
 {
     auto DrawPacMan = [this](const PacManViewModel& pacManViewModel) {
-        PackManSprite.setTextureRect(PacManAnimation.GetIntRect());
+        PackManRectangularEntity.setTextureRect(PacManAnimation.GetIntRect());
         auto position = pacManViewModel.Positon;
-        PackManSprite.setPosition(sf::Vector2f(position.X, position.Y));
+        PackManRectangularEntity.setPosition(sf::Vector2f(position.X, position.Y));
     };
     auto D = pacManViewModel.Dimention;
     if (pacManViewModel.State == State::SuperCharged)
     {
-        PackManSprite.setOrigin(15, 15);
-        PackManSprite.setScale(sf::Vector2f(2,2));
+        PackManRectangularEntity.setOrigin(15, 15);
+        PackManRectangularEntity.setScale(sf::Vector2f(2,2));
     }
     switch (pacManViewModel.Direction)
     {
@@ -159,14 +159,14 @@ void Render::RenderPacMan(const PacManViewModel& pacManViewModel, const float& d
         break;
         break;
     }
-    window->draw(PackManSprite);
-    PackManSprite.setOrigin(0, 0);
-    PackManSprite.setScale(sf::Vector2f(1, 1));
+    window->draw(PackManRectangularEntity);
+    PackManRectangularEntity.setOrigin(0, 0);
+    PackManRectangularEntity.setScale(sf::Vector2f(1, 1));
 }
 void Render::RenderSplashScreen()
 {
 }
-void Render::RenderRectangleShape(const SpriteModelView& modelView, sf::RectangleShape& rect)
+void Render::RenderRectangleShape(const StaticEntitesViewModel& modelView, sf::RectangleShape& rect)
 {
     auto size_ = modelView.Dimention;
     rect.setSize(sf::Vector2f(size_.X, size_.Y));
@@ -174,22 +174,22 @@ void Render::RenderRectangleShape(const SpriteModelView& modelView, sf::Rectangl
     window->draw(rect);
 }
 
-void Render::RenderKeys(const SpriteModelView& spriteModelView)
+void Render::RenderKeys(const StaticEntitesViewModel& StaticEntitesViewModel)
 {
 }
 
-void Render::RenderFruits(const SpriteModelView& spriteModelView)
+void Render::RenderFruits(const StaticEntitesViewModel& StaticEntitesViewModel)
 {
 }
 
 void Render::Initialise()
 {
-    PackManSprite.setSize(sf::Vector2f(50,50));
-    PackManSprite.setTexture(&PacManTexture);
+    PackManRectangularEntity.setSize(sf::Vector2f(50,50));
+    PackManRectangularEntity.setTexture(&PacManTexture);
     PacManTexture.setSmooth(true);
-    GhostSprite.setSize(sf::Vector2f(45, 45));
-    GhostSprite.setOrigin(sf::Vector2f(20, 20));
-    GhostSprite.setTexture(&GhostsTexture);
+    GhostRectangularEntity.setSize(sf::Vector2f(45, 45));
+    GhostRectangularEntity.setOrigin(sf::Vector2f(20, 20));
+    GhostRectangularEntity.setTexture(&GhostsTexture);
     Fruit.setSize(sf::Vector2f(50, 50));
     Fruit.setTexture(&FruitsTextutre);
     Key.setSize(sf::Vector2f(50,50));

@@ -1,10 +1,11 @@
 #include "fruit.h"
 
-Fruit::Fruit(const float& radius, const Vector2& position) : CircleSprite(radius, position) 
+Fruit::Fruit(const float& radius, const Vector2& postion, const unsigned int& points) : CircularEntity(radius, postion)
 {
+	PointsPerFruit = points;
 	Name("Fruit");
 }
 
-unsigned int Fruit::FruitPoints() const { return PointsPerFruit; }
+unsigned int Fruit::GetPoints() const { return PointsPerFruit; }
 
-void Fruit::SetFruitPoints(const unsigned int& points) { PointsPerFruit = points; }
+void Fruit::SetPoints(const unsigned int& points) { PointsPerFruit = points; }

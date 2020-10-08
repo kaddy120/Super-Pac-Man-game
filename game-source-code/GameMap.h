@@ -2,13 +2,13 @@
 #include "Collision.h"
 #include "fruit.h"
 #include "Door.h"
-#include "Sprite.h"
+#include "RectangularEntity.h"
 #include "Door.h"
 #include "Key.h"
 #include <vector>
 #include <iostream>
-#include "CircleSprite.h"
-#include "SuperPallet.h"
+#include "CircularEntity.h"
+#include "Pellet.h"
 /**
  *@class GameMap
  *@author Dembe Munyai and Kaddy Marindi
@@ -42,13 +42,13 @@ public:
     */
 
 
-	vector<Sprite> GetWalls() const;
-	vector<CircleSprite> GetTurningPoinints() const;
+	vector<RectangularEntity> GetWalls() const;
+	vector<CircularEntity> GetTurningPoinints() const;
 	vector<std::shared_ptr<Door>> GetDoors() const;
 	vector<Key> GetKeys() const;
 	vector<Fruit> GetFruits() const;
-	vector<SuperPallet> GetSuperPallets() const;
-	vector<SuperPallet> GetPowerPallets() const;
+	vector<Pellet> GetPellets() const;
+	vector<Pellet> GetPowerPallets() const;
 
 	    /**
     * @brief This is an entity responsible for the Ghost house door.
@@ -56,15 +56,15 @@ public:
 	Door GhostsHouseDoor() const;
 private:
 	vector<std::vector<std::string> > Maize;
-	vector<Sprite> Walls;
+	vector<RectangularEntity> Walls;
 	vector<std::shared_ptr<Door>> Doors;
 	Door GhostsHouseDoor_;
 	vector<Fruit> Fruits;
 	vector<Key> Keys;
-	vector<CircleSprite> TurningPoints;
+	vector<CircularEntity> TurningPoints;
 	//i think i should rename super pallet to just pallet
-	vector<SuperPallet> SuperPallets;
-	vector<SuperPallet> PowerPallets;
+	vector<Pellet> Pellets;
+	vector<Pellet> PowerPallets;
 	void Map();
 	void AssignKeyToDoor();
 

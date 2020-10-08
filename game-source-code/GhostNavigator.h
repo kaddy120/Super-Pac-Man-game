@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "Sprite.h"
+#include "RectangularEntity.h"
 #include "Door.h"
 #include "Movement.h"
 #include "Collision.h"
@@ -23,8 +23,8 @@ class GhostNavigator
 {
 public:
 	GhostNavigator(
-		std::vector<CircleSprite> TurningTiles,
-		std::vector<Sprite> Walls,
+		std::vector<CircularEntity> TurningTiles,
+		std::vector<RectangularEntity> Walls,
 		std::vector<std::shared_ptr<Door>> Doors,
 	    std::shared_ptr<Vector2> ghostPosition_ptr);
     /**
@@ -62,15 +62,15 @@ public:
 	void SetTarget(const Vector2& target);
 private:
 
-	std::vector<CircleSprite> TurningTiles;
-	std::vector<Sprite> Walls;
+	std::vector<CircularEntity> TurningTiles;
+	std::vector<RectangularEntity> Walls;
 	std::vector<std::shared_ptr<Door>> Doors;
 	std::shared_ptr<Vector2> GhostPosition_ptr;
 	Vector2 Target;
 	int StuckCount = 0;
 	Direction CurrentDirection = Direction::Up;
 	bool isSelectedDirectionMovable(const Direction& direction);
-	bool CheckCollisionWithaDoor(const Sprite& rectangle) const;
+	bool CheckCollisionWithaDoor(const RectangularEntity& rectangle) const;
 };
 
 

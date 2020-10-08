@@ -71,14 +71,14 @@ void GameLogic::Update()
         {
             pacMan.Die();
             IsGameOver_ = true;
-            if (pacMan.GetLifes() == 0) {
+            if (pacMan.GetLives() == 0) {
                 Level = 0;
                 pacMan.ResetPoints();
             }
         }
     }
     Logic.EatFruits(pacMan, Fruits);
-    if (Logic.AtePallet(pacMan, SuperPallets)) {
+    if (Logic.AtePallet(pacMan, Pellets)) {
         pacMan.SetState(State::SuperCharged);
         pacMan.SetSpeed(2.6);
         Clock_.Reset();
@@ -129,7 +129,7 @@ void GameLogic::Update()
     Logic.MovablesExitMaze(pacMan, MazeWidth);
     for (auto i = 0; i < Ghosts.size(); i++)
         Logic.MovablesExitMaze(*Ghosts[i], 660);
-    if (PowerPallets.size() == 0 && SuperPallets.size() == 0 && Fruits.size() == 0)
+    if (PowerPallets.size() == 0 && Pellets.size() == 0 && Fruits.size() == 0)
     {
         NextLevel = true;
         Level++;
@@ -140,7 +140,7 @@ void GameLogic::Update()
 void GameLogic::RenderEntities()
 {
     MapEntitiesToModelView();
-    Render_.RenderStaticSprites(StaticEntityModelView);
+    Render_.RenderStaticRectangularEntitys(StaticEntityModelView);
     Render_.RenderGhost(ghostModelView, deltaTime);
     Render_.RenderPacMan(PacManViewModel, deltaTime);
     Render_.RenderText(textModelView);
@@ -191,8 +191,8 @@ void GameLogic::MapStaticEntitiesViewModel()
     for (auto key : Keys)
         MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, key);
 
-    for (auto superPallet : SuperPallets)
-        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, superPallet);
+    for (auto Pellet : Pellets)
+        MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, Pellet);
 
     for (auto powerPallet : PowerPallets)
         MapEntitiesToDTO::MapStaticEntitiesModelView(StaticEntityModelView, powerPallet);
@@ -203,7 +203,7 @@ void GameLogic::MapStaticEntitiesViewModel()
 
 void GameLogic::InitialiseEntities()
 {
-    if (pacMan.GetLifes() == 3 || pacMan.GetLifes() == 0 || NextLevel)
+    if (pacMan.GetLives() == 3 || pacMan.GetLives() == 0 || NextLevel)
     {
         GameMap GameMap{};
         walls = GameMap.GetWalls();
@@ -212,7 +212,7 @@ void GameLogic::InitialiseEntities()
         GhostsHouseDoor = GameMap.GhostsHouseDoor();
         Keys = GameMap.GetKeys();
         Fruits = GameMap.GetFruits();
-        SuperPallets = GameMap.GetSuperPallets();
+        Pellets = GameMap.GetPellets();
         PowerPallets = GameMap.GetPowerPallets();
         NextLevel = false;
     }
@@ -224,7 +224,7 @@ void GameLogic::InitialiseEntities()
     ProposedDirection = static_cast<Direction>(0);
     proposed = true;
     auto pacManInitPosition = Vector2(310, 570);
-    if(pacMan.GetLifes() == 0)
+    if(pacMan.GetLives() == 0)
     pacMan = PacMan(44.f, 44.f, pacManInitPosition);
     pacMan.SetSpeed(2.3);
     pacMan.SetPosition(pacManInitPosition);

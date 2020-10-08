@@ -58,24 +58,24 @@ private:
 
 private:
 	PacMan pacMan;
-	vector<Sprite> walls;
+	vector<RectangularEntity> walls;
 	vector<std::shared_ptr<Door>> Doors;
-	vector<CircleSprite> TurningPoints;
+	vector<CircularEntity> TurningPoints;
 	Direction ProposedDirection;
 	vector<Key> Keys;
 	vector<Fruit> Fruits;
 	Door GhostsHouseDoor;
-	vector<SuperPallet> PowerPallets;
+	vector<Pellet> PowerPallets;
 	std::vector<std::unique_ptr<AbstractGhost>> Ghosts;
 
 	Direction PacManCurrentDirection;
-	vector<SuperPallet> SuperPallets;
+	vector<Pellet> Pellets;
 	Render Render_;
 	Application Logic;
 	std::shared_ptr<sf::RenderWindow> window;
 	TextModelView textModelView;
 	vector<GhostModelView> ghostModelView;
-	vector<SpriteModelView> StaticEntityModelView;
+	vector<StaticEntitesViewModel> StaticEntityModelView;
 	PacManViewModel PacManViewModel;
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;

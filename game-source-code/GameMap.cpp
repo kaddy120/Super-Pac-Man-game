@@ -46,7 +46,7 @@ void GameMap::Map()
 	float height_ = 8;
 	float width = 8;
 	float height = 68;
-	Sprite Wall_h(width_, height_, position);
+	RectangularEntity Wall_h(width_, height_, position);
 
 	auto tempPosition = position;///////////////////
 	
@@ -66,14 +66,14 @@ void GameMap::Map()
 			auto condition = Maize[row][col];
 			if (condition == "h")
 			{
-				auto wall = Sprite(width_, height_, position);
+				auto wall = RectangularEntity(width_, height_, position);
 				wall.Name("Wall");
 				Walls.push_back(wall);
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "v")
 			{
-				auto wall = Sprite(width, height, position);
+				auto wall = RectangularEntity(width, height, position);
 				wall.Name("Wall");
 				Walls.push_back(wall);
 			}
@@ -108,7 +108,7 @@ void GameMap::Map()
 				tempPosition = position;
 				tempPosition.add(CircleHorizontalIncrement);
 				tempPosition.add(CircleVerticalIncrement);
-				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
+				TurningPoints.push_back(CircularEntity(3.f, tempPosition));
 				Fruits.push_back(Fruit(15.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
@@ -116,7 +116,7 @@ void GameMap::Map()
 			{
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				TurningPoints.push_back(CircleSprite(2.f, tempPosition));
+				TurningPoints.push_back(CircularEntity(2.f, tempPosition));
 				Keys.push_back(Key(4.f, tempPosition));
 				position.add(HorizontalIncrement);
 
@@ -125,22 +125,22 @@ void GameMap::Map()
 			{
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
+				TurningPoints.push_back(CircularEntity(3.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "P")
 			{
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				TurningPoints.push_back(CircleSprite(3.f, tempPosition));
-				SuperPallets.push_back(SuperPallet(16.f, tempPosition));
+				TurningPoints.push_back(CircularEntity(3.f, tempPosition));
+				Pellets.push_back(Pellet(16.f, tempPosition));
 				position.add(HorizontalIncrement);
 			}
 			else if (condition == "p")
 			{
 				tempPosition.X = position.X;
 				tempPosition.add(CircleHorizontalIncrement);
-				auto pallet = SuperPallet(15.f, tempPosition);
+				auto pallet = Pellet(15.f, tempPosition);
 				pallet.Name("PowerPallet");
 				PowerPallets.push_back(pallet);
 				position.add(HorizontalIncrement);
@@ -149,10 +149,10 @@ void GameMap::Map()
 	}
 }
 
-std::vector<Sprite> GameMap::GetWalls() const { 
+std::vector<RectangularEntity> GameMap::GetWalls() const { 
 	return Walls; 
 }
-vector<CircleSprite> GameMap::GetTurningPoinints() const { 
+vector<CircularEntity> GameMap::GetTurningPoinints() const { 
 	return TurningPoints; 
 }
 vector<std::shared_ptr<Door>> GameMap::GetDoors() const {
@@ -166,11 +166,11 @@ vector<Fruit> GameMap::GetFruits() const {
 	return Fruits;
 }
 
-vector<SuperPallet> GameMap::GetSuperPallets() const {
-	return SuperPallets; 
+vector<Pellet> GameMap::GetPellets() const {
+	return Pellets; 
 }
 
-vector<SuperPallet> GameMap::GetPowerPallets() const {
+vector<Pellet> GameMap::GetPowerPallets() const {
 	return PowerPallets;
 }
 Door GameMap::GhostsHouseDoor() const {
@@ -187,7 +187,7 @@ void GameMap::AssignKeyToDoor()
 		{
 			if (count >= 3)
 				break;
-			CircleSprite RangeCircle(120, key.GetPosition());
+			CircularEntity RangeCircle(120, key.GetPosition());
 			if (Collision::CheckCollision(RangeCircle, *Doors[i]))
 			{
 				if (!Doors[i]->HasKey())

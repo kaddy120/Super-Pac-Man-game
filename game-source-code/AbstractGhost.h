@@ -1,5 +1,5 @@
 #pragma once
-#include "CircleSprite.h"
+#include "CircularEntity.h"
 #include "Movement.h"
 #include "GhostNavigator.h"
 #include <chrono>
@@ -14,12 +14,12 @@
 
 
 
-class AbstractGhost: public CircleSprite
+class AbstractGhost: public CircularEntity
 {
 public:
 	AbstractGhost(
-		const std::vector<CircleSprite>& turningTiles,
-		const std::vector<Sprite>& walls,
+		const std::vector<CircularEntity>& turningTiles,
+		const std::vector<RectangularEntity>& walls,
 		const std::vector<std::shared_ptr<Door>>& doors,
 		const float& radius,
 		const Vector2& initPosition);

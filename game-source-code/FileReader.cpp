@@ -3,8 +3,6 @@
 
 FileReader::FileReader() : filePath_{"resources/file.txt"}
 {
-
-
 }
 
 int FileReader::getHighestScore()
@@ -29,6 +27,4 @@ void FileReader::setHighestScore(int gamescore)
 }
 
 FileReader::~FileReader()
-{
-
-}
+{ }

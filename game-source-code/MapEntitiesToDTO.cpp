@@ -6,7 +6,7 @@ void MapEntitiesToDTO::MapTextViewModel(
     const int& highestScore,
     const unsigned int& level)
 {
-    modelView.Lives = std::to_string(pacMan.GetLifes());
+    modelView.Lives = std::to_string(pacMan.GetLives());
     modelView.HighestScore = std::to_string(highestScore);
     modelView.Level = std::to_string(level);
     modelView.CurrentScore = std::to_string(pacMan.GetPoints());
@@ -32,31 +32,31 @@ void MapEntitiesToDTO::MapGhostModelView(vector<GhostModelView>& modelView, cons
         modelView.push_back(tempModel);
     }
 }
-void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const vector<Sprite>& rectSprites)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<StaticEntitesViewModel>& modelView, const vector<RectangularEntity>& rectRectangularEntitys)
 {
-    auto model = SpriteModelView{};
-    for (auto rectSprite : rectSprites)
+    auto model = StaticEntitesViewModel{};
+    for (auto rectRectangularEntity : rectRectangularEntitys)
     {
-        MapStaticEntitiesModelView(modelView, rectSprite);
+        MapStaticEntitiesModelView(modelView, rectRectangularEntity);
     }
 }
-void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const CircleSprite& circleSprite)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<StaticEntitesViewModel>& modelView, const CircularEntity& CircularEntity)
 {
-    SpriteModelView Model;
+    StaticEntitesViewModel Model;
 
-    Model.Title = circleSprite.Name();
-    auto radius = circleSprite.GetRadius();
+    Model.Title = CircularEntity.Name();
+    auto radius = CircularEntity.GetRadius();
     Model.Dimention = Vector2(radius * 2, radius * 2);
-    Model.Positon = circleSprite.GetPosition();
+    Model.Positon = CircularEntity.GetPosition();
     modelView.push_back(Model);
 }
-void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<SpriteModelView>& modelView, const Sprite& rectSprite)
+void MapEntitiesToDTO::MapStaticEntitiesModelView(vector<StaticEntitesViewModel>& modelView, const RectangularEntity& rectRectangularEntity)
 {
-    SpriteModelView Model;
+    StaticEntitesViewModel Model;
 
-    Model.Title = rectSprite.Name();
-    auto [width, height] = rectSprite.getDimentions();
+    Model.Title = rectRectangularEntity.Name();
+    auto [width, height] = rectRectangularEntity.getDimentions();
     Model.Dimention = Vector2(width, height);
-    Model.Positon = rectSprite.GetPosition();
+    Model.Positon = rectRectangularEntity.GetPosition();
     modelView.push_back(Model);
 }

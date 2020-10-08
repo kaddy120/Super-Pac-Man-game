@@ -22,8 +22,8 @@ public:
 
     */
 	PinkGhost(
-		const std::vector<CircleSprite>& turningTiles,
-		const std::vector<Sprite>& walls,
+		const std::vector<CircularEntity>& turningTiles,
+		const std::vector<RectangularEntity>& walls,
 		const std::vector<std::shared_ptr<Door>>& Doors,
 		const std::shared_ptr<Vector2>& RedGhostposition,
 		const float& radius = 20.f,

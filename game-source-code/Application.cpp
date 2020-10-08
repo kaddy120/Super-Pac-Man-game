@@ -1,12 +1,12 @@
 #include "Application.h"
 
-Application::Application(vector<Sprite> walls, vector<std::shared_ptr<Door>> Doors)
+Application::Application(vector<RectangularEntity> walls, vector<std::shared_ptr<Door>> Doors)
 {
     this->walls = walls;
     this->Doors = Doors;
 }
 
-bool Application::AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallets)
+bool Application::AtePallet(PacMan& pacMan, std::vector<Pellet>& pallets)
 {
     for (auto it = pallets.begin(); it != pallets.end(); it++)
     {
@@ -42,7 +42,7 @@ void Application::EatFruits(PacMan& pacMan, std::vector<Fruit>& Fruits)
     {
         if (Collision::CheckCollision(*it, pacMan))
         {
-            pacMan.IncreamentPoints(it->FruitPoints());
+            pacMan.IncreamentPoints(it->GetPoints());
             Fruits.erase(it);
             break;
         }
@@ -123,7 +123,7 @@ bool Application::isProsedDirectionMovable(
     const Direction& direction)
 {
     auto [width, height] = pacMan.getDimentions();
-    Sprite Temp(width,height, pacMan.GetPosition());
+    RectangularEntity Temp(width,height, pacMan.GetPosition());
     Movement move_{ 8.f};
     move_.Move(Temp.GetPosition_ptr(), direction);
     if(Collision::CheckCollision(Temp, walls)) return false;

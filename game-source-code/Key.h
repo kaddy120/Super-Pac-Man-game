@@ -1,19 +1,19 @@
 #pragma once
-#include "sprite.h"
+#include "RectangularEntity.h"
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>
 #include <string>
-#include "CircleSprite.h"
+#include "CircularEntity.h"
 /**
 * @class Key
 * @brief The class assignes the keys to the maze
-*The class also inherits from CircleSprite.
+*The class also inherits from CircularEntity.
 * @author Dembe Munyai and Kaddy Marindi
 * \version 3.0
 */
 
 
-class Key: public CircleSprite
+class Key: public CircularEntity
 {
 public:
 

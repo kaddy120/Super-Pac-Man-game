@@ -1,6 +1,6 @@
 #include "PacMan.h"
 
-PacMan::PacMan(const float& width, const float& height, const Vector2& postion): Sprite(width,height, postion),
+PacMan::PacMan(const float& width, const float& height, const Vector2& postion): RectangularEntity(width,height, postion),
 Movement_()
 {}
 
@@ -41,6 +41,6 @@ Vector2 PacMan::Move(const Direction& direction)
     return Movement_.Move(GetPosition_ptr(),direction);
 }
 
-unsigned int PacMan::GetLifes() const { return Lifes; }
+unsigned int PacMan::GetLives() const { return Lifes; }
 
 

@@ -6,21 +6,21 @@
 /**
 * @class CircularEntity
 *@author Dembe Munyai and Kaddy Marindi
-*@brief CircularSprite is responsible for all circular objects with a radius and powssition which is the center.
+*@brief CircularRectangularEntity is responsible for all circular objects with a radius and powssition which is the center.
 *\version 3.0
 */
-class CircleSprite: public IEntity
+class CircularEntity: public IEntity 
 {
 public:
 
-    /** \brief Parameterized Constructor. Creates  CircleSprite object.
+    /** \brief Parameterized Constructor. Creates  CircularEntity object.
     */
-	CircleSprite();
-	/** \brief Parameterized Constructor. Creates  CircleSprite object.
+	CircularEntity();
+	/** \brief Parameterized Constructor. Creates  CircularEntity object.
     * \param radius of type float  made for circular entity
     * \param Position is of type vector2.Sets the position of the circular entity.
     */
-	CircleSprite(const float& radius, const Vector2& postion);
+	CircularEntity(const float& radius, const Vector2& postion);
 	Vector2 GetPosition() const override;
 	std::shared_ptr<Vector2> GetPosition_ptr() const override;
 
@@ -32,7 +32,7 @@ public:
 	void SetPosition(const Vector2& position) override;
 
     /**
-    * @brief Getter function ,responsible for returning a radius of a circular sprite
+    * @brief Getter function ,responsible for returning a radius of a circular RectangularEntity
     *
     *  @return float ,returns a float of type float
     */

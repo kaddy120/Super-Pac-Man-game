@@ -5,10 +5,7 @@
 #include "YellowGhost.h"
 #include "PinkGhost.h"
 #include "PacMan.h"
-#include "Window.h"
 #include "GameMap.h"
-#include "SplashScreen.h"
-#include "Render.h"
 #include "BlueGhost.h"
 #include "MapEntitiesToDTO.h"
 #include "FileReader.h"
@@ -21,18 +18,18 @@ class Application
 {
 public:
 	Application() = default;
-	Application(vector<Sprite> walls, vector<std::shared_ptr<Door>> Doors);
+	Application(vector<RectangularEntity> walls, vector<std::shared_ptr<Door>> Doors);
 	void MovePacMan(PacMan& pacMan, const Direction& direction, const float& deltaTime);
 	void MoveGhost(std::vector<std::unique_ptr<AbstractGhost>>& Ghosts, const float& deltaTime);
 	bool PacManAndGhostsCollide(const PacMan& pacMan, vector<std::unique_ptr<AbstractGhost>>& Ghosts);
 	void EatFruits(PacMan& pacMan, std::vector<Fruit>& fruits);
-	bool AtePallet(PacMan& pacMan, std::vector<SuperPallet>& pallet);
+	bool AtePallet(PacMan& pacMan, std::vector<Pellet>& pallet);
 	void OpenDoors(const PacMan& pacMan, std::vector<Key>& keys, vector<std::shared_ptr<Door>>& Doors);
 	bool isProsedDirectionMovable(const PacMan& pacMan,const Direction& direction);
 	void MovablesExitMaze(IEntity& MovableEntity,const unsigned int& mazeWidth);
 
 private:
-	vector<Sprite> walls;
+	vector<RectangularEntity> walls;
 	vector<std::shared_ptr<Door>> Doors;
 };
 

@@ -1,8 +1,8 @@
 #include "GhostNavigator.h"
 
 GhostNavigator::GhostNavigator(
-	std::vector<CircleSprite> turningTiles,
-	std::vector<Sprite> walls,
+	std::vector<CircularEntity> turningTiles,
+	std::vector<RectangularEntity> walls,
 	std::vector<std::shared_ptr<Door>> doors,
 	std::shared_ptr<Vector2> ghostPosition_ptr) {
 
@@ -103,13 +103,13 @@ void GhostNavigator::SetTarget(const Vector2& target)
 
 bool GhostNavigator::isInsideTurningTiles()
 {
-	CircleSprite smallCircle(3.f, *GhostPosition_ptr);
+	CircularEntity smallCircle(3.f, *GhostPosition_ptr);
 	return Collision::CheckCollision(smallCircle, TurningTiles);
 }
 
 bool GhostNavigator::isSelectedDirectionMovable(const Direction& direction)
 {
-	Sprite tempSprite(30, 30, Vector2(0, 0));
+	RectangularEntity tempRectangularEntity(30, 30, Vector2(0, 0));
 	auto displace_test = 38.f;
 	auto isMovable = true;
 	auto temp = *GhostPosition_ptr;
@@ -117,26 +117,26 @@ bool GhostNavigator::isSelectedDirectionMovable(const Direction& direction)
 	{
 	case Up:
 		temp.subtract(Vector2(0, displace_test));
-		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
+		tempRectangularEntity.SetPosition(temp);
+		if (Collision::CheckCollision(tempRectangularEntity, Walls) || CheckCollisionWithaDoor(tempRectangularEntity))
 			isMovable = false;
 		break;
 	case Down:
 		temp.add(Vector2(0, displace_test));
-		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
+		tempRectangularEntity.SetPosition(temp);
+		if (Collision::CheckCollision(tempRectangularEntity, Walls) || CheckCollisionWithaDoor(tempRectangularEntity))
 			isMovable = false;
 		break;
 	case Right:
 		temp.add(Vector2(displace_test, 0));
-		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
+		tempRectangularEntity.SetPosition(temp);
+		if (Collision::CheckCollision(tempRectangularEntity, Walls) || CheckCollisionWithaDoor(tempRectangularEntity))
 			isMovable = false;
 		break;
 	case Left:
 		temp.subtract(Vector2(displace_test, 0));
-		tempSprite.SetPosition(temp);
-		if (Collision::CheckCollision(tempSprite, Walls) || CheckCollisionWithaDoor(tempSprite))
+		tempRectangularEntity.SetPosition(temp);
+		if (Collision::CheckCollision(tempRectangularEntity, Walls) || CheckCollisionWithaDoor(tempRectangularEntity))
 			isMovable = false;
 		break;
 	}
@@ -168,7 +168,7 @@ void GhostNavigator::RandomDirection()
 	CurrentDirection = temp;
 }
 
-bool GhostNavigator::CheckCollisionWithaDoor(const Sprite& rectangle) const
+bool GhostNavigator::CheckCollisionWithaDoor(const RectangularEntity& rectangle) const
 {
 	for (auto Door : Doors)
 	{

@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Window.h"
 #include "Application.h"
-#include "Sprite.h"
+#include "RectangularEntity.h"
 #include "GameMap.h"
 #include <vector>
 #include <tuple>

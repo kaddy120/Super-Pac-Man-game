@@ -1,16 +1,16 @@
 #pragma once
-#include "Sprite.h"
+#include "RectangularEntity.h"
 #include "Key.h"
 #include "Vector2.h"
 /**
 * @class Door
 * @brief This class is responsible for door entities in the game
-*each door is assigned a position and a key.The class inherits from sprite
+*each door is assigned a position and a key.The class inherits from RectangularEntity
 * @author Dembe Munyai and Kaddy Marindi
 * \version 3.0
 */
 
-class Door: public Sprite
+class Door: public RectangularEntity
 {
 public:
 

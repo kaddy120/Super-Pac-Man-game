@@ -8,11 +8,11 @@ using std::pow;
 
 
 
-bool Collision::CheckCollision(const Sprite& firstRectangle, const std::vector<Sprite>& secondRectangle)
+bool Collision::CheckCollision(const RectangularEntity& firstRectangle, const std::vector<RectangularEntity>& secondRectangle)
 {
-	for (auto secSprite : secondRectangle)
+	for (auto secRectangularEntity : secondRectangle)
 	{
-		if (CheckCollision(firstRectangle, secSprite)) return true;
+		if (CheckCollision(firstRectangle, secRectangularEntity)) return true;
 	}
 	return false;
 }
@@ -25,12 +25,12 @@ bool Collision::CheckCollision(const Sprite& firstRectangle, const std::vector<S
     @return bool
     */
 
-bool Collision::CheckCollision(const Sprite& firstRectangle, const Sprite& sprite2)
+bool Collision::CheckCollision(const RectangularEntity& firstRectangle, const RectangularEntity& RectangularEntity2)
 {
 	auto [width1,height1] = firstRectangle.getDimentions();
-	auto [width2,height2] = sprite2.getDimentions();
+	auto [width2,height2] = RectangularEntity2.getDimentions();
 	auto position1 = firstRectangle.GetPosition();
-	auto position2 = sprite2.GetPosition();
+	auto position2 = RectangularEntity2.GetPosition();
 
 		if (position1.X <= position2.X + width2 &&
 			position1.X + width1 >= position2.X &&
@@ -44,7 +44,7 @@ bool Collision::CheckCollision(const Sprite& firstRectangle, const Sprite& sprit
 		return false;
 }
 
- bool Collision::CheckCollision(const CircleSprite& firstCircle, const CircleSprite& secondCircle)
+ bool Collision::CheckCollision(const CircularEntity& firstCircle, const CircularEntity& secondCircle)
  {
 	 auto r1 = firstCircle.GetRadius();
 	 auto r2 = secondCircle.GetRadius();
@@ -55,7 +55,7 @@ bool Collision::CheckCollision(const Sprite& firstRectangle, const Sprite& sprit
 	 else
 		 return false;
  }
- bool Collision::CheckCollision(const CircleSprite& firstCircle, const std::vector<CircleSprite>& circles)
+ bool Collision::CheckCollision(const CircularEntity& firstCircle, const std::vector<CircularEntity>& circles)
  {
 	 for (auto circle: circles)
 	 {
@@ -65,7 +65,7 @@ bool Collision::CheckCollision(const Sprite& firstRectangle, const Sprite& sprit
 
  }
 
- bool Collision::CheckCollision(const CircleSprite& circle, const Sprite& rect)
+ bool Collision::CheckCollision(const CircularEntity& circle, const RectangularEntity& rect)
  {
 		 auto [width, height] = rect.getDimentions();
 		 /*auto circleDistance_x = abs(circle.GetPosition().X - rect.GetCenter().X);
@@ -87,7 +87,7 @@ bool Collision::CheckCollision(const Sprite& firstRectangle, const Sprite& sprit
 
  }
 
- bool Collision::CheckCollision(const Sprite& rectangle, const std::vector<CircleSprite>& circles)
+ bool Collision::CheckCollision(const RectangularEntity& rectangle, const std::vector<CircularEntity>& circles)
  {
 	 for (auto circle : circles)
 	 {

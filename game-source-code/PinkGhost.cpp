@@ -1,8 +1,8 @@
 #include "PinkGhost.h"
 
 PinkGhost::PinkGhost(
-	const std::vector<CircleSprite>& turningTiles,
-	const std::vector<Sprite>& walls,
+	const std::vector<CircularEntity>& turningTiles,
+	const std::vector<RectangularEntity>& walls,
 	const std::vector<std::shared_ptr<Door>>& Doors,
 	const std::shared_ptr<Vector2>& RedGhostposition,
 	const float& radius,
@@ -16,8 +16,8 @@ PinkGhost::PinkGhost(
 
 void PinkGhost::SetTarget()
 {
-	CircleSprite WithinRangeCircle{ 230, GetPosition() };
-	CircleSprite tempCircle{ 1, *PacManPosition };
+	CircularEntity WithinRangeCircle{ 230, GetPosition() };
+	CircularEntity tempCircle{ 1, *PacManPosition };
 	auto pos = GetPosition();
 	if (Collision::CheckCollision(WithinRangeCircle, tempCircle))
 	{

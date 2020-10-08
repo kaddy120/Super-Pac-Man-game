@@ -1,7 +1,7 @@
 #pragma once
-#include "Sprite.h"
+#include "RectangularEntity.h"
 #include <vector>
-#include "CircleSprite.h"
+#include "CircularEntity.h"
 /**
  @class Collision
  @author Dembe Munyai and Kaddy Marindi
@@ -21,7 +21,7 @@ public:
     */
 
 
-	static bool CheckCollision(const Sprite& firstRectangle, const Sprite& secondRectangle ); //square to square
+	static bool CheckCollision(const RectangularEntity& firstRectangle, const RectangularEntity& secondRectangle ); //square to square
 
     /**
     * @brief The function checks the collision between two RectangularEntities and any object derived from RectangularEntity
@@ -30,7 +30,7 @@ public:
     * @return bool
     */
 
-	static bool CheckCollision(const Sprite& firstSprite, const std::vector<Sprite>& secondSprite); //square to squares
+	static bool CheckCollision(const RectangularEntity& firstRectangularEntity, const std::vector<RectangularEntity>& secondRectangularEntity); //square to squares
 	  /**
     * @brief The function checks the collision between two RectangularEntities and any object derived from RectangularEntity
     * @param firstRectangle
@@ -38,27 +38,27 @@ public:
     * @return bool
     */
 
-	static bool CheckCollision(const CircleSprite& firstCircle, const CircleSprite& secondCircle); //circle to cicle
+	static bool CheckCollision(const CircularEntity& firstCircle, const CircularEntity& secondCircle); //circle to cicle
 	  /**
     * @brief The function checks the collision between two RectangularEntities and any object derived from RectangularEntity
     * @param firstRectangle
     * @param secondRectangle
     * @return bool
     */
-	static bool CheckCollision(const CircleSprite& circle, const std::vector<CircleSprite>& circles); //circle to circles
+	static bool CheckCollision(const CircularEntity& circle, const std::vector<CircularEntity>& circles); //circle to circles
 	  /**
     * @brief The function checks the collision between two RectangularEntities and any object derived from RectangularEntity
     * @param firstRectangle
     * @param secondRectangle
     * @return bool
     */
-	static bool CheckCollision(const CircleSprite& circle, const Sprite& rectangle); //circle to rectangle
+	static bool CheckCollision(const CircularEntity& circle, const RectangularEntity& rectangle); //circle to rectangle
 	  /**
     * @brief The function checks the collision between two RectangularEntities and any object derived from RectangularEntity
     * @param firstRectangle
     * @param secondRectangle
     * @return bool
     */
-	static bool CheckCollision(const Sprite& rectangle, const std::vector<CircleSprite>& circles); //rectange and cicles
+	static bool CheckCollision(const RectangularEntity& rectangle, const std::vector<CircularEntity>& circles); //rectange and cicles
 };
 
