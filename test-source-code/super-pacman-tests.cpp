@@ -681,26 +681,92 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
                 CHECK(InitNumberOfFruits -1 == Fruits.size());
             }
         }
-        TEST_CASE("")
+        
+        TEST_CASE("Pellet")
         {
-
-            /* bool AtePallet(PacMan & pacMan, std::vector<SuperPallet> & pallet);*/
+            std::vector<SuperPallet> Pellets;
+            auto FruitRadius = 15.f;
+            auto Points = 20;
+            auto Pellet_1_position = Vector2(0, 0);
+            Pellets.push_back(SuperPallet(FruitRadius,Pellet_1_position , Points));
+            Pellets.push_back(SuperPallet(FruitRadius, Vector2(0, 80), Points));
+            auto PacMan_ = PacMan{ 35,35, Vector2(300, 300) };
+            auto Logic = Application{};
+            //Fruit has default point of 10;
+            SUBCASE("")
+            {
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfPellet = Pellets.size();
+                auto AtePellet = Logic.AtePallet(PacMan_, Pellets);
+                CHECK_FALSE(AtePellet);
+                CHECK(InitScore == PacMan_.GetPoints());
+                CHECK(InitNumberOfPellet == Pellets.size());
+            }
+            SUBCASE("")
+            {
+                auto PacMan_ = PacMan{ 35,35, Vector2(0, 0) };
+                PacMan_.SetPosition(Pellet_1_position);
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfPellet = Pellets.size();
+                auto AtePellet = Logic.AtePallet(PacMan_, Pellets);
+                CHECK(AtePellet);
+                CHECK(InitScore+ Points == PacMan_.GetPoints());
+                CHECK(InitNumberOfPellet - 1 == Pellets.size());
+            }
         }
 
-        TEST_CASE("")
+        TEST_CASE("Open Doors")
         {
             //void OpenDoors(const PacMan & pacMan, std::vector<Key> & keys, vector<std::shared_ptr<Door>> & Doors);
+            auto Key1 = Key{};
+            auto Key2 = Key{};
+            vector<Key> Keys{ Key1, Key2 };
+            auto Door1Position = Vector2{ 0,0 };
+            auto Door1 = std::make_shared<Door>( 40, 8, Door1Position );
+            auto Door2Position = Vector2{ 80, 0 };
+            auto Door2 = std::make_shared<Door>(40, 8, Door2Position );
+            Door1->AssignKey(Key1);
+            Door2->AssignKey(Key2);
+            vector<std::shared_ptr<Door>> Doors{ Door1, Door2 };
+            auto PacMan_ = PacMan{ 35.f, 35.f, Vector2(300, 300) };
+            auto Logic = Application{};
+            Logic.OpenDoors(PacMan_, Keys, Doors);
+            CHECK(Doors[0]->IsDoorLocked());
+            CHECK(Doors[1]->IsDoorLocked());
+            CHECK(Keys.size() == 2);
 
         }
         TEST_CASE("")
         {
-            //void MovablesExitMaze(IEntity & MovableEntity, const unsigned int& mazeWidth);
+            auto MazeWidth = 500;
+            auto PacMan_ = PacMan{35.f, 35.f, Vector2(MazeWidth+1, 8)};
+            auto Logic = Application{};
+            Logic.MovablesExitMaze(PacMan_, MazeWidth);
+            CHECK(PacMan_.GetPosition() == Vector2(0, 8));
+
+            PacMan_.SetPosition(Vector2(-1, 8));
+            Logic.MovablesExitMaze(PacMan_, MazeWidth);
+            CHECK(PacMan_.GetPosition() == Vector2(MazeWidth, 8));
         }
         TEST_CASE("")
         {
+            auto MazeWidth = 500;
+            std::vector<CircleSprite> TurningTiles;
+            std::vector<Sprite> Walls;
+            std::vector<std::shared_ptr<Door>> Doors;
+            RedGhost Ghost(TurningTiles, Walls, Doors, 20, Vector2(MazeWidth + 1, 8));
+            auto Logic = Application{};
+            //make subcase
+            Logic.MovablesExitMaze(Ghost, MazeWidth);
+            CHECK(Ghost.GetPosition() == Vector2(0, 8));
+            //make subcase
+            Ghost.SetPosition(Vector2(-1, 8));
+            Logic.MovablesExitMaze(Ghost, MazeWidth);
+            CHECK(Ghost.GetPosition() == Vector2(MazeWidth, 8));
             //void MovablesExitMaze(IEntity & MovableEntity, const unsigned int& mazeWidth);
         }
+
     }
-    }
+}
     
 
