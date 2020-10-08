@@ -12,9 +12,9 @@ Render::Render(const std::shared_ptr<sf::RenderWindow>& window_) :
     Initialise();
 }
 
-void Render::RenderStaticSprites(const std::vector<StaticEntitesViewModel>& StaticEntitesViewModel)
+void Render::RenderStaticSprites(const std::vector<SpriteModelView>& spriteModelView)
 {
-    for (auto modelView : StaticEntitesViewModel)
+    for (auto modelView : spriteModelView)
     {
         if (modelView.Title == "Fruit")
         {
@@ -166,7 +166,7 @@ void Render::RenderPacMan(const PacManViewModel& pacManViewModel, const float& d
 void Render::RenderSplashScreen()
 {
 }
-void Render::RenderRectangleShape(const StaticEntitesViewModel& modelView, sf::RectangleShape& rect)
+void Render::RenderRectangleShape(const SpriteModelView& modelView, sf::RectangleShape& rect)
 {
     auto size_ = modelView.Dimention;
     rect.setSize(sf::Vector2f(size_.X, size_.Y));
@@ -174,11 +174,11 @@ void Render::RenderRectangleShape(const StaticEntitesViewModel& modelView, sf::R
     window->draw(rect);
 }
 
-void Render::RenderKeys(const StaticEntitesViewModel& StaticEntitesViewModel)
+void Render::RenderKeys(const SpriteModelView& spriteModelView)
 {
 }
 
-void Render::RenderFruits(const StaticEntitesViewModel& StaticEntitesViewModel)
+void Render::RenderFruits(const SpriteModelView& spriteModelView)
 {
 }
 

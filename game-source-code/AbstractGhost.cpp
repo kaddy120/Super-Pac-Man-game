@@ -65,7 +65,7 @@ void AbstractGhost::SetPackManPosition(const std::shared_ptr<Vector2>& position)
 void AbstractGhost::ScaredMovement()
 {
 	Movement_.Move(GetPosition_ptr(),Navigator.GetCurrentDirrection());
-	
+
 	auto isInside_turningTile = Navigator.isInsideTurningTiles();
 	if (isInside_turningTile && Clock_.TimeLapse()>0.4)
 	{
@@ -88,7 +88,9 @@ void AbstractGhost::ChaseTargetMovement()
 	}
 	//count_++;
 }
-
+/**
+*The function is here
+*/
 //this can move out
 void AbstractGhost::SetChaseMode()
 {

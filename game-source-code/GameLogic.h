@@ -16,6 +16,17 @@
 #include "Clock.h"
 #include "Render.h"
 #include "Application.h"
+/**
+ @class GameLogic
+ @author Dembe Munyai and Kaddy Marindi
+ @brief This class is the CPU of the game.All decisions are made here before they are presented on the window.
+ Most of the member functions are made to be private
+* \version 3.0
+*
+*/
+
+
+
 
 class GameLogic
 {
@@ -26,6 +37,12 @@ public:
 	//	const PacMan& pacMan,
 	//	std::vector<std::unique_ptr<AbstractGhost>> Ghosts);
 	GameLogic(std::shared_ptr<sf::RenderWindow> window);
+
+    /**
+    * @brief The function is used to run the game when the conditions are met(userinput,points remaining and lives remaining)
+
+    *  @return void
+    */
 	void Run();
 private:
 	void Update();
@@ -58,7 +75,7 @@ private:
 	std::shared_ptr<sf::RenderWindow> window;
 	TextModelView textModelView;
 	vector<GhostModelView> ghostModelView;
-	vector<StaticEntitesViewModel> StaticEntityModelView;
+	vector<SpriteModelView> StaticEntityModelView;
 	PacManViewModel PacManViewModel;
 	void MapEntitiesToModelView();
 	float deltaTime = 0.f;

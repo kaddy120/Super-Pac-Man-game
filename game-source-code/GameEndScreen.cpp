@@ -10,7 +10,7 @@ GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& Window_, c
     pauseMessage.setCharacterSize(70);
     pauseMessage.setPosition(50.f, 200.f);
     pauseMessage.setFillColor(sf::Color::White);
-    
+
     if( !(file_image.loadFromFile("resources/background.jpg")) )
     {
         return;
@@ -24,7 +24,7 @@ GameEndScreen::GameEndScreen(const std::shared_ptr<sf::RenderWindow>& Window_, c
     }
     else
     {
-        pauseMessage.setString("Game over !\n\n\nPress Enter to Replay\n\n Press Esc to exit \n");
+        pauseMessage.setString("You lose!\n\n\nPress Enter to Replay\n\n Press Esc to exit \n");
        Window_->draw(gameover);
     }
     Window_->draw(pauseMessage);

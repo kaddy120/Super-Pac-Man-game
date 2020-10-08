@@ -2,23 +2,34 @@
 #include <iostream>
 #include <cmath>
 
+
+
 using std::pow;
 
-bool Collision::CheckCollision(const Sprite& firstSprite, const std::vector<Sprite>& secondSprites)
+
+
+bool Collision::CheckCollision(const Sprite& firstRectangle, const std::vector<Sprite>& secondRectangle)
 {
-	for (auto secSprite : secondSprites)
+	for (auto secSprite : secondRectangle)
 	{
-		if (CheckCollision(firstSprite, secSprite)) return true;
+		if (CheckCollision(firstRectangle, secSprite)) return true;
 	}
 	return false;
 }
 
+    /**
+    * @brief Parametrized constructor. Inherits from MovingGameObject class. Creates the alienBullet gameObject.
+    * @param firstRectangle
+    * @param secondRectangle
 
-bool Collision::CheckCollision(const Sprite& sprite1, const Sprite& sprite2)
+    @return bool
+    */
+
+bool Collision::CheckCollision(const Sprite& firstRectangle, const Sprite& sprite2)
 {
-	auto [width1,height1] = sprite1.getDimentions();
+	auto [width1,height1] = firstRectangle.getDimentions();
 	auto [width2,height2] = sprite2.getDimentions();
-	auto position1 = sprite1.GetPosition();
+	auto position1 = firstRectangle.GetPosition();
 	auto position2 = sprite2.GetPosition();
 
 		if (position1.X <= position2.X + width2 &&

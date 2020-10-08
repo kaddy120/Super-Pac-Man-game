@@ -1,9 +1,8 @@
 #include "fruit.h"
 
-Fruit::Fruit(const float& radius, const Vector2& position, unsigned int Points) : CircleSprite(radius, position)
+Fruit::Fruit(const float& radius, const Vector2& position) : CircleSprite(radius, position) 
 {
 	Name("Fruit");
-	PointsPerFruit = Points;
 }
 
 unsigned int Fruit::FruitPoints() const { return PointsPerFruit; }

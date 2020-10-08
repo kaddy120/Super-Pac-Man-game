@@ -12,9 +12,11 @@ public:
     string Lives;
     string HighestScore;
     string CurrentScore;
+    int highscore_;
+    int currentscore;
 };
 
-class StaticEntitesViewModel
+class SpriteModelView
 {
 public:
     std::string Title;
@@ -22,13 +24,13 @@ public:
     Vector2 Dimention;
 };
 
-class GhostModelView : public StaticEntitesViewModel
+class GhostModelView : public SpriteModelView
 {
 public:
     Mode Mode;
 };
 
-class PacManViewModel : public StaticEntitesViewModel
+class PacManViewModel : public SpriteModelView
 {
 public:
     Direction Direction;

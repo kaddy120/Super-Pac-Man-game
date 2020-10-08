@@ -5,6 +5,14 @@
 #include <chrono>
 #include "Definitions.h"
 #include "Clock.h"
+/** @brief
+*
+*
+*/
+
+
+
+
 
 class AbstractGhost: public CircleSprite
 {
@@ -21,11 +29,14 @@ public:
 	{
 		Navigator.SetTarget(target);
 	}
+/////////////////////////////////////////////////
+/// ... This is that...
+/////////////////////////////////////////////////
 	virtual void SetPackManPosition(const std::shared_ptr<Vector2>& position);
 	virtual void UpdateMode(const Mode& mode);
 	void SetSpeed(const float& speed);
 	Mode GetMode() const;
-
+ ///this is just temporary
 protected:
 	int count_ = 4;
 	std::chrono::steady_clock::time_point StartTime;
