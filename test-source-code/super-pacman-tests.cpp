@@ -1,16 +1,22 @@
-#include "../game-source-code/Collision.h"
-#include "../game-source-code/CircleSprite.h"
-#include "../game-source-code/PacMan.h"
-#include "../game-source-code/Sprite.h"
-#include "../game-source-code/Key.h"
-#include "../game-source-code/Door.h"
-#include "../game-source-code/fruit.h"
-#include "../game-source-code/FileReader.h"
-#include "../game-source-code/Clock.h"
-#include "../game-source-code/GameMap.h"
-#include "../game-source-code/MapEntitiesToDTO.h"
-#include "../game-source-code/ModelViews.h"
-#include "../game-source-code/AbstractGhost.h"
+
+#include "../game-source-code/Logic/Collision.h"
+#include "../game-source-code/Logic/CircularEntity.h"
+#include "../game-source-code/Logic/PacMan.h"
+#include "../game-source-code/Logic/RectangularEntity.h"
+#include "../game-source-code/Logic/Key.h"
+#include "../game-source-code/Logic/Door.h"
+#include "../game-source-code/Logic/fruit.h"
+#include "../game-source-code/Logic/FileReader.h"
+#include "../game-source-code/Logic/Clock.h"
+#include "../game-source-code/Logic/GameMap.h"
+#include "../game-source-code/Data/MapEntitiesToDTO.h"
+#include "../game-source-code/Data/ModelViews.h"
+#include "../game-source-code/Logic/Application.h"
+#include "../game-source-code/Logic/AbstractGhost.h"
+#include "../game-source-code/Logic/RedGhost.h"
+#include "../game-source-code/Logic/BlueGhost.h"
+#include "../game-source-code/Logic/PinkGhost.h"
+#include "../game-source-code/Logic/YellowGhost.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -204,16 +210,16 @@ TEST_CASE("PacMan Intial has 3 Lives")
 {
     auto width = 35, height = 35;
     PacMan PacMan(width, height, Vector2(0, 0));
-    CHECK(PacMan.GetLifes() == 3);
+    CHECK(PacMan.GetLives() == 3);
 }
 
 TEST_CASE("PacMan loss a life when he dies")
 {
     auto width = 35, height = 35;
     PacMan PacMan(width, height, Vector2(0, 0));
-    auto InitLives = PacMan.GetLifes();
+    auto InitLives = PacMan.GetLives();
     PacMan.Die();
-    CHECK(InitLives-1 == PacMan.GetLifes());
+    CHECK(InitLives-1 == PacMan.GetLives());
 }
 
 TEST_CASE("PacMan Lives should never be less than 0")
@@ -224,7 +230,7 @@ TEST_CASE("PacMan Lives should never be less than 0")
     PacMan.Die();
     PacMan.Die();
     PacMan.Die();
-    CHECK(PacMan.GetLifes() >= 0);
+    CHECK(PacMan.GetLives() >= 0);
 }
 
 TEST_CASE("PacMan Score is reset to 0 when PacMan loses all lives")
@@ -258,15 +264,15 @@ TEST_CASE("Two rectangles closer to each other collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
-    Sprite rectangle2(width, height, Vector2(10, 10));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle2(width, height, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
 TEST_CASE("Two rectangles apart cannot to collide")
 {
-    Sprite rectangle1(40, 20, Vector2(0, 0));
-    Sprite rectangle2(40, 40, Vector2(100, 100));
+    RectangularEntity rectangle1(40, 20, Vector2(0, 0));
+    RectangularEntity rectangle2(40, 40, Vector2(100, 100));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
@@ -274,29 +280,29 @@ TEST_CASE("Two rectangles with touching edges collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
-    Sprite rectangle2(width, height, Vector2(40, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle2(width, height, Vector2(40, 0));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
 TEST_CASE("Testing if two circles collide ")
 {
-    CircleSprite rectangle1(40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(10, 10));
+    CircularEntity rectangle1(40, Vector2(0, 0));
+    CircularEntity rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle1, rectangle2));
 }
 //
 TEST_CASE("Two circles apart do not collide")
 {
     auto radius = 40;
-    CircleSprite rectangle1(radius, Vector2(0, 0));
-    CircleSprite rectangle2(radius, Vector2(100, 100));
+    CircularEntity rectangle1(radius, Vector2(0, 0));
+    CircularEntity rectangle2(radius, Vector2(100, 100));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 TEST_CASE("Testing if a circle and a square collide ")
 {
-    Sprite rectangle1(40, 40, Vector2(0, 0));
-    CircleSprite rectangle2(40, Vector2(10, 10));
+    RectangularEntity rectangle1(40, 40, Vector2(0, 0));
+    CircularEntity rectangle2(40, Vector2(10, 10));
     CHECK(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
@@ -305,9 +311,9 @@ TEST_CASE("circle and a square do not collide if they are far apart ")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
     auto radius = 20.f;
-    CircleSprite rectangle2(radius, Vector2(70, 0));
+    CircularEntity rectangle2(radius, Vector2(70, 0));
     CHECK_FALSE(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
@@ -315,10 +321,10 @@ TEST_CASE("circle and a square that are 1px apart do not collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
     auto radius = 20.f;
-    CircleSprite Circle1(radius, Vector2(61, 0));
-    CircleSprite Circle2(radius, Vector2(0, 61));
+    CircularEntity Circle1(radius, Vector2(61, 0));
+    CircularEntity Circle2(radius, Vector2(0, 61));
     CHECK_FALSE(Collision::CheckCollision(Circle1, rectangle1));
     CHECK_FALSE(Collision::CheckCollision(Circle2, rectangle1));
 }
@@ -327,9 +333,9 @@ TEST_CASE("circle and a square that are only touching by edges collide")
 {
     auto width = 40;
     auto height = 40;
-    Sprite rectangle1(width, height, Vector2(0, 0));
+    RectangularEntity rectangle1(width, height, Vector2(0, 0));
     auto radius = 20.f;
-    CircleSprite rectangle2(radius, Vector2(60, 0));
+    CircularEntity rectangle2(radius, Vector2(60, 0));
     CHECK(Collision::CheckCollision(rectangle2, rectangle1));
 }
 
@@ -337,8 +343,8 @@ TEST_CASE("circles of different radius closer to each other collides")
 {
     auto radius1 = 40;
     auto radius2 = 12;
-    CircleSprite rectangle1(radius1, Vector2(0, 0));
-    CircleSprite rectangle2(radius2, Vector2(50, 40));
+    CircularEntity rectangle1(radius1, Vector2(0, 0));
+    CircularEntity rectangle2(radius2, Vector2(50, 40));
     CHECK_FALSE(Collision::CheckCollision(rectangle1, rectangle2));
 }
 
@@ -403,7 +409,7 @@ TEST_CASE("Doors wil not unlock with an incorrect key")
     Door1.AssignKey(key1);
     Door1.Unlock(IncorrectKey);
     CHECK(Door1.IsDoorLocked());
-    
+
     Door1.Unlock(IncorrectKey2);
     CHECK(Door1.IsDoorLocked());
 }
@@ -414,7 +420,7 @@ TEST_CASE("Fruits points are correct and can be modified")
 //Vector2 vector2(2.f,3.f);
 //Fruit fruit_(10.f,vector2);
 //int fruit_point=10;
-//auto modifiedfruitpoint=fruit_(10.f,vector2).FruitPoints(10);
+//auto modifiedfruitpoint=fruit_(10.f,vector2).GetPoints(10);
 //CHECK_FALSE(fruit_point==modifiedfruitpoint);
 }
 ////------------Test Score File Reader ------------
@@ -460,5 +466,310 @@ TEST_CASE("PacMan is mapped to PacManViewModel(DTO) correctly")
 
 TEST_CASE("TextViewModel is correctly filled")
 {
-   // MapEntitiesToDTO::MapTextViewModel();
+    PacManViewModel PacManViewModel_;
+    auto width = 20.f, height = 20.f;
+    auto PacManPosition = Vector2(20, 50);
+    PacMan PacMan_(width, height, PacManPosition);
+    auto TextViewModel = TextModelView{};
+    auto HighestScore = 30;
+    auto Level = 2;
+    MapEntitiesToDTO::MapTextViewModel(TextViewModel, PacMan_, HighestScore, Level);
+    CHECK(TextViewModel.CurrentScore == std::to_string(PacMan_.GetPoints()));
+    CHECK(TextViewModel.HighestScore == std::to_string(HighestScore));
+    CHECK(TextViewModel.Level == std::to_string(Level));
+    CHECK(TextViewModel.Lives == std::to_string(PacMan_.GetLives()));
 }
+
+TEST_CASE("Static Entites are Mapped correctly")
+{
+    std::vector<StaticEntitesViewModel> ViewModel;
+    auto width = 60, height = 8;
+    auto position = Vector2{ 0,0 };
+
+    SUBCASE("Wall is correctly mapped to StaticEntitiesViewModel")
+    {
+        auto Wall = RectangularEntity(width,height,position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Wall);
+        CHECK(ViewModel[0].Dimention == Vector2(width, height));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Wall.Name());
+    }
+
+    SUBCASE("Wall is correctly mapped to StaticEntitiesViewModel")
+    {
+        auto Door_ = Door(width, height, position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Door_);
+        CHECK(ViewModel[0].Dimention == Vector2(width, height));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Door_.Name());
+    }
+
+    SUBCASE("Fruit is mapped correctly to StaticEntitiesViewModel")
+    {
+        auto radius = 15;
+        auto Fruit_ = Fruit(radius, position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Fruit_);
+        CHECK(ViewModel[0].Dimention == Vector2(radius*2, radius*2));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Fruit_.Name());
+    }
+
+    SUBCASE("Pallet is mapped correctly to StaticEntitiesViewModel")
+    {
+        auto radius = 15;
+        auto Pallet_ = Pellet(radius, position);
+        MapEntitiesToDTO::MapStaticEntitiesModelView(ViewModel, Pallet_);
+        CHECK(ViewModel[0].Dimention == Vector2(radius * 2, radius * 2));
+        CHECK(ViewModel[0].Positon == position);
+        CHECK(ViewModel[0].Title == Pallet_.Name());
+    }
+}
+
+TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
+{
+
+    TEST_CASE("PacMan Can not pass through the Walls")
+    {
+        std::vector<std::shared_ptr<Door>> Doors;
+        SUBCASE("PacMan cannot move Up if there is a horizontal wall on top of pacMan")
+        {
+            auto WallWidth = 60.f, WallHeight = 8.f;
+            auto position = Vector2{ 0,0 };
+            auto HorizontalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ HorizontalWall_ };
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(10, 9);
+            auto PacMan_ = PacMan{35, 35, PacManInitPosition}; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Up, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+
+        SUBCASE("PacMan cannot move to the left if there's a verical wall on the left side of pacMan")
+        {
+            auto WallWidth = 8.f, WallHeight = 60.f;
+            auto position = Vector2{ 0,0 };
+            auto VerticalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ VerticalWall_};
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(8.5, 9);
+            auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Left, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+
+        SUBCASE("PacMan cannot move to the Right if there's a verical wall on the Right side of pacMan")
+        {
+            auto WallWidth = 8.f, WallHeight = 60.f;
+            auto position = Vector2{ 8,0 };
+            auto VerticalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ VerticalWall_};
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(7, 9);
+            auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Right, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+
+        SUBCASE("PacMan cannot move Up if there is a horizontal wall on top of pacMan")
+        {
+            auto WallWidth = 60.f, WallHeight = 8.f;
+            auto position = Vector2{ 0,100 };
+            auto HorizontalWall_ = RectangularEntity{ WallWidth, WallHeight, position };
+            std::vector<RectangularEntity> Walls{ HorizontalWall_ };
+            auto Logic = Application(Walls, Doors);
+            auto PacManInitPosition = Vector2(10, (100-35));
+            auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+            Logic.MovePacMan(PacMan_, Direction::Down, 0);
+            CHECK(PacMan_.GetPosition() == PacManInitPosition);
+        }
+    }
+
+    TEST_CASE("PacMan can move through an unlocked door")
+    {
+        std::vector<RectangularEntity> Walls;
+        auto DoorWidth = 60.f, DoorHeight = 8.f;
+        std::vector<std::shared_ptr<Door>> Doors{ std::make_unique<Door>(DoorWidth, DoorHeight, Vector2(0,0)) };
+        auto Logic = Application(Walls, Doors);
+        auto PacManInitPosition = Vector2(0, 9.f);
+        auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+        Logic.MovePacMan(PacMan_, Direction::Up, 0);
+        CHECK(PacMan_.GetPosition() == PacManInitPosition);
+    }
+    TEST_CASE("PacMan cannot move through a locked door")
+    {
+        std::vector<RectangularEntity> Walls;
+        auto DoorWidth = 60.f, DoorHeight = 8.f;
+        std::vector<std::shared_ptr<Door>> Doors{ std::make_unique<Door>(DoorWidth, DoorHeight, Vector2(0,0)) };
+        auto Key_ = Key{};
+        Doors[0]->AssignKey(Key_);
+        Doors[0]->Unlock(Key_);
+        auto Logic = Application(Walls, Doors);
+        auto PacManInitPosition = Vector2(0, 9.f);
+        auto PacMan_ = PacMan{ 35, 35, PacManInitPosition }; //pacMan is positioned slightly underneath a HorizontalWall_
+        auto speed = 2.f;
+        PacMan_.SetSpeed(speed);
+        Logic.MovePacMan(PacMan_, Direction::Up, 0);
+        CHECK_FALSE(PacMan_.GetPosition() == PacManInitPosition);
+        auto newPosition = PacManInitPosition.subtract(Vector2(0, speed));
+        CHECK(PacMan_.GetPosition() == newPosition);
+    }
+    TEST_CASE("Testing Collision of Ghosts and PacMan")
+    {
+        std::vector<std::unique_ptr<AbstractGhost>> GhostContainer;
+        std::vector<RectangularEntity> walls;
+        std::vector<std::shared_ptr<Door>> Doors;
+        std::vector<CircularEntity> TurningPoints;
+        auto Logic = Application(walls, Doors);
+
+        auto position = Vector2(0,0);
+        auto PacMan_ = PacMan{ 35, 35, position };
+        auto GhostRadius = 20.f;
+        GhostContainer.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors, GhostRadius, position));
+
+        SUBCASE("Test collide with one of the ghosts in a GhostContainer")
+        {
+            auto collision = Logic.PacManAndGhostsCollide(PacMan_,GhostContainer);
+            CHECK(collision);
+        }
+
+        SUBCASE("PacMan will fly over Ghosts if Pac-Man SuperCharged (PacMan eats SuperPellet)")
+        {
+            PacMan_.SetState(State::SuperCharged);
+            auto collision = Logic.PacManAndGhostsCollide(PacMan_, GhostContainer);
+            CHECK_FALSE(collision);
+        }
+
+        SUBCASE("If Ghosts are at Frightened mode, PacMan can eat ghosts")
+        {
+            GhostContainer.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors, GhostRadius , Vector2(300, 300)));
+            PacMan_.SetState(State::charged);
+            GhostContainer[0]->UpdateMode(Mode::Frightened);
+            GhostContainer[1]->UpdateMode(Mode::Frightened);
+            auto collision = Logic.PacManAndGhostsCollide(PacMan_, GhostContainer);
+            CHECK(collision);
+            CHECK(GhostContainer[0]->GetMode() == Mode::Eaten);
+            CHECK(GhostContainer[1]->GetMode() == Mode::Frightened);
+        }
+    }
+    TEST_SUITE("PacMan and IConsumable")
+    {
+
+        TEST_CASE("pacMan eats fruits correclty")
+        {
+            std::vector<Fruit> Fruits;
+            auto FruitRadius = 15.f;
+            auto Points = 20;
+            Fruits.push_back(Fruit(FruitRadius, Vector2(0, 0), Points));
+            Fruits.push_back(Fruit(FruitRadius, Vector2(0, 80), Points));
+            //Fruit has default point of 10;
+            auto Logic = Application{};
+            SUBCASE("PacMan points stay the same if pacMan do not eat a fruit and fruits number stay the same")
+            {
+                auto PacMan_ = PacMan{ 35,35, Vector2(300, 300)};
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfFruits = Fruits.size();
+                Logic.EatFruits(PacMan_, Fruits);
+                CHECK(InitScore == PacMan_.GetPoints());
+                CHECK(InitNumberOfFruits == Fruits.size());
+            }
+            SUBCASE("PacMan points are incremented if pac-man eats a fruit and eaten fruit is deleted")
+            {
+                auto PacMan_ = PacMan{ 35,35, Vector2(0, 0) };
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfFruits = Fruits.size();
+                Logic.EatFruits(PacMan_, Fruits);
+                CHECK(InitScore+Points == PacMan_.GetPoints());
+                CHECK(InitNumberOfFruits -1 == Fruits.size());
+            }
+        }
+
+        TEST_CASE("PacMan eats pallets correctly")
+        {
+            std::vector<Pellet> Pellets;
+            auto FruitRadius = 15.f;
+            auto Points = 20;
+            auto Pellet_1_position = Vector2(0, 0);
+            Pellets.push_back(Pellet(FruitRadius,Pellet_1_position , Points));
+            Pellets.push_back(Pellet(FruitRadius, Vector2(0, 80), Points));
+            auto PacMan_ = PacMan{ 35,35, Vector2(300, 300) };
+            auto Logic = Application{};
+            //Fruit has default point of 10;
+            SUBCASE("PacMan's points are not incremented if it does not eat a pellet")
+            {
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfPellet = Pellets.size();
+                auto AtePellet = Logic.AtePallet(PacMan_, Pellets);
+                CHECK_FALSE(AtePellet);
+                CHECK(InitScore == PacMan_.GetPoints());
+                CHECK(InitNumberOfPellet == Pellets.size());
+            }
+            SUBCASE("pacMans points are incremented correctly if it eats a pellet and a pellet is deleted")
+            {
+                auto PacMan_ = PacMan{ 35,35, Vector2(0, 0) };
+                PacMan_.SetPosition(Pellet_1_position);
+                auto InitScore = PacMan_.GetPoints();
+                auto InitNumberOfPellet = Pellets.size();
+                auto AtePellet = Logic.AtePallet(PacMan_, Pellets);
+                CHECK(AtePellet);
+                CHECK(InitScore+ Points == PacMan_.GetPoints());
+                CHECK(InitNumberOfPellet - 1 == Pellets.size());
+            }
+        }
+
+        TEST_CASE("No do is open if pacMan do not eat a key")
+        {
+            //void OpenDoors(const PacMan & pacMan, std::vector<Key> & keys, vector<std::shared_ptr<Door>> & Doors);
+            auto Key1 = Key{};
+            auto Key2 = Key{};
+            vector<Key> Keys{ Key1, Key2 };
+            auto Door1Position = Vector2{ 0,0 };
+            auto Door1 = std::make_shared<Door>( 40, 8, Door1Position );
+            auto Door2Position = Vector2{ 80, 0 };
+            auto Door2 = std::make_shared<Door>(40, 8, Door2Position );
+            Door1->AssignKey(Key1);
+            Door2->AssignKey(Key2);
+            vector<std::shared_ptr<Door>> Doors{ Door1, Door2 };
+            auto PacMan_ = PacMan{ 35.f, 35.f, Vector2(300, 300) };
+            auto Logic = Application{};
+            Logic.OpenDoors(PacMan_, Keys, Doors);
+            CHECK(Doors[0]->IsDoorLocked());
+            CHECK(Doors[1]->IsDoorLocked());
+            CHECK(Keys.size() == 2);
+
+        }
+        TEST_CASE("pacMan returns to the oposite site of the maze if pac-man exit the maze")
+        {
+            auto MazeWidth = 500;
+            auto PacMan_ = PacMan{35.f, 35.f, Vector2(MazeWidth+1, 8)};
+            auto Logic = Application{};
+            Logic.MovablesExitMaze(PacMan_, MazeWidth);
+            CHECK(PacMan_.GetPosition() == Vector2(0, 8));
+
+            PacMan_.SetPosition(Vector2(-1, 8));
+            Logic.MovablesExitMaze(PacMan_, MazeWidth);
+            CHECK(PacMan_.GetPosition() == Vector2(MazeWidth, 8));
+        }
+        TEST_CASE("the ghosts returns to the opposite side of the maze if pac-man exit the maze")
+        {
+            auto MazeWidth = 500;
+            std::vector<CircularEntity> TurningTiles;
+            std::vector<RectangularEntity> Walls;
+            std::vector<std::shared_ptr<Door>> Doors;
+            RedGhost Ghost(TurningTiles, Walls, Doors, 20, Vector2(MazeWidth + 1, 8));
+            auto Logic = Application{};
+            //make subcase
+            Logic.MovablesExitMaze(Ghost, MazeWidth);
+            CHECK(Ghost.GetPosition() == Vector2(0, 8));
+            //make subcase
+            Ghost.SetPosition(Vector2(-1, 8));
+            Logic.MovablesExitMaze(Ghost, MazeWidth);
+            CHECK(Ghost.GetPosition() == Vector2(MazeWidth, 8));
+            //void MovablesExitMaze(IEntity & MovableEntity, const unsigned int& mazeWidth);
+        }
+
+    }
+}
+
+
+
+
