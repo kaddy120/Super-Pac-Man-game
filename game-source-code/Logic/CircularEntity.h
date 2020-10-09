@@ -9,7 +9,7 @@
 *@brief CircularRectangularEntity is responsible for all circular objects with a radius and powssition which is the center.
 *\version 3.0
 */
-class CircularEntity: public IEntity 
+class CircularEntity: public IEntity
 {
 public:
 
@@ -21,7 +21,23 @@ public:
     * \param Position is of type vector2.Sets the position of the circular entity.
     */
 	CircularEntity(const float& radius, const Vector2& postion);
+
+
+
+	 /**
+    * @brief this function gets a position of CircularEnity object's position.
+    * @
+    *  @return a position of type vector2
+    */
+
 	Vector2 GetPosition() const override;
+
+/**
+    * @brief This function gets a shared pointer to the CircularEntity objects's center position
+    * @
+    *  @return returns a shared pointer to the center position
+    */
+
 	std::shared_ptr<Vector2> GetPosition_ptr() const override;
 
     /**

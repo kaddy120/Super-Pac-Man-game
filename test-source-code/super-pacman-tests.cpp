@@ -1,4 +1,5 @@
-#include "../game-source-code/Collision.h"
+
+\#include "../game-source-code/Collision.h"
 #include "../game-source-code/CircularEntity.h"
 #include "../game-source-code/PacMan.h"
 #include "../game-source-code/RectangularEntity.h"
@@ -408,7 +409,7 @@ TEST_CASE("Doors wil not unlock with an incorrect key")
     Door1.AssignKey(key1);
     Door1.Unlock(IncorrectKey);
     CHECK(Door1.IsDoorLocked());
-    
+
     Door1.Unlock(IncorrectKey2);
     CHECK(Door1.IsDoorLocked());
 }
@@ -493,7 +494,7 @@ TEST_CASE("Static Entites are Mapped correctly")
         CHECK(ViewModel[0].Positon == position);
         CHECK(ViewModel[0].Title == Wall.Name());
     }
-    
+
     SUBCASE("Wall is correctly mapped to StaticEntitiesViewModel")
     {
         auto Door_ = Door(width, height, position);
@@ -502,7 +503,7 @@ TEST_CASE("Static Entites are Mapped correctly")
         CHECK(ViewModel[0].Positon == position);
         CHECK(ViewModel[0].Title == Door_.Name());
     }
-    
+
     SUBCASE("Fruit is mapped correctly to StaticEntitiesViewModel")
     {
         auto radius = 15;
@@ -526,7 +527,7 @@ TEST_CASE("Static Entites are Mapped correctly")
 
 TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
 {
-    
+
     TEST_CASE("PacMan Can not pass through the Walls")
     {
         std::vector<std::shared_ptr<Door>> Doors;
@@ -555,7 +556,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             Logic.MovePacMan(PacMan_, Direction::Left, 0);
             CHECK(PacMan_.GetPosition() == PacManInitPosition);
         }
-        
+
         SUBCASE("PacMan cannot move to the Right if there's a verical wall on the Right side of pacMan")
         {
             auto WallWidth = 8.f, WallHeight = 60.f;
@@ -652,7 +653,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
     }
     TEST_SUITE("PacMan and Fruits")
     {
-        
+
         TEST_CASE("")
         {
             std::vector<Fruit> Fruits;
@@ -681,7 +682,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
                 CHECK(InitNumberOfFruits -1 == Fruits.size());
             }
         }
-        
+
         TEST_CASE("PacMan and Pellets")
         {
             std::vector<Pellet> Pellets;
@@ -781,5 +782,5 @@ TEST_SUITE("Ghost Navigation")
         void SetTarget(const Vector2 & target);
     }
 }
-    
+
 
