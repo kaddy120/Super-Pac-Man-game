@@ -4,10 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "SplashScreen.h"
-#include "ModelViews.h"
+#include "../Data/ModelViews.h"
 #include "Animation.h"
 #include "GameEndScreen.h"
-#include "FileReader.h"
+#include "../Logic/FileReader.h"
 
 using std::string;
 using std::vector;

@@ -2,11 +2,7 @@
 #include <iostream>
 #include <cmath>
 
-
-
 using std::pow;
-
-
 
 bool Collision::CheckCollision(const RectangularEntity& firstRectangle, const std::vector<RectangularEntity>& secondRectangle)
 {

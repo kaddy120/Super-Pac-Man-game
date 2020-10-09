@@ -625,20 +625,20 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
         auto GhostRadius = 20.f;
         GhostContainer.push_back(std::make_unique<RedGhost>(TurningPoints, walls, Doors, GhostRadius, position));
 
-        SUBCASE("")
+        SUBCASE("Test collide with one of the ghosts in a GhostContainer")
         {
             auto collision = Logic.PacManAndGhostsCollide(PacMan_,GhostContainer);
             CHECK(collision);
         }
 
-        SUBCASE("pacman ate superpellet")
+        SUBCASE("PacMan will fly over Ghosts if Pac-Man SuperCharged (PacMan eats SuperPellet)")
         {
             PacMan_.SetState(State::SuperCharged);
             auto collision = Logic.PacManAndGhostsCollide(PacMan_, GhostContainer);
             CHECK_FALSE(collision);
         }
 
-        SUBCASE("pacman charged")
+        SUBCASE("If Ghosts are at Frightened mode, PacMan can eat ghosts")
         {
             GhostContainer.push_back(std::make_unique<YellowGhost>(TurningPoints, walls, Doors, GhostRadius , Vector2(300, 300)));
             PacMan_.SetState(State::charged);
@@ -650,7 +650,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             CHECK(GhostContainer[1]->GetMode() == Mode::Frightened);
         }
     }
-    TEST_SUITE("")
+    TEST_SUITE("PacMan and Fruits")
     {
         
         TEST_CASE("")
@@ -682,7 +682,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             }
         }
         
-        TEST_CASE("Pellet")
+        TEST_CASE("PacMan and Pellets")
         {
             std::vector<Pellet> Pellets;
             auto FruitRadius = 15.f;
@@ -736,7 +736,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             CHECK(Keys.size() == 2);
 
         }
-        TEST_CASE("")
+        TEST_CASE("PacMan Return to the maze")
         {
             auto MazeWidth = 500;
             auto PacMan_ = PacMan{35.f, 35.f, Vector2(MazeWidth+1, 8)};
@@ -748,7 +748,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             Logic.MovablesExitMaze(PacMan_, MazeWidth);
             CHECK(PacMan_.GetPosition() == Vector2(MazeWidth, 8));
         }
-        TEST_CASE("")
+        TEST_CASE("Ghost retutn to the maze")
         {
             auto MazeWidth = 500;
             std::vector<CircularEntity> TurningTiles;
@@ -766,6 +766,19 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             //void MovablesExitMaze(IEntity & MovableEntity, const unsigned int& mazeWidth);
         }
 
+    }
+}
+
+TEST_SUITE("Ghost Navigation")
+{
+    TEST_CASE("")
+    {
+        GhostNavigator(
+            std::vector<CircularEntity> TurningTiles,
+            std::vector<RectangularEntity> Walls,
+            std::vector<std::shared_ptr<Door>> Doors,
+            std::shared_ptr<Vector2> ghostPosition_ptr);
+        void SetTarget(const Vector2 & target);
     }
 }
     

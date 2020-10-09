@@ -1,19 +1,20 @@
 #include <SFML/Graphics.hpp>
-#include "Window.h"
-#include "Application.h"
-#include "RectangularEntity.h"
-#include "GameMap.h"
+
+#include "Presentation/Window.h"
+#include "Logic/Application.h"
+#include "Logic/RectangularEntity.h"
+#include "Logic/GameMap.h"
 #include <vector>
 #include <tuple>
-#include "PacMan.h"
-#include "Collision.h"
-#include "RedGhost.h"
-#include "SplashScreen.h"
-#include "PinkGhost.h"
-#include "YellowGhost.h"
+#include "Logic/PacMan.h"
+#include "Logic/Collision.h"
+#include "Logic/RedGhost.h"
+#include "Presentation/SplashScreen.h"
+#include "Logic/PinkGhost.h"
+#include "Logic/YellowGhost.h"
 #include <fstream>
-#include "GameLogic.h"
-#include "GameEndScreen.h"
+#include "Logic/GameLogic.h"
+#include "Presentation/GameEndScreen.h"
 //This is main cpp
 int main()
 {

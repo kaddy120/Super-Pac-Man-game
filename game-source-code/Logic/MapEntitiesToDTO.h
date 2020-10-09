@@ -1,5 +1,5 @@
 #pragma once
-#include "ModelViews.h"
+#include "../Data/ModelViews.h"
 #include "AbstractGhost.h"
 #include "PacMan.h"
 #include "CircularEntity.h"

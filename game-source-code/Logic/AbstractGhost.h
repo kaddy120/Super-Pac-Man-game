@@ -11,9 +11,6 @@
 */
 
 
-
-
-
 class AbstractGhost: public CircularEntity
 {
 public:

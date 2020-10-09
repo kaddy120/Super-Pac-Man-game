@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include "Vector2.h"
-#include "Definitions.h"
+#include "../Logic/Vector2.h"
+#include "../Logic/Definitions.h"
 
 using std::string;
 
