@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include "Inputs.h"
 #include "RedGhost.h"
 #include "YellowGhost.h"
 #include "PinkGhost.h"
