@@ -1,22 +1,22 @@
 
-\#include "../game-source-code/Collision.h"
-#include "../game-source-code/CircularEntity.h"
-#include "../game-source-code/PacMan.h"
-#include "../game-source-code/RectangularEntity.h"
-#include "../game-source-code/Key.h"
-#include "../game-source-code/Door.h"
-#include "../game-source-code/fruit.h"
-#include "../game-source-code/FileReader.h"
-#include "../game-source-code/Clock.h"
-#include "../game-source-code/GameMap.h"
-#include "../game-source-code/MapEntitiesToDTO.h"
-#include "../game-source-code/ModelViews.h"
-#include "../game-source-code/Application.h"
-#include "../game-source-code/AbstractGhost.h"
-#include "../game-source-code/RedGhost.h"
-#include "../game-source-code/BlueGhost.h"
-#include "../game-source-code/PinkGhost.h"
-#include "../game-source-code/YellowGhost.h"
+#include "../game-source-code/Logic/Collision.h"
+#include "../game-source-code/Logic/CircularEntity.h"
+#include "../game-source-code/Logic/PacMan.h"
+#include "../game-source-code/Logic/RectangularEntity.h"
+#include "../game-source-code/Logic/Key.h"
+#include "../game-source-code/Logic/Door.h"
+#include "../game-source-code/Logic/fruit.h"
+#include "../game-source-code/Logic/FileReader.h"
+#include "../game-source-code/Logic/Clock.h"
+#include "../game-source-code/Logic/GameMap.h"
+#include "../game-source-code/Data/MapEntitiesToDTO.h"
+#include "../game-source-code/Data/ModelViews.h"
+#include "../game-source-code/Logic/Application.h"
+#include "../game-source-code/Logic/AbstractGhost.h"
+#include "../game-source-code/Logic/RedGhost.h"
+#include "../game-source-code/Logic/BlueGhost.h"
+#include "../game-source-code/Logic/PinkGhost.h"
+#include "../game-source-code/Logic/YellowGhost.h"
 #include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -651,10 +651,10 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             CHECK(GhostContainer[1]->GetMode() == Mode::Frightened);
         }
     }
-    TEST_SUITE("PacMan and Fruits")
+    TEST_SUITE("PacMan and IConsumable")
     {
 
-        TEST_CASE("")
+        TEST_CASE("pacMan eats fruits correclty")
         {
             std::vector<Fruit> Fruits;
             auto FruitRadius = 15.f;
@@ -663,7 +663,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             Fruits.push_back(Fruit(FruitRadius, Vector2(0, 80), Points));
             //Fruit has default point of 10;
             auto Logic = Application{};
-            SUBCASE("")
+            SUBCASE("PacMan points stay the same if pacMan do not eat a fruit and fruits number stay the same")
             {
                 auto PacMan_ = PacMan{ 35,35, Vector2(300, 300)};
                 auto InitScore = PacMan_.GetPoints();
@@ -672,7 +672,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
                 CHECK(InitScore == PacMan_.GetPoints());
                 CHECK(InitNumberOfFruits == Fruits.size());
             }
-            SUBCASE("")
+            SUBCASE("PacMan points are incremented if pac-man eats a fruit and eaten fruit is deleted")
             {
                 auto PacMan_ = PacMan{ 35,35, Vector2(0, 0) };
                 auto InitScore = PacMan_.GetPoints();
@@ -683,7 +683,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             }
         }
 
-        TEST_CASE("PacMan and Pellets")
+        TEST_CASE("PacMan eats pallets correctly")
         {
             std::vector<Pellet> Pellets;
             auto FruitRadius = 15.f;
@@ -694,7 +694,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             auto PacMan_ = PacMan{ 35,35, Vector2(300, 300) };
             auto Logic = Application{};
             //Fruit has default point of 10;
-            SUBCASE("")
+            SUBCASE("PacMan's points are not incremented if it does not eat a pellet")
             {
                 auto InitScore = PacMan_.GetPoints();
                 auto InitNumberOfPellet = Pellets.size();
@@ -703,7 +703,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
                 CHECK(InitScore == PacMan_.GetPoints());
                 CHECK(InitNumberOfPellet == Pellets.size());
             }
-            SUBCASE("")
+            SUBCASE("pacMans points are incremented correctly if it eats a pellet and a pellet is deleted")
             {
                 auto PacMan_ = PacMan{ 35,35, Vector2(0, 0) };
                 PacMan_.SetPosition(Pellet_1_position);
@@ -716,7 +716,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             }
         }
 
-        TEST_CASE("Open Doors")
+        TEST_CASE("No do is open if pacMan do not eat a key")
         {
             //void OpenDoors(const PacMan & pacMan, std::vector<Key> & keys, vector<std::shared_ptr<Door>> & Doors);
             auto Key1 = Key{};
@@ -737,7 +737,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             CHECK(Keys.size() == 2);
 
         }
-        TEST_CASE("PacMan Return to the maze")
+        TEST_CASE("pacMan returns to the oposite site of the maze if pac-man exit the maze")
         {
             auto MazeWidth = 500;
             auto PacMan_ = PacMan{35.f, 35.f, Vector2(MazeWidth+1, 8)};
@@ -749,7 +749,7 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
             Logic.MovablesExitMaze(PacMan_, MazeWidth);
             CHECK(PacMan_.GetPosition() == Vector2(MazeWidth, 8));
         }
-        TEST_CASE("Ghost retutn to the maze")
+        TEST_CASE("the ghosts returns to the opposite side of the maze if pac-man exit the maze")
         {
             auto MazeWidth = 500;
             std::vector<CircularEntity> TurningTiles;
@@ -770,17 +770,6 @@ TEST_SUITE("Application Logic (Integration Test of the whole game Logic)")
     }
 }
 
-TEST_SUITE("Ghost Navigation")
-{
-    TEST_CASE("")
-    {
-        GhostNavigator(
-            std::vector<CircularEntity> TurningTiles,
-            std::vector<RectangularEntity> Walls,
-            std::vector<std::shared_ptr<Door>> Doors,
-            std::shared_ptr<Vector2> ghostPosition_ptr);
-        void SetTarget(const Vector2 & target);
-    }
-}
+
 
 

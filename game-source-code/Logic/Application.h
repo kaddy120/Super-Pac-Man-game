@@ -7,7 +7,7 @@
 #include "PacMan.h"
 #include "GameMap.h"
 #include "BlueGhost.h"
-#include "MapEntitiesToDTO.h"
+#include "../Data/MapEntitiesToDTO.h"
 #include "FileReader.h"
 #include "Clock.h"
 

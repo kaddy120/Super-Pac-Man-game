@@ -11,7 +11,7 @@
 #include "../Presentation/SplashScreen.h"
 #include "../Presentation/Render.h"
 #include "BlueGhost.h"
-#include "MapEntitiesToDTO.h"
+#include "../Data/MapEntitiesToDTO.h"
 #include "FileReader.h"
 #include "Clock.h"
 #include "../Presentation/Render.h"
