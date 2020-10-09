@@ -47,7 +47,7 @@ TEST_CASE("check that vector with differet coordinates are not equal")
 TEST_CASE("Time lapse should always be greater than 0")
 {
     Clock Clock_{};
-    Sleep(10);
+    Sleep(150);
     CHECK(Clock_.TimeLapse() > 0);
 }
 
@@ -414,15 +414,6 @@ TEST_CASE("Doors wil not unlock with an incorrect key")
     CHECK(Door1.IsDoorLocked());
 }
 
-//------------Test fruit ---------------
-TEST_CASE("Fruits points are correct and can be modified")
-{
-//Vector2 vector2(2.f,3.f);
-//Fruit fruit_(10.f,vector2);
-//int fruit_point=10;
-//auto modifiedfruitpoint=fruit_(10.f,vector2).GetPoints(10);
-//CHECK_FALSE(fruit_point==modifiedfruitpoint);
-}
 ////------------Test Score File Reader ------------
 
 TEST_CASE("FileReader can set and retrieve the Highest score successfully from a textfile")
@@ -438,11 +429,6 @@ TEST_CASE("A score can never be less than 0 set and retrived from a textfile")
      auto highScore = -1;
      score_reader_file.setHighestScore(highScore);
      CHECK_FALSE(highScore == score_reader_file.getHighestScore());
-}
-TEST_CASE("An exception is thrown when file is not found"){
-
-
-
 }
 
 ////------------Test Game Score ------------

@@ -54,6 +54,12 @@ public:
       @return unsigned int.
     */
 	unsigned int GetLives() const;
+	 /**
+    * @brief A function responsible for moving the pacman
+    @param direction of type Direction
+      @return Vector2.
+    */
+
 	Vector2 Move(const Direction& direction);
     /**
     * @brief The function is responsible for destroying the Pac-man when the lives remaining are 0

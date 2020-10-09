@@ -13,7 +13,7 @@ class GameEndScreen
 {
 public:
       /**\brief Parameterized Constructor. .
-       *\param window of type....,
+       *\param window of type RenderWindow
        *\param won,won is of type bool,checks if the Pac-man has won the game.
        */
 	GameEndScreen(const std::shared_ptr<sf::RenderWindow>& window,const bool& won);
