@@ -47,7 +47,7 @@ TEST_CASE("check that vector with differet coordinates are not equal")
 TEST_CASE("Time lapse should always be greater than 0")
 {
     Clock Clock_{};
-    Sleep(100);
+    Sleep(150);
     CHECK(Clock_.TimeLapse() > 0);
 }
 

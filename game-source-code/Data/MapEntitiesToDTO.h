@@ -9,6 +9,13 @@
 #include <string>
 #include "../Logic/Definitions.h"
 
+/**
+* @class MapEntitiesToDTO
+* @brief This class is responsible for maooing all the entities
+* @author Dembe Munyai and Kaddy Marindi
+* \version 3.0
+*/
+
 using std::vector;
 
 //DTO stand for Data Transfer Object

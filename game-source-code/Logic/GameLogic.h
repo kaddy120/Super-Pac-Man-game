@@ -35,6 +35,11 @@ public:
 	//	std::shared_ptr<sf::RenderWindow> window,
 	//	const PacMan& pacMan,
 	//	std::vector<std::unique_ptr<AbstractGhost>> Ghosts);
+	   /**
+   /**\brief Parameterized Constructor. .
+       *\param window is a shared pointer ,
+       *\param
+       */
 	GameLogic(std::shared_ptr<sf::RenderWindow> window);
 
     /**

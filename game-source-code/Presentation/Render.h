@@ -13,16 +13,35 @@ using std::string;
 using std::vector;
 
 
+/**
+* @class FaildeToLoadResourceException
+* @brief This class is responsible for throwing an exeption when no resource is loaded
+* @author Dembe Munyai and Kaddy Marindi
+* \version 3.0
+*/
 
 
 class FaildeToLoadResourceException
 {
 };
+/**
+* @class Render
+* @brief This class is responsible for rendering all the enties to be displayed on the window
+* @author Dembe Munyai and Kaddy Marindi
+* \version 3.0
+*/
 
 class Render
 {
 public:
+
+        /**\brief Parameterized Constructor. Creates object of Render
+       *\param window of type RenderWindow
+       */
+
 	Render(const std::shared_ptr<sf::RenderWindow>& window);
+
+
     void RenderStaticRectangularEntitys(const std::vector<StaticEntitesViewModel>& StaticEntitesViewModel);
     void RenderText(const TextModelView& textModelView);
     void RenderGhost(const vector<GhostModelView>& ghostModelView, const float& deltaTime);

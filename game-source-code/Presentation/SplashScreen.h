@@ -12,7 +12,8 @@ class SplashScreen
 {
 public:
       /**\brief Parameterized Constructor. .
-       *\param window of type....,
+       *\param window of type std::shared_ptr to sf::RenderWindow,
+         * \return returns a std::shared_ptr to sf::RenderWindow
        */
 
 	SplashScreen(std::shared_ptr<sf::RenderWindow>& window);

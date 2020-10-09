@@ -6,7 +6,7 @@
 /**
 * @class CircularEntity
 *@author Dembe Munyai and Kaddy Marindi
-*@brief CircularRectangularEntity is responsible for all circular objects with a radius and powssition which is the center.
+*@brief CircularRectangularEntity is responsible for all circular objects with a radius and position which is the center.
 *\version 3.0
 */
 class CircularEntity: public IEntity
