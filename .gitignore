@@ -86,7 +86,6 @@ xcuserdata/
 *.project
 *.workspace
 compile_commands.json
-Makefile
 # generated directories
 .codelite/
 
