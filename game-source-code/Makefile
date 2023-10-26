@@ -13,12 +13,9 @@ GAME_SRC2 = $(shell find ./Presentation -name '*.cpp')
 GAME_SRC = $(GAME_SRC0) $(GAME_SRC1)  $(GAME_SRC2)
 GAME_OBJS = $(GAME_SRC:.cpp=.o)
 
-SFML_LIB_DIR = /home/kaddy120/Downloads/SFML-2.6.0/lib
-SFML_INCLUDE_DIR = /home/kaddy120/Downloads/SFML-2.6.0/include
+SFML_LIB_DIR =/usr/lib/x86_64-linux-gnu 
+SFML_INCLUDE_DIR = /usr/include/SFML 
 
-
-# -I/home/kaddy120/Downloads/SFML-2.6.0/include -I/home/kaddy120/workspace/Super-Pac-Man-game/game-source-code/Data -I/home/kaddy120/work
-# space/Super-Pac-Man-game/game-source-code/Logic Main.cpp
 CPP_SRC  = Main.cpp
 CPP_OBJS = $(CPP_SRC:.cpp=.o)
 
