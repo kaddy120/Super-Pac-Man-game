@@ -11,7 +11,7 @@ Linux. This code has been compiled in both systems, Windows and Linux, without m
 
 ##### Prerequisite:
 
-`make`, `C++ complier, i.e g++`, `SFML library`, `Doctest`
+`make`, `C++ compiler, i.e g++`, `SFML library`, `Doctest`
 
 ### Installation in Debian system
 
@@ -30,7 +30,7 @@ To verify that you have installed `make` and `g++`, run:
 ```bash
  $ g++ -v
 ```
-And to check the list files installed to your system from package-name
+And to check the list of files installed to your system from package-name
 ```bash
  $ dpkg -L <package-name>
 ```
@@ -46,7 +46,7 @@ Build the game source code:
 ```
  $ make
 ```
-If your machine has multiple core processor,  you can speed the build process by running `make` in multiple threads. To run `make` in N threads, use:
+If your machine has multiple core processors,  you can speed the build process by running `make` in multiple threads. To run `make` in N threads, use:
 ```bash
  $ make -jN
 ```
@@ -56,10 +56,10 @@ Run the game executable:
 ```
 
 ### Testing
-The code is thorough tested using Unit tests to 
-limit regression bugs during development. The test are in `test-source-code` directory.
+The code is thoroughly tested using Unit tests to 
+limit regression bugs during development. The tests are in `test-source-code` directory.
 
-Change directory to the tests 
+Change the directory to the tests 
 ```bash
  $ cd test-source-code/
 ```
