@@ -1,106 +1,78 @@
-## Super-Pac Man
+# Super-Pac Man
 
-Software Development II - Course Project
+An implementation of [Super-Pac Man](https://en.wikipedia.org/wiki/Super_Pac-Man) game in `C++` for Software Development II - Course Project. [Super-Pac Man](https://en.wikipedia.org/wiki/Super_Pac-Man) is a spin off of the classic [Pac-Man](https://en.wikipedia.org/wiki/Pac-Man) game released in 1980. Its gameplay mechanics were altered radically from the first two entries into the Pac-Man series -- instead of eating dots, the player is required to eat keys in order to open doors, which open up sections of the maze that contain what in earlier games were known as “fruits”, the basic items that must be cleared. Once all the food is eaten, the player advances to the next level, in which the food is worth more points.
 
-When I first wrote this code I was using windows. But I have now switched to
-linux, which means that this code can be complite for both, Linux and Windows.
-the problem is that as I'm writing this `README`, I'm on Linux, So I will only
-gave a guideline on how to run it on windows without going deep in details.
-I hope that I will find time in the future to write a readme that caters for
-both operating system.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JrmWflmov2U?si=36SLR-1kqGtmkUww" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Prerequisite to build the code
+## Build and testing the source code
+This code is developed in Windows machine, but I have since switched to
+Linux, and this code have compiled in both system, Windows and Linux, without modifying the code. The problem is that as I'm writing the `README`, I'm on Linux, So I'll only provide a thorough guide for compiling and testing the source code in `Linux`. 
+
+##### Prerequisite:
 
 `make`, `C++ complier, i.e g++`, `SFML library`, `Doctest`
 
-### Prerequisite installation
+### Installation in Debian system
 
 ```bash
  $ sudo apt update
 ```
-
-check if you have `make installed`
-
+Install all the prerequisites:
 ```bash
- $ make -v
+ $ sudo apt-get install make g++ libsfml-dev doctest-dev 
 ```
 
+To verify that you have installed `make` and `g++`, run:
+```bash
+ $ make -v 
+```
 ```bash
  $ g++ -v
 ```
-
-if you don't get a version number, that make their are not installed. Install
-install `g++` and `make` by running:
-
+And to check the list files installed to your system from package-name
 ```bash
- $ sudo apt install g++ make
+ $ dpkg -L <package-name>
 ```
+Then check `libsfml-dev` and `doctest-dev` using the above command.
 
-You can get the latest version of SFML from their [download page](), or install from the package manager by running:
-
+### Build
+Change directory to the source code:
 ```bash
- $ sudo apt install libsfml-dev
+ $ cd game-source-code/
 ```
 
-Install `Doctest` for C++
-
+Build the game source code:
+```
+ $ make
+```
+If your machine has multiple core processor,  you can speed the build process by running `make` in multiple threads. To run `make` in N threads, use:
 ```bash
- $ sudo apt install doctest-dev
+ $ make -jN
+```
+Run the game executable:
+```
+ $ ./game.out
 ```
 
-## A readme for building the project
+### Testing
+The code is thorough tested using Unit tests to 
+limit regression bugs during development. The test are in `test-source-code` directory.
 
-## side notes
-
-- **SFML**:
-  SFML includes are located at `/usr/include/SFML`
-  SFML shared libraries are located at `/usr/lib/x86_64-linux-gnu`
-
-- **Doctest**
-  To locate a shared libraries in Ubuntu, type
-
+Change directory to the tests 
 ```bash
- $ dpkg -L package_name
+ $ cd test-source-code/
 ```
 
-i.e
-
+Build the tests
 ```bash
- $ dpkg -L doctest-dev
+ $ make
+```
+run the tests executable:
+```
+ $ ./test.out
 ```
 
-```bash
- # output
- /usr/include/doctest
-```
+## Download the game
 
-```C
-/* main.cpp */
-#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include <doctest.h>
-
-int fact(int n) {
-    return n <= 1 ? 1 : n * fact(n - 1);
-}
-
-TEST_CASE("testing the factorial function") {
-    CHECK(fact(1) == 1);
-    CHECK(fact(2) == 2);
-    CHECK(fact(3) == 6);
-    CHECK(fact(10) == 3628800);
-}
-```
-
-run test:
-
-```bash
- $ g++ -o tests main.cpp -I/usr/include/doctest
-```
-
-then run:
-
-```bash
- $ ./tests
-```
-Windows executable are located in:
-`/home/kaddy120/workspace/student number 1416262 - student number 1607360/executables`
+- Windows, [64-bit binaries](https://github.com/kaddy120/Super-Pac-Man-game/releases/download/v1.0/super-pac-man-windows.zip).
+- Linux, [x64-bit binaries](https://github.com/kaddy120/Super-Pac-Man-game/releases/download/v1.0/super-pac-man-linux.zip).
