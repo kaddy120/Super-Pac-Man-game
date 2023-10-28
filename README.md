@@ -2,7 +2,8 @@
 
 An implementation of [Super-Pac Man](https://en.wikipedia.org/wiki/Super_Pac-Man) game in `C++` for Software Development II - Course Project. [Super-Pac Man](https://en.wikipedia.org/wiki/Super_Pac-Man) is a spin off of the classic [Pac-Man](https://en.wikipedia.org/wiki/Pac-Man) game released in 1980. Its gameplay mechanics were altered radically from the first two entries into the Pac-Man series -- instead of eating dots, the player is required to eat keys in order to open doors, which open up sections of the maze that contain what in earlier games were known as “fruits”, the basic items that must be cleared. Once all the food is eaten, the player advances to the next level, in which the food is worth more points.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JrmWflmov2U?si=36SLR-1kqGtmkUww" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+**Watch the game demo on YouTube**
+[![Watch the video](https://img.youtube.com/vi/JrmWflmov2U/sddefault.jpg)](https://youtu.be/JrmWflmov2U)
 
 ## Build and testing the source code
 This code is developed in Windows machine, but I have since switched to
