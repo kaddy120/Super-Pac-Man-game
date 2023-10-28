@@ -1,7 +1,7 @@
 CXX = g++
 # CXXFLAGS
 # CPPFLAGS
-# LDFLAGS
+LDFLAGS = -Wl,-rpath=../executables/libs/
 
 all: main
 
@@ -13,16 +13,13 @@ GAME_SRC2 = $(shell find ./Presentation -name '*.cpp')
 GAME_SRC = $(GAME_SRC0) $(GAME_SRC1)  $(GAME_SRC2)
 GAME_OBJS = $(GAME_SRC:.cpp=.o)
 
-SFML_LIB_DIR =/usr/lib/x86_64-linux-gnu 
-SFML_INCLUDE_DIR = /usr/include/SFML 
-
 CPP_SRC  = Main.cpp
 CPP_OBJS = $(CPP_SRC:.cpp=.o)
 
-CXXFLAGS= -std=c++20 -fpermissive -I Logic/ -I Data/ -I .
+CXXFLAGS= -std=c++20 -fpermissive -I Logic/ -I Data/ -I . 
 
 main: ${CPP_OBJS} ${GAME_OBJS}
-	g++ ${CCCALLFLAGS} ${CPP_OBJS} ${GAME_OBJS} -o game.out -lsfml-graphics -lsfml-window -lsfml-system
+	$(CXX) ${CCCALLFLAGS} ${CPP_OBJS} ${GAME_OBJS}  -o game.out -lsfml-graphics -lsfml-window -lsfml-system ${LDFLAGS} 
 
 cpp_clean:
 	rm -f ${CPP_OBJS} ${GAME_OBJS} 
